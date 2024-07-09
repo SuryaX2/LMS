@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Carousel, Button } from 'react-bootstrap';
-import './Home.css';
+import '../Home.css';
 
 function Home() {
   return (
