@@ -1,5 +1,5 @@
 import "./input.css"
-function input() {
+function inp() {
     return (
         <div class="group">
             <svg viewBox="0 0 24 24" aria-hidden="true" class="search-icon">
@@ -20,4 +20,4 @@ function input() {
         </div>
     );
 }
-export default input
+export default inp;
