@@ -75,6 +75,7 @@ body {
 .nav {
   list-style: none;
   padding-left: 0;
+  display: flex;
   margin-bottom: 0;
 }
 
@@ -85,7 +86,8 @@ body {
   transition: color 0.2s ease-in-out;
 }
 
-.nav-link:hover, .nav-link:focus {
+.nav-link:hover,
+.nav-link:focus {
   color: #adb5bd !important;
 }
 
