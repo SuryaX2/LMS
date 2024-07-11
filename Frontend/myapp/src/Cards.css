@@ -38,6 +38,7 @@
     background-color: #444; /* Darker background for devices */
     border-radius: 21px;
     transform: rotate(30deg);
+    margin-bottom: 10px;
 }
 
 .product-device::before {
