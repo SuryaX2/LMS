@@ -1,5 +1,7 @@
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './Carousel.css';
-
 function Carousel() {
     return (
         <div id="myCarousel" className="carousel slide mb-6" data-bs-ride="carousel">
