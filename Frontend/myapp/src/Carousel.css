@@ -6,15 +6,15 @@
     overflow: hidden;
     background-color: #333;
     color: #fff;
-  }
-  
-  /* Margin bottom */
-  .mb-6 {
+}
+
+/* Margin bottom */
+.mb-6 {
     margin-bottom: 6rem;
-  }
-  
-  /* Carousel indicators */
-  .carousel-indicators {
+}
+
+/* Carousel indicators */
+.carousel-indicators {
     position: absolute;
     bottom: 10px;
     left: 50%;
@@ -25,9 +25,9 @@
     margin-right: 15%;
     margin-bottom: 0;
     list-style: none;
-  }
-  
-  .carousel-indicators button {
+}
+
+.carousel-indicators button {
     width: 12px;
     height: 12px;
     margin: 1px;
@@ -36,44 +36,44 @@
     background-color: #fff;
     opacity: 0.5;
     transition: opacity 0.6s ease;
-  }
-  
-  .carousel-indicators .active {
+}
+
+.carousel-indicators .active {
     opacity: 1;
     background-color: #000;
-  }
-  
-  /* Carousel inner items */
-  .carousel-inner {
+}
+
+/* Carousel inner items */
+.carousel-inner {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-  }
-  
-  .carousel-item {
+}
+
+.carousel-item {
     position: relative;
     display: none;
     float: left;
     width: 100%;
     height: 100%;
     transition: transform 0.6s ease-in-out;
-  }
-  
-  .carousel-item.active {
+}
+
+.carousel-item.active {
     display: block;
-  }
-  
-  /* Placeholder SVG */
-  .bd-placeholder-img {
+}
+
+/* Placeholder SVG */
+.bd-placeholder-img {
     text-anchor: middle;
     user-select: none;
     height: 100%;
     width: 100%;
-  }
-  
-  /* Carousel captions */
-  .carousel-caption {
+}
+
+/* Carousel captions */
+.carousel-caption {
     position: absolute;
     right: 15%;
     bottom: 20px;
@@ -83,41 +83,41 @@
     padding-bottom: 20px;
     color: #fff;
     text-align: center;
-  }
-  
-  .carousel-caption h1 {
+}
+
+.carousel-caption h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-  }
-  
-  .carousel-caption p {
+}
+
+.carousel-caption p {
     margin-bottom: 1rem;
-  }
-  
-  .carousel-caption .btn {
+}
+
+.carousel-caption .btn {
     padding: 0.75rem 1.25rem;
     font-size: 1.25rem;
     line-height: 1.5;
     border-radius: 0.3rem;
-  }
-  
-  /* Text alignment */
-  .text-start {
+}
+
+/* Text alignment */
+.text-start {
     text-align: left !important;
-  }
-  
-  .text-end {
+}
+
+.text-end {
     text-align: right !important;
-  }
-  
-  /* Button opacity */
-  .opacity-75 {
+}
+
+/* Button opacity */
+.opacity-75 {
     opacity: 0.75;
-  }
-  
-  /* Carousel controls */
-  .carousel-control-prev,
-  .carousel-control-next {
+}
+
+/* Carousel controls */
+.carousel-control-prev,
+.carousel-control-next {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -130,30 +130,30 @@
     text-align: center;
     opacity: 0.5;
     transition: opacity 0.15s ease;
-  }
-  
-  .carousel-control-prev:hover,
-  .carousel-control-next:hover {
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
     opacity: 0.9;
-  }
-  
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
     display: inline-block;
     width: 2rem;
     height: 2rem;
     background: no-repeat 50%/100% 100%;
-  }
-  
-  .carousel-control-prev-icon {
+}
+
+.carousel-control-prev-icon {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M4.53.22a.75.75 0 0 1 1.06 1.06L2.81 4l2.78 2.72a.75.75 0 0 1-1.06 1.06L1.47 4.53a.75.75 0 0 1 0-1.06L4.53.22z'/%3E%3C/svg%3E");
-  }
-  
-  .carousel-control-next-icon {
+}
+
+.carousel-control-next-icon {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M1.47 7.78a.75.75 0 0 1 0-1.06L4.25 4 1.47 1.28a.75.75 0 1 1 1.06-1.06L6.53 4l-4 4a.75.75 0 0 1-1.06 0z'/%3E%3C/svg%3E");
-  }
-  
-  .visually-hidden {
+}
+
+.visually-hidden {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -162,5 +162,4 @@
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
-  }
-  
+}
