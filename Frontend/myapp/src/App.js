@@ -1,7 +1,8 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Carousel from './Carousel.js';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Cards from './Cards.js';
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
         <Route path="/" element={
         <>
             <Home />
-            <Carousel/>  
+            <Carousel />
+            <Cards/>
         </>
         }></Route>
       </Routes>
