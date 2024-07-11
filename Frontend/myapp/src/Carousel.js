@@ -25,9 +25,7 @@ function Carousel() {
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <svg className="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
-                    </svg>
+                    <img height="100%" width="100%" src='https://media.licdn.com/dms/image/D4E12AQHEOXjA5g24bw/article-cover_image-shrink_720_1280/0/1693422613600?e=2147483647&v=beta&t=24kITRf_tymcYzUlkshIgNKUYfOZ4o2YyEZO-JooicI' alt='img' />
                     <div className="container">
                         <div className="carousel-caption">
                             <h1>Another example headline.</h1>
