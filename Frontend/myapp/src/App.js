@@ -1,9 +1,9 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import Carousel from './Carousel.js';
-import Cards from './Cards.js';
-import Footer from './Footer.js';
+import Home from './Components/Home.js';
+import Carousel from './Components/Carousel.js';
+import Cards from './Components/Cards.js';
+import Footer from './Components/Footer.js';
 
 function App() {
   return (
