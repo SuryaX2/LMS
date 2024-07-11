@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Carousel from './Carousel.js';
 import Cards from './Cards.js';
+import Footer from './Footer.js';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
         <>
             <Home />
             <Carousel />
-            <Cards/>
+            <Cards />
+            <Footer/>
         </>
         }></Route>
       </Routes>
