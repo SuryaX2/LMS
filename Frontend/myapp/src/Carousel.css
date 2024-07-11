@@ -8,10 +8,15 @@
     color: #fff;
 }
 
+img{
+    object-fit: cover;
+}
+
 /* Margin bottom */
 .mb-6 {
     margin-bottom: 2rem;
 }
+
 
 /* Carousel indicators */
 .carousel-indicators {
