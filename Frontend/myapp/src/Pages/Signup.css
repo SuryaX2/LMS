@@ -9,42 +9,42 @@ body {
     margin: 0;
     background-image: url('../assets/image/signup.jpg');
     background-size: cover;
-  }
-  
-  .container {
+}
+
+.container {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     backdrop-filter: blur(10px);
-  
-  }
-  
-  h2 {
+
+}
+
+h2 {
     text-align: center;
     color: #333;
-  }
-  
-  form {
+}
+
+form {
     display: flex;
     flex-direction: column;
-  }
-  
-  label {
+}
+
+label {
     margin: 10px 0 5px;
     color: #555;
-  }
-  
-  input {
+}
+
+input {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     display: flex;
-  }
-  
-  button {
+}
+
+button {
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -52,48 +52,48 @@ body {
     color: white;
     cursor: pointer;
     margin-top: 10px;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #218838;
-  }
-  
-  p {
+}
+
+p {
     color: red;
     text-align: center;
-  }
-  
-  .heading {
+}
+
+.heading {
     text-align: center;
     color: #ffffff;
     margin-top: 20px;
     font-size: 2.5em;
-  }
-  
-  .signup-image {
+}
+
+.signup-image {
     max-width: 100%;
     height: auto;
     margin: 20px 0;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .main {
+}
+
+.main {
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 23px;
     padding: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 5px 10px rgba(0, 0, 0, 0.4);
-  }
-  
-  .text {
+}
+
+.text {
     color: white;
-  }
-  
-  .design {
+}
+
+.design {
     margin: 8px;
     padding-top: 6px;
     border-top: 1px solid white;
     border-radius: 5px;
-  }
+}
