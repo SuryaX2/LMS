@@ -9,9 +9,6 @@ function App() {
         <Route path="/" element={
           <>
             <Home />
-            <Carousel />
-            <Cards />
-            <Footer />
           </>
         }></Route>
       </Routes>
