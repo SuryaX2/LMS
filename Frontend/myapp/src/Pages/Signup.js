@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
-import AuthContext from '../Context/AuthContext';
+import React, { useState } from 'react';
+// import AuthContext from '../Context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './signup.css';
 
 
 const Signup = () => {
-  const { setAuthState } = useContext(AuthContext);
+//   const { setAuthState } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,7 +37,7 @@ const Signup = () => {
       });
 
       if (response.data.success) {
-        setAuthState(response.data.user);
+        // setAuthState(response.data.user);
         clearFormFields(); // Clear the form fields after successful signup
         navigate('/login');
       } else {
