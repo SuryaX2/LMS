@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { Link } from 'react-router-dom';
 import './Carousel.css';
 
 function Carousel() {
@@ -18,7 +19,9 @@ function Carousel() {
                         <div className="carousel-caption text-start">
                             <h1>Learn, Grow, Succeed with Us</h1>
                             <p className="opacity-75">Join our LMS to access diverse courses, interactive content, and a supportive learning community. Start your journey to success today.</p>
+                            <Link to={ }>
                             <p><a className="btn btn-lg btn-primary" href="#home">Sign up today</a></p>
+                            </Link>
                         </div>
                     </div>
                 </div>
