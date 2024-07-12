@@ -61,12 +61,7 @@ container {
   button:hover {
     background-color: #218838;
   }
-  
-  p {
-    color: red;
-    text-align: center;
-  }
-  
+ 
   .heading {
     text-align: center;
     color: #ffffff;
