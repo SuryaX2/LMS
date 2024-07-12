@@ -15,79 +15,89 @@
     background-size: cover;
 }
 
-.main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
+container {
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
-    background: rgba(255, 255, 255, 0.8);
-    /* Semi-transparent background */
-    backdrop-filter: blur(10px);
-    /* Blur effect */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Shadow for card effect */
     border-radius: 10px;
-    /* Rounded corners */
-    width: 400px;
-    /* Fixed width for card */
-    max-width: 90%;
-    /* Responsive design */
-}
-
-.heading {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-.design {
-    font-style: italic;
-}
-
-.text {
-    font-size: 1rem;
-    margin: 10px 0 5px;
-    /* Adjusted margin */
-    text-align: left;
-    /* Align text to left */
-    width: 100%;
-    /* Full width for label */
-}
-
-input {
-    padding: 10px;
-    margin: 5px 0 15px;
-    /* Adjusted margin */
-    font-size: 1rem;
-    width: calc(100% - 20px);
-    /* Full width minus padding */
-    border: 1px solid #ccc;
-    /* Border for input */
-    border-radius: 5px;
-    /* Rounded corners for input */
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
-    border-radius: 5px;
-    /* Rounded corners for button */
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-form div {
-    margin-bottom: 15px;
-    width: 100%;
-    /* Full width for form div */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    backdrop-filter: blur(10px);
+  
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  form {
     display: flex;
     flex-direction: column;
-    /* Stack label and input vertically */
-}
+  }
+  
+  label {
+    margin: 10px 0 5px;
+    color: #555;
+  }
+  
+  input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+  }
+  
+  button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #218838;
+  }
+  
+  p {
+    color: red;
+    text-align: center;
+  }
+  
+  .heading {
+    text-align: center;
+    color: #ffffff;
+    margin-top: 20px;
+    font-size: 2.5em;
+  }
+  
+  .signup-image {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main {
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 23px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 5px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  .text {
+    color: white;
+  }
+  
+  .design {
+    margin: 8px;
+    padding-top: 6px;
+    border-top: 1px solid white;
+    border-radius: 5px;
+  }
