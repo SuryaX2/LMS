@@ -1,4 +1,6 @@
 import './Navbar.css';
+import { Link } from 'react-router-dom';
+
 
 function Navbar() {
     return (
@@ -14,7 +16,7 @@ function Navbar() {
                         <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search" />
                     </form>
                     <div class="text-end">
-                    <Link to="/login">
+                        <Link to="/login">
                             <button type="button" className="btn btn-outline-light me-2">Login</button>
                         </Link>
                         <Link to="/signup">
