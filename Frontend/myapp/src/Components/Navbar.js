@@ -1,4 +1,4 @@
-import './Home.css';
+import './Navbar.css';
 
 function Home() {
     return (
