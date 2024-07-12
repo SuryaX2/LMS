@@ -1,6 +1,6 @@
 import './Navbar.css';
 
-function Home() {
+function Navbar() {
     return (
         <header class="p-3 text-bg-dark">
             <div class="container">
@@ -23,4 +23,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Navbar;
