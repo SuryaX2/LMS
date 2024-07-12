@@ -14,8 +14,12 @@ function Navbar() {
                         <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search" />
                     </form>
                     <div class="text-end">
-                        <button type="button" class="btn btn-outline-light me-2">Login</button>
-                        <button type="button" class="btn btn-warning">Sign-up</button>
+                    <Link to="/login">
+                            <button type="button" className="btn btn-outline-light me-2">Login</button>
+                        </Link>
+                        <Link to="/signup">
+                            <button type="button" className="btn btn-warning">Sign-up</button>
+                        </Link>
                     </div>
                 </div>
             </div>
