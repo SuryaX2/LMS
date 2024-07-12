@@ -19,7 +19,7 @@ function Carousel() {
                         <div className="carousel-caption text-start">
                             <h1>Learn, Grow, Succeed with Us</h1>
                             <p className="opacity-75">Join our LMS to access diverse courses, interactive content, and a supportive learning community. Start your journey to success today.</p>
-                            <Link to={ }>
+                            <Link to="/signup">
                             <p><a className="btn btn-lg btn-primary" href="#home">Sign up today</a></p>
                             </Link>
                         </div>
