@@ -45,7 +45,7 @@ const Signup = () => {
     };
 
     return (
-        <div>
+        <div className="body">
             <div className='main'>
                 <h1 className='heading'>BROADEN YOUR HORIZON</h1>
 
