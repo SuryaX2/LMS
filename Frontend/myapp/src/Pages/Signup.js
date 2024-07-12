@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-// import AuthContext from '../Context/AuthContext';
+import './Signup.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const Signup = () => {
-    //   const { setAuthState } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,8 +34,7 @@ const Signup = () => {
             });
 
             if (response.data.success) {
-                // setAuthState(response.data.user);
-                clearFormFields(); // Clear the form fields after successful signup
+                clearFormFields();
                 navigate('/login');
             } else {
                 setError(response.data.message);
@@ -54,7 +51,6 @@ const Signup = () => {
             <h2 className='text design'>Sign Up Page</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSignup}>
-
                 <div>
                     <label className='text'>Username:</label>
                     <input
@@ -75,7 +71,7 @@ const Signup = () => {
                         required
                     />
                 </div>
-                <div >
+                <div>
                     <label className='text'>Password:</label>
                     <input
                         size="70"
@@ -85,7 +81,7 @@ const Signup = () => {
                         required
                     />
                 </div>
-                <div >
+                <div>
                     <label className='text'>Confirm Password:</label>
                     <input
                         size="70"
@@ -95,7 +91,6 @@ const Signup = () => {
                         required
                     />
                 </div>
-
                 <button type="submit">Sign Up</button>
             </form>
         </div>
