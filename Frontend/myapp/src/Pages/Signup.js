@@ -36,7 +36,7 @@ const Signup = () => {
             });
 
             if (response.data.success) {
-                setAuthState(response.data.user);
+                // setAuthState(response.data.user);
                 clearFormFields(); // Clear the form fields after successful signup
                 navigate('/login');
             } else {
