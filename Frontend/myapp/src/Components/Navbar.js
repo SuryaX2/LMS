@@ -1,23 +1,23 @@
-import './Navbar.css';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
+import styles from './Navbar.module.css';
 
 function Navbar() {
     return (
-        <header class="p-3 text-bg-dark">
-            <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <header className={styles.p3 + ' ' + styles.textBgDark}>
+            <div className={styles.container}>
+                <div className={`${styles.dFlex} ${styles.flexWrap} ${styles.alignItemsCenter} ${styles.justifyContentCenter} ${styles.justifyContentLgStart}`}>
                     <img width="9%" src="https://lmsonline.com/wp-content/uploads/2022/01/cropped-LMS_Logo_FullColor_2017.png" alt="Logo" />
-                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href="#home" id="home" class="nav-link px-2 text-secondary">Home</a></li>
-                        <li><a href="#about" id="about" class="nav-link px-2 text-white">About</a></li>
+                    <ul className={`${styles.nav} ${styles.col12} ${styles.colLgAuto} ${styles.meLgAuto} ${styles.mb2} ${styles.justifyContentCenter} ${styles.mbMd0}`}>
+                        <li><a href="#home" id="home" className={`${styles.navLink} ${styles.px2} ${styles.textSecondary}`}>Home</a></li>
+                        <li><a href="#about" id="about" className={`${styles.navLink} ${styles.px2} ${styles.textWhite}`}>About</a></li>
                     </ul>
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                        <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search" />
+                    <form className={`${styles.col12} ${styles.colLgAuto} ${styles.mb3} ${styles.mbLg0} ${styles.meLg3}`} role="search">
+                        <input type="search" className={`${styles.formControlDark} ${styles.textBgDark}`} placeholder="Search..." aria-label="Search" />
                     </form>
-                    <div class="text-end">
+                    <div className={styles.textEnd}>
                         <Link to="/login">
-                            <button type="button" className="btn btn-outline-light me-2">Login</button>
+                            <button type="button" className={`btn btn-outline-light ${styles.me2}`}>Login</button>
                         </Link>
                         <Link to="/signup">
                             <button type="button" className="btn btn-warning">Sign-up</button>
