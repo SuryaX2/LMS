@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Signup.module.css';
+import styles from './Signup.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -45,56 +45,49 @@ const Signup = () => {
     };
 
     return (
-        <div className="body">
-            <div className='main'>
-                <h1 className='heading'>BROADEN YOUR HORIZON</h1>
-
-                <h2 className='text design'>Sign Up Page</h2>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <form onSubmit={handleSignup}>
-                    <div>
-                        <label className='text'>Username:</label>
-                        <input
-                            size="70"
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className='text'>Email:</label>
-                        <input
-                            size="70"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className='text'>Password:</label>
-                        <input
-                            size="70"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label className='text'>Confirm Password:</label>
-                        <input
-                            size="70"
-                            type="password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button type="submit">Sign Up</button>
-                </form>
-            </div>
+        <div className={styles.main}>
+            <h1 className={styles.heading}>BROADEN YOUR HORIZON</h1>
+            <h2 className={`${styles.text} ${styles.design}`}>Sign Up Page</h2>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <form onSubmit={handleSignup}>
+                <div>
+                    <label className={styles.text}>Username:</label>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label className={styles.text}>Email:</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label className={styles.text}>Password:</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label className={styles.text}>Confirm Password:</label>
+                    <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
         </div>
     );
 };
