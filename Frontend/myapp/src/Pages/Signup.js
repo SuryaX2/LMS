@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import AuthContext from '../Context/AuthContext';
+// import AuthContext from '../Context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Signup.css';
 
 const Signup = () => {
-    const { setAuthState } = useContext(AuthContext);
+    // const { setAuthState } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
