@@ -1,15 +1,16 @@
 /* Signup.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-.body{
+.body {
     font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-image: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-  background-size: cover;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-size: cover;
 }
 
 .main {
@@ -18,12 +19,18 @@
     align-items: center;
     margin-top: 50px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-    backdrop-filter: blur(10px); /* Blur effect */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for card effect */
-    border-radius: 10px; /* Rounded corners */
-    width: 400px; /* Fixed width for card */
-    max-width: 90%; /* Responsive design */
+    background: rgba(255, 255, 255, 0.8);
+    /* Semi-transparent background */
+    backdrop-filter: blur(10px);
+    /* Blur effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Shadow for card effect */
+    border-radius: 10px;
+    /* Rounded corners */
+    width: 400px;
+    /* Fixed width for card */
+    max-width: 90%;
+    /* Responsive design */
 }
 
 .heading {
@@ -37,18 +44,25 @@
 
 .text {
     font-size: 1rem;
-    margin: 10px 0 5px; /* Adjusted margin */
-    text-align: left; /* Align text to left */
-    width: 100%; /* Full width for label */
+    margin: 10px 0 5px;
+    /* Adjusted margin */
+    text-align: left;
+    /* Align text to left */
+    width: 100%;
+    /* Full width for label */
 }
 
 input {
     padding: 10px;
-    margin: 5px 0 15px; /* Adjusted margin */
+    margin: 5px 0 15px;
+    /* Adjusted margin */
     font-size: 1rem;
-    width: calc(100% - 20px); /* Full width minus padding */
-    border: 1px solid #ccc; /* Border for input */
-    border-radius: 5px; /* Rounded corners for input */
+    width: calc(100% - 20px);
+    /* Full width minus padding */
+    border: 1px solid #ccc;
+    /* Border for input */
+    border-radius: 5px;
+    /* Rounded corners for input */
 }
 
 button {
@@ -59,7 +73,8 @@ button {
     border: none;
     cursor: pointer;
     margin-top: 20px;
-    border-radius: 5px; /* Rounded corners for button */
+    border-radius: 5px;
+    /* Rounded corners for button */
 }
 
 button:hover {
@@ -68,7 +83,9 @@ button:hover {
 
 form div {
     margin-bottom: 15px;
-    width: 100%; /* Full width for form div */
+    width: 100%;
+    /* Full width for form div */
     display: flex;
-    flex-direction: column; /* Stack label and input vertically */
+    flex-direction: column;
+    /* Stack label and input vertically */
 }
