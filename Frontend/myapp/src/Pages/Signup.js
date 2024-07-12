@@ -46,7 +46,6 @@ const Signup = () => {
 
     return (
         <div className='body'>
-
         <div className={styles.main}>
             <h1 className={styles.heading}>BROADEN YOUR HORIZON</h1>
             <h2 className={`${styles.text} ${styles.design}`}>Sign Up Page</h2>
