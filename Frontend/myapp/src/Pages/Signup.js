@@ -46,7 +46,7 @@ const Signup = () => {
 
     return (
 <div className="flex justify-center items-center min-h-screen bg-[url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover font-sans p-2">
-    <div className="bg-transparent bg-opacity-40 shadow-lg backdrop-blur-sm p-4 rounded-lg w-full max-w-md mx-4 h-auto max-h-screen overflow-y-auto">
+    <div className="bg-transparent bg-opacity-40 shadow-lg backdrop-blur-sm p-4 rounded-lg w-full max-w-md mx-4 h-auto max-h-screen overflow-y-auto shadow-xl">
         <h1 className="text-center text-white text-3xl mt-1 mb-2">BROADEN YOUR HORIZON</h1>
         <h2 className="text-white text-lg mt-2 mb-1 pt-1 border-t border-white">Sign Up Page</h2>
         {error && <p className="text-red-500">{error}</p>}
