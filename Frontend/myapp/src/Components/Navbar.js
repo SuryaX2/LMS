@@ -17,7 +17,7 @@ function Navbar() {
                         <input type="search" className="bg-gray-800 text-white placeholder-gray-500 border border-gray-700 rounded px-4 py-2" placeholder="Search..." aria-label="Search" />
                     </form>
                     <Link to="/login">
-                        <button type="button" className="bg-transparent border border-white text-white px-4 py-2 rounded ">Login</button>
+                        <button type="button" className="bg-transparent border border-white text-white px-4 py-2 rounded">Login</button>
                     </Link>
                     <Link to="/signup">
                         <button type="button" className="bg-yellow-500 text-gray-900 px-4 py-2 rounded hover:bg-yellow-600">Sign-up</button>
