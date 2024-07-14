@@ -14,7 +14,7 @@ function Carousel() {
             </div>
             <div className="carousel-inner">
                 <div className="carousel-item active">
-                    <img height="100%" width="100%" src='https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='img' className='object-fit-cover'/>
+                    <img height="100%" width="100%" src='https://images.unsplash.com/photo-1560693478-dfdb32f2176a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='img'/>
                     <div className="container">
                         <div className="carousel-caption text-start">
                             <h1>Learn, Grow, Succeed with Us</h1>
@@ -36,7 +36,7 @@ function Carousel() {
                     </div>
                 </div>
                 <div className="carousel-item">
-                    <img height="100%" width="100%" src='https://images.unsplash.com/photo-1549383028-df014fa3a325?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='img' />
+                    <img height="100%" width="100%" src='https://images.unsplash.com/photo-1618365908648-e71bd5716cba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='img' />
                     <div className="container">
                         <div className="carousel-caption text-end">
                             <h1>Elevate Your Learning Experience</h1>
