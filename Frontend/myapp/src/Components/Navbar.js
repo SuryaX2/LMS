@@ -1,31 +1,38 @@
-// import './navbar.css';
-import { Link } from 'react-router-dom';
+// src/components/navbar.js
+import React from 'react';
+import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-function Navbar() {
+function MyNavbar() {
     return (
-        <header className="bg-gray-900 p-3">
-            <div className="container mx-auto flex items-center justify-between">
-                <div className="flex items-center space-x-6">
-                    <img className="w-24" src="https://lmsonline.com/wp-content/uploads/2022/01/cropped-LMS_Logo_FullColor_2017.png" alt="Logo" />
-                    <nav className="space-x-4">
-                        <a href="#home" className="text-gray-400 hover:text-white no-underline">Home</a>
-                        <a href="#about" className="text-white hover:text-gray-400 no-underline">About</a>
-                    </nav>
-                </div>
-                <div className="flex items-center space-x-4">
-                    <form className="flex items-center">
-                        <input type="search" className="bg-gray-800 text-white placeholder-gray-500 border border-gray-700 rounded px-4 py-2" placeholder="Search..." aria-label="Search" />
-                    </form>
-                    <Link to="/login">
-                        <button type="button" className="bg-transparent border border-white text-white px-4 py-2 rounded">Login</button>
-                    </Link>
-                    <Link to="/signup">
-                        <button type="button" className="bg-yellow-500 text-gray-900 px-4 py-2 rounded hover:bg-yellow-600">Sign-up</button>
-                    </Link>
-                </div>
-            </div>
-        </header>
+        <Navbar bg="dark" variant="dark" expand="lg">
+            <Navbar.Brand href="#">
+                <img
+                    src="https://lmsonline.com/wp-content/uploads/2022/01/cropped-LMS_Logo_FullColor_2017.png"
+                    width="100"
+                    className="d-inline-block align-top"
+                    alt="Logo"
+                />
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                    <Nav.Link href="#home">Home</Nav.Link>
+                    <Nav.Link href="#about">About</Nav.Link>
+                </Nav>
+                <Form inline className="ml-auto">
+                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                    <Button variant="outline-light">Search</Button>
+                </Form>
+                <LinkContainer to="/login">
+                    <Button variant="outline-light" className="ml-2">Login</Button>
+                </LinkContainer>
+                <LinkContainer to="/signup">
+                    <Button variant="warning" className="ml-2">Sign-up</Button>
+                </LinkContainer>
+            </Navbar.Collapse>
+        </Navbar>
     );
 }
 
-export default Navbar;
+export default MyNavbar;
