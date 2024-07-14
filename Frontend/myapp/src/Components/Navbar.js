@@ -28,7 +28,6 @@ function MyNavbar() {
                             className="mr-2"
                             aria-label="Search"
                         />
-                        <Button variant="outline-light">Search</Button>
                     </Form>
                     <div className="d-flex">
                         <LinkContainer to="/login">
