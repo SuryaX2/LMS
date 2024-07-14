@@ -25,7 +25,7 @@ function MyNavbar() {
                         <FormControl
                             type="search"
                             placeholder="Search"
-                            className="mr-2 bg-"
+                            className="mr-2 bg-dark"
                             aria-label="Search"
                         />
                     </Form>
