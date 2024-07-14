@@ -12,8 +12,8 @@ function Navbar() {
                         <a href="#about" className="text-white hover:text-gray-400 no-underline">About</a>
                     </nav>
                 </div>
-                <div className="flex items-center space-x-4">
-                    <form className="flex items-center">
+                <div className="flex items-center space-x-4 ">
+                    <form className="flex items-center ">
                         <input type="search" className="bg-gray-800 text-white placeholder-gray-500 border border-gray-700 rounded px-4 py-2" placeholder="Search..." aria-label="Search" />
                     </form>
                     <Link to="/login">
