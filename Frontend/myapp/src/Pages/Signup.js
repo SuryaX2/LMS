@@ -54,7 +54,7 @@ const Signup = () => {
                 <h2 className="text-white text-lg mt-2 mb-1 pt-1 border-t border-white">Sign Up Page</h2>
                 {error && <p className="text-red-500">{error}</p>}
                 <div className="mb-0 flex items-center">
-                    <label className="text-white mb-1">Role:</label>
+                    <label className="text-white mb-1 ">Role:</label>
                     <div className="flex items-center space-x-4 ">
                         <label className="text-white flex">
                             <input
@@ -62,7 +62,7 @@ const Signup = () => {
                                 value="user"
                                 checked={role === 'user'}
                                 onChange={(e) => setRole(e.target.value)}
-                                className='mt-2'
+                                className='mt-1.5 mr-2'
                             />
                             User
                         </label>
@@ -72,7 +72,7 @@ const Signup = () => {
                                 value="admin"
                                 checked={role === 'admin'}
                                 onChange={(e) => setRole(e.target.value)}
-                                className='mt-2'
+                                className='mt-1.5 mr-2'
                             />
                             Admin
                         </label>
