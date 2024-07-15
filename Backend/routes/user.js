@@ -1,5 +1,6 @@
 import express from 'express';
-import router from "express.Router()";
+
+const router = express.Router();
 
 router.get("/", (req, res) => {
     res.send("hello");
