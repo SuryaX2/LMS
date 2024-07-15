@@ -7,10 +7,11 @@ const router = express.Router();
 router.use(express.json());
 
 router.post("/signup", async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(500).json({ errors: errors.array() });
+    const { username, email, password, role } = req.body;
+    if (!username || !email || !password || !role) {
+      return res.status(400).json({ message: 'Please fill in all fields' });
     }
+  
     try {
         let user = await User.findOne({ email: req.body.email });
         if (user) {
