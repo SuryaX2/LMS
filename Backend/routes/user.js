@@ -34,7 +34,7 @@ router.post("/signup", async (req, res) => {
 
 router.post('/verify-email', async (req, res) => {
     const { email } = req.body;
-    const user = await usersCollection.findOne({ email });
+    const user = await User.findOne({ email });
     if (user) {
         res.json({ success: true });
     } else {
@@ -45,7 +45,7 @@ router.post('/verify-email', async (req, res) => {
 router.post('/reset-password', async (req, res) => {
     const { email, newPassword } = req.body;
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    const result = await usersCollection.updateOne(
+    const result = await User.updateOne(
         { email },
         { $set: { password: hashedPassword } }
     );
