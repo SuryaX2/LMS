@@ -1,5 +1,6 @@
 import express from 'express';
 import b1 from 'bcryptjs';
+import { validationResult } from 'express-validator';
 import User from '../models/user.js'
 
 const router = express.Router();
@@ -10,7 +11,7 @@ router.post("/signup", async (req, res) => {
         return res.status(500).json({ errors: errors.array() });
     }
     try {
-        let user = await User.findOne({ email:req.body.email });
+        let user = await User.findOne({ email: req.body.email });
         if (user) {
             return res.status(404).json({ error: "user already exits" });
         }
