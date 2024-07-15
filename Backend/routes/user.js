@@ -31,6 +31,7 @@ router.post("/signup", async (req, res) => {
         }
         const authtoken = jwt.sign(data, jwt_str);
         res.json(authtoken)
+        res.status(201).json({ success: true, message: 'User registered successfully' });
     } catch (error) {
         console.error(error.massage);
         res.status(600).send("Some Error occured");
