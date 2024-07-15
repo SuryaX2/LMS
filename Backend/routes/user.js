@@ -46,7 +46,7 @@ router.post('/login', (req, res) => {
             res.json("User not found");
         }
     }
-    catch(err){
+    catch (err) {
         console.log("Error occurred:", err);
         res.status(500).json("Internal Server Error");
     }
