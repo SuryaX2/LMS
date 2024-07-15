@@ -49,7 +49,7 @@ export default function Forgot() {
                     md={7}
                     sx={{
                         backgroundImage:
-                            'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
+                            'url("https://i0.wp.com/uniquelibrary.s3.amazonaws.com/wp-content/uploads/2022/02/Material_Recovery_Animated_Image.png?resize=500%2C500&ssl=1")',
                         backgroundColor: (t) =>
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                         backgroundSize: 'cover',
