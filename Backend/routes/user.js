@@ -31,8 +31,6 @@ router.post("/signup", async (req, res) => {
         }
         const authtoken = jwt.sign(data, jwt_str);
         res.json(authtoken)
-
-        //res.json(user)
     } catch (error) {
         console.error(error.massage);
         res.status(600).send("Some Error occured");
