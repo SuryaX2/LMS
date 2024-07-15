@@ -11,7 +11,7 @@ const Forgot = () => {
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/auth/verify-email', { email });
+            const response = await axios.post('http://localhost:3001/api/auth/verify-email', { email });
             if (response.data.success) {
                 setEmailVerified(true);
                 setMessage('');
