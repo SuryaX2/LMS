@@ -3,7 +3,6 @@ import b1 from 'bcryptjs';
 import User from '../models/user.js'
 
 const router = express.Router();
-router.use(express.json());
 
 router.post("/signup", async (req, res) => {
     const { username, email, password, role } = req.body;
