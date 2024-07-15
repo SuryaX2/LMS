@@ -34,7 +34,7 @@ router.post("/signup", async (req, res) => {
         res.json(authtoken)
         res.status(201).json({ success: true, message: 'User registered successfully' });
     } catch (error) {
-        console.error(error.massage);
+        console.error(error.message);
         res.status(600).send("Some Error occured");
     }
 
