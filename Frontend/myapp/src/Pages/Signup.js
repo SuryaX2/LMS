@@ -33,7 +33,7 @@ const Signup = () => {
                 username,
                 email,
                 password,
-                role, // Include role in the signup data
+                role,
             });
 
             if (response.data.success) {
