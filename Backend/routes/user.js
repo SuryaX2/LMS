@@ -1,6 +1,5 @@
 import express from 'express';
-import b1 from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import b1 from 'bcryptjs';
 import User from '../models/user.js'
 
 const router = express.Router();
@@ -9,7 +8,7 @@ router.use(express.json());
 router.post("/signup", async (req, res) => {
     const { username, email, password, role } = req.body;
     if (!username || !email || !password || !role) {
-      return res.status(400).json({ message: 'Please fill in all fields' });
+        return res.status(400).json({ message: 'Please fill in all fields' });
     }
     try {
         let user = await User.findOne({ email });
@@ -18,7 +17,6 @@ router.post("/signup", async (req, res) => {
         }
         const salt = await b1.genSalt(6);
         const spass = await b1.hash(req.body.password, salt);
-        console.log(spass);
         user = await User.create({
             username: req.body.username,
             email: req.body.email,
