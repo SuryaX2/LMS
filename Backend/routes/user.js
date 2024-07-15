@@ -51,9 +51,9 @@ router.post('/reset-password', async (req, res) => {
         { $set: { password: newPassword } }
     );
     if (result.modifiedCount > 0) {
-        res.json({ message: 'Password has been reset successfully.' });
+        res.json({ success: true,message: 'Password has been reset successfully.' });
     } else {
-        res.json({ message: 'Error resetting password.' });
+        res.json({ success: false,message: 'Error resetting password.' });
     }
 });
 
