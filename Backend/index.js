@@ -10,11 +10,7 @@ connectToMongo();
 
 app.use(express.json());
 app.use(cors());
-
 app.use("/api/auth", userRoutes);
-// app.get("/", (req, res) => {
-//     res.send("Hello");
-// });
 
 app.listen(PORT, () => {
     console.log(`Server Listening at ${PORT}`);
