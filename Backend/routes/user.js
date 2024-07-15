@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
 
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async(req, res) => {
     try {
         const { email, password } = req.body;
         const user = User.findOne({ email: email })
