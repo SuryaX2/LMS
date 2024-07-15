@@ -11,4 +11,4 @@ const connectToMongo = async () => {
     }
 }
 
-export default connectToMongo
+export default connectToMongo;
