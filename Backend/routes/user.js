@@ -5,7 +5,7 @@ import User from '../models/user.js'
 
 const router = express.Router();
 
-router.post("/signup", async(req, res) => {
+router.post("/signup", async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(500).json({ errors: errors.array() });
