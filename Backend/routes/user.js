@@ -22,6 +22,7 @@ router.post("/signup", async (req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: spass,
+            role: req.body.role
         });
         const data = {
             user: {
