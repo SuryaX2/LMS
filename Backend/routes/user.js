@@ -5,9 +5,9 @@ import User from '../models/user.js'
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
-    const { username, email, password, role } = req.body;
-    if (!username || !email || !password || !role) {
-        return res.status(400).json({ message: 'Please fill in all fields' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(500).json({ errors: errors.array() });
     }
     try {
         let user = await User.findOne({ email });
