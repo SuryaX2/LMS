@@ -56,7 +56,7 @@ const Signup = () => {
                     <div className="mb-0 flex items-center">
                         <label className="text-white mb-1">Role:</label>
                         <div className="flex items-center space-x-4 ">
-                            <label className="text-white flex items-center">
+                            <label className="text-white flex">
                                 <input
                                     type="radio"
                                     value="user"
