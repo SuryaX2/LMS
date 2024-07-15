@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import User from '../models/user.js'
 
 const router = express.Router();
-app.use(express.json());
+router.use(express.json());
 
 router.post("/signup", async (req, res) => {
     const errors = validationResult(req);
@@ -26,6 +26,7 @@ router.post("/signup", async (req, res) => {
             password: spass,
             role: req.body.role
         });
+        await user.save();
         const data = {
             user: {
                 id: user.id
