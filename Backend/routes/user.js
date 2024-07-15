@@ -11,7 +11,6 @@ router.post("/signup", async (req, res) => {
     if (!username || !email || !password || !role) {
       return res.status(400).json({ message: 'Please fill in all fields' });
     }
-  
     try {
         let user = await User.findOne({ email: req.body.email });
         if (user) {
