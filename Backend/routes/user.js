@@ -37,6 +37,7 @@ router.post('/login', (req, res) => {
         const { email, password } = req.body;
         const user = User.findOne({ email: email })
         if (user) {
+            const passcom = await b1.compare(password, user.password);
             if (user.password === password) {
                 res.json({ success: true });
             } else {
