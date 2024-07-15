@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const ForgotPassword = () => {
+const Forgot = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
@@ -46,4 +46,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default Forgot;
