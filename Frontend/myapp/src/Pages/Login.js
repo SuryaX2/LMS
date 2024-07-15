@@ -46,11 +46,6 @@ const Login = () => {
               required
             />
           </div>
-          <div className="flex items-center justify-center">
-            <div className="text-sm">
-              <a href="/forgot" className="font-medium text-blue-600 hover:text-blue-500">Forgot your password?</a>
-            </div>
-          </div>
           <div>
             <button
               type="submit"
@@ -58,6 +53,14 @@ const Login = () => {
             >
               Login
             </button>
+          </div>
+          <div className="flex items-center justify-between">
+            <span>
+              Not a Member? <a href='/signup' className='font-medium text-blue-600 hover:text-blue-500 no-underline'>Sign Up</a>
+            </span>
+            <div className="text-sm">
+              <a href="/forgot" className="font-medium text-blue-600 hover:text-blue-500 no-underline">Forgot your password?</a>
+            </div>
           </div>
         </form>
       </div>
