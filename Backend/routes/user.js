@@ -32,6 +32,26 @@ router.post("/signup", async (req, res) => {
 
 });
 
+router.post('/login', (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = User.findOne({ email: email })
+        if (user) {
+            if (user.password === password) {
+                res.json({ success: true });
+            } else {
+                res.json({ success: false });
+            }
+        } else {
+            res.json("User not found");
+        }
+    }
+    catch(err){
+        console.log("Error occurred:", err);
+        res.status(500).json("Internal Server Error");
+    }
+});
+
 router.post('/verify-email', async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -50,10 +70,11 @@ router.post('/reset-password', async (req, res) => {
         { $set: { password: hashedPassword } }
     );
     if (result.modifiedCount > 0) {
-        res.json({ success: true,message: 'Password has been reset successfully.' });
+        res.json({ success: true, message: 'Password has been reset successfully.' });
     } else {
-        res.json({ success: false,message: 'Error resetting password.' });
+        res.json({ success: false, message: 'Error resetting password.' });
     }
 });
+
 
 export default router;
