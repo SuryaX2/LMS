@@ -11,7 +11,7 @@ const Forgot = () => {
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/verify-email', { email });
+      const response = await axios.post('/api/auth/verify-email', { email });
       if (response.data.success) {
         setEmailVerified(true);
         setMessage('');
@@ -30,7 +30,7 @@ const Forgot = () => {
       return;
     }
     try {
-      const response = await axios.post('/api/reset-password', { email, newPassword });
+      const response = await axios.post('/api/auth/reset-password', { email, newPassword });
       setMessage(response.data.message);
     } catch (error) {
       setMessage('An error occurred. Please try again.');
