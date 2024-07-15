@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
 
 });
 
-router.post('/api/verify-email', async (req, res) => {
+router.post('/api/auth/verify-email', async (req, res) => {
     const { email } = req.body;
     const user = await usersCollection.findOne({ email });
     if (user) {
@@ -42,7 +42,7 @@ router.post('/api/verify-email', async (req, res) => {
     }
 });
 
-router.post('/api/reset-password', async (req, res) => {
+router.post('/api/auth/reset-password', async (req, res) => {
     const { email, newPassword } = req.body;
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     const result = await usersCollection.updateOne(
