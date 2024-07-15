@@ -36,24 +36,24 @@ app.post('/api/verify-email', async (req, res) => {
     const { email } = req.body;
     const user = await usersCollection.findOne({ email });
     if (user) {
-      res.json({ success: true });
+        res.json({ success: true });
     } else {
-      res.json({ success: false });
+        res.json({ success: false });
     }
-  });
+});
 
-  app.post('/api/reset-password', async (req, res) => {
+app.post('/api/reset-password', async (req, res) => {
     const { email, newPassword } = req.body;
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     const result = await usersCollection.updateOne(
-      { email },
-      { $set: { password: hashedPassword } }
+        { email },
+        { $set: { password: hashedPassword } }
     );
     if (result.modifiedCount > 0) {
-      res.json({ message: 'Password has been reset successfully.' });
+        res.json({ message: 'Password has been reset successfully.' });
     } else {
-      res.json({ message: 'Error resetting password.' });
+        res.json({ message: 'Error resetting password.' });
     }
-  });
+});
 
 export default router;
