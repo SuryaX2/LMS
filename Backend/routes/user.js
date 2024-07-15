@@ -20,7 +20,7 @@ router.post("/signup", async (req, res) => {
         const spass = await b1.hash(req.body.password, salt);
         console.log(spass);
         user = await User.create({
-            name: req.body.name,
+            username: req.body.username,
             email: req.body.email,
             password: spass,
             role: req.body.role
