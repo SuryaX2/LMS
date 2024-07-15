@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 const Forgot = () => {
     const [email, setEmail] = useState('');
@@ -33,7 +34,7 @@ const Forgot = () => {
             const response = await axios.post('http://localhost:3001/api/auth/reset-password', { email, newPassword });
             setMessage(response.data.message);
             if (response.data.success) 
-                
+                Navigate("")
         } catch (error) {
             setMessage('An error occurred. Please try again.');
         }
