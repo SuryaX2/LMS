@@ -8,6 +8,7 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [role, setRole] = useState('user'); // Added state for role
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -16,6 +17,7 @@ const Signup = () => {
         setEmail('');
         setPassword('');
         setConfirmPassword('');
+        setRole('user'); // Reset role to default
     };
 
     const handleSignup = async (e) => {
@@ -31,6 +33,7 @@ const Signup = () => {
                 username,
                 email,
                 password,
+                role, // Include role in the signup data
             });
 
             if (response.data.success) {
@@ -50,6 +53,30 @@ const Signup = () => {
                 <h1 className="text-center text-white text-3xl mt-1 mb-2">BROADEN YOUR HORIZON</h1>
                 <h2 className="text-white text-lg mt-2 mb-1 pt-1 border-t border-white">Sign Up Page</h2>
                 {error && <p className="text-red-500">{error}</p>}
+                    <div className="mb-0 flex items-center">
+                        <label className="text-white mb-1">Role:</label>
+                        <div className="flex items-center space-x-4 ">
+                            <label className="text-white flex items-center">
+                                <input
+                                    type="radio"
+                                    value="user"
+                                    checked={role === 'user'}
+                                    onChange={(e) => setRole(e.target.value)}
+                                />
+                                User
+                            </label>
+                            <label className="text-white flex">
+                                <input
+                                    type="radio"
+                                    value="admin"
+                                    checked={role === 'admin'}
+                                onChange={(e) => setRole(e.target.value)}
+                                className='mt-2'
+                                />
+                                Admin
+                            </label>
+                        </div>
+                    </div>
                 <form onSubmit={handleSignup} className="flex flex-col">
                     <div className="mb-0">
                         <label className="text-white block mb-1">Username:</label>
@@ -100,7 +127,6 @@ const Signup = () => {
                 </form>
             </div>
         </div>
-
     );
 };
 
