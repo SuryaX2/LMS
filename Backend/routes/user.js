@@ -38,10 +38,10 @@ router.post('/login', async(req, res) => {
         const user = User.findOne({ email: email })
         if (user) {
             const passcom = await b1.compare(password, user.password);
-            if (passcom) {
-                res.json({ success: true });
-            } else {
+            if (!passcom) {
                 res.json({ success: false });
+            } else {
+                res.json({ success: true });
             }
         } else {
             res.json("User not found");
