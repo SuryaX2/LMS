@@ -32,26 +32,27 @@ router.post("/signup", async (req, res) => {
 
 });
 
-router.post('/login', async(req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = User.findOne({ email: email })
+        const user = await User.findOne({ email: email }); // Add `await` here
+
         if (user) {
             const passcom = await b1.compare(password, user.password);
             if (!passcom) {
-                res.json({ success: false });
+                return res.json({ success: false, message: "Incorrect password" });
             } else {
-                res.json({ success: true });
+                return res.json({ success: true, message: "Login successful" });
             }
         } else {
-            res.json("User not found");
+            return res.json({ success: false, message: "User not found" });
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.log("Error occurred:", err);
-        res.status(500).json("Internal Server Error");
+        res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 });
+
 
 router.post('/verify-email', async (req, res) => {
     const { email } = req.body;
