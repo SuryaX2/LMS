@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Forgot = () => {
     const [email, setEmail] = useState('');
@@ -8,6 +8,7 @@ const Forgot = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
     const [emailVerified, setEmailVerified] = useState(false);
+    const Navigate = useNavigate();
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
@@ -34,7 +35,7 @@ const Forgot = () => {
             const response = await axios.post('http://localhost:3001/api/auth/reset-password', { email, newPassword });
             setMessage(response.data.message);
             if (response.data.success)
-                Navigate("./Login.js");
+                Navigate("./login");
         } catch (error) {
             setMessage('An error occurred. Please try again.');
         }
