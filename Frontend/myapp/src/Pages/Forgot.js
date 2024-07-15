@@ -35,7 +35,7 @@ const Forgot = () => {
             const response = await axios.post('http://localhost:3001/api/auth/reset-password', { email, newPassword });
             setMessage(response.data.message);
             if (response.data.success)
-                Navigate("./login");
+                Navigate("/login");
         } catch (error) {
             setMessage('An error occurred. Please try again.');
         }
