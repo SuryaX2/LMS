@@ -47,8 +47,7 @@ router.post('/reset-password', async (req, res) => {
     // const hashedPassword = await b1.hash(newPassword, 10);
     const result = await User.updateOne(
         { email },
-        // { $set: { password: hashedPassword } }
-        { $set: { password: newPassword } }
+        { $set: { password: hashedPassword } }
     );
     if (result.modifiedCount > 0) {
         res.json({ success: true,message: 'Password has been reset successfully.' });
