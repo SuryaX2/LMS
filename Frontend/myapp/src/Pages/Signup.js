@@ -53,7 +53,7 @@ const Signup = () => {
                 <h1 className="text-center text-white text-3xl mt-1 mb-2">BROADEN YOUR HORIZON</h1>
                 <h2 className="text-white text-lg mt-2 mb-1 pt-1 border-t border-white">Sign Up Page</h2>
                 {error && <p className="text-red-500">{error}</p>}
-                <div className="mb-0 flex items-center">
+                <div className="mb-0 flex items-center space-x-4">
                     <label className="text-white mb-1 ">Role:</label>
                     <div className="flex items-center space-x-4 ">
                         <label className="text-white flex">
