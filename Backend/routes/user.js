@@ -5,7 +5,7 @@ import User from '../models/user.js'
 
 const router = express.Router();
 
-router.post("/signup", (req, res) => {
+router.post("/signup", async(req, res) => {
     res.send("hello");
 });
 
