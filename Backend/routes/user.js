@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import User from '../models/user.js'
 
 const router = express.Router();
+app.use(express.json());
 
 router.post("/signup", async (req, res) => {
     const errors = validationResult(req);
