@@ -61,7 +61,8 @@ const Signup = () => {
                                     type="radio"
                                     value="user"
                                     checked={role === 'user'}
-                                    onChange={(e) => setRole(e.target.value)}
+                                onChange={(e) => setRole(e.target.value)}
+                                className='mt-2'
                                 />
                                 User
                             </label>
