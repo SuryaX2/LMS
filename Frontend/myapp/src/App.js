@@ -4,7 +4,7 @@ import Home from './Pages/Home.js';
 import Signup from './Pages/Signup.js';
 import Login from './Pages/Login.js';
 import Forgot from './Pages/Forgot.js';
-import Dashboard from './Pages/Dashboards/Dashboard.js';
+import Dashboard from './Pages/Dashboards/User-Dashboard.js';
 
 function App() {
   return (
