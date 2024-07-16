@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Dashboard() {
+function adminDashboard() {
     return (
         <h1>DashBoard</h1>
     );
 }
 
-export default Dashboard;
+export default adminDashboard;
