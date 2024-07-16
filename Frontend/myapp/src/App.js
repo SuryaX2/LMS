@@ -16,10 +16,10 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route element={<ProtectedRoute requiredRole="user" />}>
-          <Route path="/user-dashboard" element={<UserDashboard />} />
+          <Route path="/user-dashboard" element={<userDashboard />} />
         </Route>
         <Route element={<ProtectedRoute requiredRole="admin" />}>
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/admin-dashboard" element={<adminDashboard />} />
         </Route>
         <Route path="/forgot" element={<Forgot />}></Route>
       </Routes>
