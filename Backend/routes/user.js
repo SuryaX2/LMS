@@ -40,9 +40,9 @@ router.post('/login', async (req, res) => {
         if (user) {
             const passcom = await b1.compare(password, user.password);
             if (!passcom) {
-                return res.json({ success: false, message: "Incorrect password" });
+                res.status(401).json({ success: false, message: 'Invalid email or password' });
             } else {
-                return res.json({ success: true, message: "Login successful" });
+                res.json({ success: true, role: user.role });
             }
         } else {
             return res.json({ success: false, message: "User not found" });
