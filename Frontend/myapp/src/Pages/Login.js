@@ -6,7 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -14,8 +14,15 @@ const Login = () => {
 
     try {
       const response = await axios.post('http://localhost:3001/api/auth/login', { email, password });
-      if (response.data.success)
-        Navigate('/dashboard');
+      if (response.data.success) {
+        const role = response.data.role;
+        localStorage.setItem('role', role);
+        if (role === 'user') {
+          navigate('/user-dashboard');
+        } else if (role === 'admin') {
+          navigate('/admin-dashboard');
+        }
+      }
     } catch (err) {
       setError('Invalid email or password');
     }
