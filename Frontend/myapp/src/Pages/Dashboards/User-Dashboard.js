@@ -1,9 +1,9 @@
 import React from 'react';
 
-function U-Dashboard() {
+function userDashboard() {
     return (
         <h1>DashBoard</h1>
     );
 }
 
-export default U-Dashboard;
+export default userDashboard;
