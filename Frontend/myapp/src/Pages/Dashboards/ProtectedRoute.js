@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Navigate  } from 'react-router-dom';
 
 const ProtectedRoute = ({ component: Component, requiredRole, ...rest }) => {
     const role = localStorage.getItem('role');
@@ -10,7 +10,7 @@ const ProtectedRoute = ({ component: Component, requiredRole, ...rest }) => {
                 role === requiredRole ? (
                     <Component {...props} />
                 ) : (
-                    <Redirect to="/login" />
+                    <Navigate  to="/login" />
                 )
             }
         />

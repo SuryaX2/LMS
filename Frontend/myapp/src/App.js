@@ -4,7 +4,7 @@ import Home from './Pages/Home.js';
 import Signup from './Pages/Signup.js';
 import Login from './Pages/Login.js';
 import Forgot from './Pages/Forgot.js';
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from './Pages/Dashboards/ProtectedRoute';
 import userDashboard from './Pages/Dashboards/User-Dashboard.js';
 import adminDashboard from './Pages/Dashboards/Admin-Dashboard.js';
 
