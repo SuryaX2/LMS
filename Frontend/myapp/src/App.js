@@ -13,6 +13,8 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <ProtectedRoute path="/user-dashboard" component={UserDashboard} requiredRole="user" />
+        <ProtectedRoute path="/admin-dashboard" component={AdminDashboard} requiredRole="admin" />
         <Route path="/forgot" element={<Forgot />}></Route>
       </Routes>
     </BrowserRouter>
