@@ -4,7 +4,9 @@ import Home from './Pages/Home.js';
 import Signup from './Pages/Signup.js';
 import Login from './Pages/Login.js';
 import Forgot from './Pages/Forgot.js';
-import Dashboard from './Pages/Dashboards/User-Dashboard.js';
+import UserDashboard from './UserDashboard';
+import AdminDashboard from './AdminDashboard';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
