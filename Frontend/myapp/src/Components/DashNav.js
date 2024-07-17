@@ -38,23 +38,23 @@ function ResponsiveAppBar() {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <img src="https://lmsonline.com/wp-content/uploads/2022/01/cropped-LMS_Logo_FullColor_2017.png" alt='logo'/>
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
+                            fontFamily: 'Arial',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            letterSpacing: '.1rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        Home
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
