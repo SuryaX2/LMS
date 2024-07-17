@@ -22,8 +22,8 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute requiredRole="admin" />}>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/add-book" component={<AddBook/>} />
         </Route>
+        <Route path="/add-book" component={<AddBook />} />
       </Routes>
     </BrowserRouter>
   );
