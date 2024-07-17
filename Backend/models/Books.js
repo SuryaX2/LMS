@@ -1,15 +1,15 @@
-// models/Book.js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
-const BookSchema = new mongoose.Schema({
+const BookSchema = new Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
   isbn: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
-  borrowedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
+  borrowedBy: { type: Schema.Types.ObjectId, ref: 'User', default: null },
   borrowedDate: { type: Date, default: null },
   returnDate: { type: Date, default: null }
 });
 
-module.exports = mongoose.model('Book', BookSchema);
+export default model('Book', BookSchema);
