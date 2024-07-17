@@ -23,9 +23,7 @@ function App() {
         <Route element={<ProtectedRoute requiredRole="admin" />}>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Route>
-        <Route element={<ProtectedRoute requiredRole="admin" />}>
-          <Route path="/add-book" element={<AddBook />} />
-        </Route>
+        <Route path="/add-book" element={<AddBook />} />
       </Routes>
     </BrowserRouter>
   );
