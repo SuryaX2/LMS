@@ -3,28 +3,37 @@ const { Schema } = mongoose;
 
 const BookSchema = new Schema({
     title: {
-        type: String, required: true
+        type: String, 
+        required: true
     },
     author: {
-        type: String, required: true
+        type: String, 
+        required: true
     },
     isbn: {
-        type: String, required: true
+        type: String, 
+        required: true
     },
     price: {
-        type: Number, required: true
+        type: Number, 
+        required: true
     },
     quantity: {
-        type: Number, required: true
+        type: Number, 
+        required: true
     },
     borrowedBy: {
-        type: Schema.Types.ObjectId, ref: 'User', default: null
+        type: Schema.Types.ObjectId, 
+        ref: 'User', 
+        default: null
     },
     borrowedDate: {
-        type: Date, default: null
+        type: Date, 
+        default: null
     },
     returnDate: {
-        type: Date, default: null
+        type: Date, 
+        default: null
     }
 });
 
