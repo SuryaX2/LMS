@@ -13,4 +13,14 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const books = await Book.find().exec();
+    res.json(books);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching books' });
+  }
+});
+
+
 export default router;
