@@ -1,7 +1,8 @@
 import React from 'react';
+import ResponsiveAppBar from '../../Components/DashNav';
 
 const AdminDashboard = () => {
-  return <h1>Welcome to the Admin Dashboard</h1>;
+  return (<ResponsiveAppBar />);
 };
 
 export default AdminDashboard;
