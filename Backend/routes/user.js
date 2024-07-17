@@ -35,7 +35,7 @@ router.post("/signup", async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email: email }); // Add `await` here
+        const user = await User.findOne({ email: email }); 
 
         if (user) {
             const passcom = await b1.compare(password, user.password);

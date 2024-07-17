@@ -20,6 +20,7 @@ const Login = () => {
         if (role === 'user') {
           navigate('/user-dashboard');
         } else if (role === 'admin') {
+          console.log(role);
           navigate('/admin-dashboard');
         }
       }
