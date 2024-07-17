@@ -32,10 +32,10 @@ const AddBook = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-2xl p-6 bg-white rounded shadow-lg">
-                <h2 className="text-2xl font-bold mb-4">Add a New Book</h2>
+            <div className="w-full max-w-2xl p-6 bg-white rounded-3xl shadow-lg">
+                <h2 className="text-2xl font-bold mb-2">Add a New Book</h2>
                 <form onSubmit={handleAddBook}>
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Title
                         </label>
@@ -47,7 +47,7 @@ const AddBook = () => {
                             required
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Author
                         </label>
@@ -59,7 +59,7 @@ const AddBook = () => {
                             required
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             ISBN
                         </label>
@@ -71,7 +71,7 @@ const AddBook = () => {
                             required
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Price
                         </label>
@@ -83,7 +83,7 @@ const AddBook = () => {
                             required
                         />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Quantity
                         </label>
