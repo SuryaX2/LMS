@@ -32,7 +32,7 @@ const AdminDashboard = () => {
         </div>
           <div className="relative">
             <button className="focus:outline-none" onClick={handleDropdownToggle}>
-              <img src="https://t4.ftcdn.net/jpg/04/75/00/99/360_F_475009987_zwsk4c77x3cTpcI3W1C1LU4pOSyPKaqi.jpg" alt="Avatar" className="w-20 h-20 rounded-full" />
+              <img src="https://t3.ftcdn.net/jpg/00/07/32/48/360_F_7324855_mx4CEBWTr81XLOrlQccCROtP2uNR7xbk.jpg" alt="Avatar" className="w-20 h-20 rounded-full" />
             </button>
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">

@@ -45,7 +45,7 @@ input {
   display: flex;
 }
 
-button {
+/* button {
   padding: 10px;
   border: none;
   border-radius: 5px;
@@ -53,11 +53,11 @@ button {
   color: white;
   cursor: pointer;
   margin-top: 10px;
-}
+} */
 
-button:hover {
+/* button:hover {
   background-color: #218838;
-}
+} */
 
 
 .heading {
