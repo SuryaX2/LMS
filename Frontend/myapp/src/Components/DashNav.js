@@ -1,10 +1,10 @@
 // src/components/AdminDashboard.js
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const AdDashboard = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
