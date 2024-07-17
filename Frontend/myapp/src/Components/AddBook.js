@@ -23,6 +23,11 @@ const AddBook = () => {
         axios.post('http://localhost:3001/api/books', newBook)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
+        setAuthor("");
+        setIsbn("");
+        setPrice("");
+        setQuantity("");
+        setTitle("");
     };
 
     return (
