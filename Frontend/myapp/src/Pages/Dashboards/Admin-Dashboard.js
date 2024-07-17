@@ -1,19 +1,29 @@
 // src/components/AdminDashboard.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
 const AdminDashboard = () => {
 	const [books, setBooks] = useState([]);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const { isAuthenticated, logout } = useContext(AuthContext);
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		if (!isAuthenticated) {
+			navigate('/login');
+		}
 		axios.get('http://localhost:3001/api/books')
 			.then(res => setBooks(res.data))
 			.catch(err => console.log(err));
-	}, []);
+	}, [isAuthenticated, navigate]);
 
+	const handleLogout = () => {
+		logout();
+		navigate('/login');
+	};
+	
 	const handleDropdownToggle = () => {
 		setDropdownOpen(!dropdownOpen);
 	};
@@ -38,7 +48,7 @@ const AdminDashboard = () => {
 							{dropdownOpen && (
 								<div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
 									<button onClick={() => handleNavigation('/admin-dashboard')} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Dashboard</button>
-									<button onClick={() => handleNavigation('/login')} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Logout</button>
+									<button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Logout</button>
 								</div>
 							)}
 						</div>
@@ -71,4 +81,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
