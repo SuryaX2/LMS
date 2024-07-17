@@ -34,7 +34,7 @@ const AdminDashboard = () => {
                         {dropdownOpen && (
                             <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
                                 <button onClick={() => handleNavigation('/dashboard')} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Dashboard</button>
-                                <button onClick={() => handleNavigation('/logout')} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Logout</button>
+                                <button onClick={() => handleNavigation('/login')} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Logout</button>
                             </div>
                         )}
                     </div>
