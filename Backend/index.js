@@ -1,6 +1,7 @@
 import express from "express";
 import cors from 'cors';
 import userRoutes from "./routes/user.js";
+import bookRouter from "./routes/admin.js";
 import connectToMongo from "./db.js";
 
 const app = express();
