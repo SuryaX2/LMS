@@ -27,19 +27,21 @@ const AdminDashboard = () => {
       <div className="w-full max-w-6xl p-1 bg-white rounded shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-          <div className="mt-4">
-            <button onClick={() => handleNavigation('/add-book')} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Add Book</button>
-          </div>
-          <div className="relative">
-            <button className="focus:outline-none" onClick={handleDropdownToggle}>
-              <img src="https://t3.ftcdn.net/jpg/00/07/32/48/360_F_7324855_mx4CEBWTr81XLOrlQccCROtP2uNR7xbk.jpg" alt="Avatar" className="w-20 h-20 rounded-full" />
-            </button>
-            {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
-                <button onClick={() => handleNavigation('/admin-dashboard')} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Dashboard</button>
-                <button onClick={() => handleNavigation('/login')} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Logout</button>
-              </div>
-            )}
+          <div>
+            <div className="mt-4">
+              <button onClick={() => handleNavigation('/add-book')} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Add Book</button>
+            </div>
+            <div className="relative">
+              <button className="focus:outline-none" onClick={handleDropdownToggle}>
+                <img src="https://t3.ftcdn.net/jpg/00/07/32/48/360_F_7324855_mx4CEBWTr81XLOrlQccCROtP2uNR7xbk.jpg" alt="Avatar" className="w-20 h-20 rounded-full" />
+              </button>
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
+                  <button onClick={() => handleNavigation('/admin-dashboard')} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Dashboard</button>
+                  <button onClick={() => handleNavigation('/login')} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Logout</button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
