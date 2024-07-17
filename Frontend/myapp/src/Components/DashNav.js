@@ -1,12 +1,12 @@
 // src/components/AdminDashboard.js
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/books')
@@ -19,7 +19,7 @@ const AdminDashboard = () => {
   };
 
   const handleNavigation = (path) => {
-    history.push(path);
+    navigate(path);
   };
 
   return (
