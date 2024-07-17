@@ -27,9 +27,9 @@ const AdminDashboard = () => {
       <div className="w-full max-w-6xl p-1 bg-white rounded shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-        <div className="mt-4">
-          <button onClick={() => handleNavigation('/add-book')} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Add Book</button>
-        </div>
+          <div className="mt-4">
+            <button onClick={() => handleNavigation('/add-book')} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Add Book</button>
+          </div>
           <div className="relative">
             <button className="focus:outline-none" onClick={handleDropdownToggle}>
               <img src="https://t3.ftcdn.net/jpg/00/07/32/48/360_F_7324855_mx4CEBWTr81XLOrlQccCROtP2uNR7xbk.jpg" alt="Avatar" className="w-20 h-20 rounded-full" />
@@ -43,27 +43,27 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-        <div className="mt-4">
-          <h2 className="text-xl font-bold">Books</h2>
-          <ul className="mt-2">
-            {books.map(book => (
-              <li key={book._id} className="mb-2">
-                <div className="p-4 bg-gray-200 rounded">
-                  <h3 className="font-bold">{book.title}</h3>
-                  <p>Author: {book.author}</p>
-                  <p>ISBN: {book.isbn}</p>
-                  <p>Price: ${book.price}</p>
-                  <p>Quantity: {book.quantity}</p>
-                  {book.borrowedBy ? (
-                    <p>Borrowed By: {book.borrowedBy.name} ({book.borrowedBy.email})</p>
-                  ) : (
-                    <p>Available</p>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className="mt-4">
+        <h2 className="text-xl font-bold">Books</h2>
+        <ul className="mt-2">
+          {books.map(book => (
+            <li key={book._id} className="mb-2">
+              <div className="p-4 bg-gray-200 rounded">
+                <h3 className="font-bold">{book.title}</h3>
+                <p>Author: {book.author}</p>
+                <p>ISBN: {book.isbn}</p>
+                <p>Price: ${book.price}</p>
+                <p>Quantity: {book.quantity}</p>
+                {book.borrowedBy ? (
+                  <p>Borrowed By: {book.borrowedBy.name} ({book.borrowedBy.email})</p>
+                ) : (
+                  <p>Available</p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
