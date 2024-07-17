@@ -6,7 +6,8 @@ const AddBook = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [isbn, setIsbn] = useState('');
-  const [publishedDate, setPublishedDate] = useState('');
+  const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
 
   const handleAddBook = (e) => {
     e.preventDefault();
@@ -15,7 +16,8 @@ const AddBook = () => {
       title,
       author,
       isbn,
-      publishedDate
+      price,
+      quantity
     };
 
     axios.post('http://localhost:5000/api/books', newBook)
@@ -66,12 +68,24 @@ const AddBook = () => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Published Date
+              Price
             </label>
             <input
-              type="date"
-              value={publishedDate}
-              onChange={(e) => setPublishedDate(e.target.value)}
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="w-full px-4 py-2 border rounded"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Quantity
+            </label>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
               className="w-full px-4 py-2 border rounded"
               required
             />
