@@ -1,128 +1,64 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+// src/components/AdminDashboard.js
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const settings = ['Dashboard', 'Logout'];
+const AdminDashboard = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const history = useHistory();
 
-function ResponsiveAppBar() {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const handleDropdownToggle = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
+  const handleNavigation = (path) => {
+    history.push(path);
+  };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-6xl p-6 bg-white rounded shadow-lg">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+          <div className="relative">
+            <button
+              className="focus:outline-none"
+              onClick={handleDropdownToggle}
+            >
+              <img
+                src="https://via.placeholder.com/40"
+                alt="Avatar"
+                className="w-10 h-10 rounded-full"
+              />
+            </button>
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
+                <button
+                  onClick={() => handleNavigation('/dashboard')}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                >
+                  Dashboard
+                </button>
+                <button
+                  onClick={() => handleNavigation('/logout')}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="mt-4">
+          <button
+            onClick={() => handleNavigation('/add-book')}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Add Book
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
-
-    return (
-        <AppBar position="static">
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    <img width="10%" src="https://lmsonline.com/wp-content/uploads/2022/01/cropped-LMS_Logo_FullColor_2017.png" alt='logo'/>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            ml: 2,
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'Arial',
-                            fontWeight: 700,
-                            letterSpacing: '.1rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        Home
-                    </Typography>
-
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
-                        >
-                        </Menu>
-                    </Box>
-                    
-
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/5.jpg" />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                </Toolbar>
-            </Container>
-        </AppBar>
-    );
-}
-export default ResponsiveAppBar;
+export default AdminDashboard;
