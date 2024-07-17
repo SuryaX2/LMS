@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const AdminDashboard = () => {
+const AdDashboard = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const history = useHistory();
 
@@ -61,4 +61,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AdDashboard;

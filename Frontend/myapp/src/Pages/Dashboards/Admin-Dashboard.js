@@ -1,9 +1,9 @@
 import React from 'react';
-import ResponsiveAppBar from '../../Components/DashNav';
+import AdDashboard from '../../Components/DashNav';
 
 const AdminDashboard = () => {
   return (
-    <ResponsiveAppBar />
+    <AdDashboard />
   );
 };
 
