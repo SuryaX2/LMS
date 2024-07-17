@@ -7,6 +7,7 @@ import Forgot from './Pages/Forgot.js';
 import ProtectedRoute from './Pages/Dashboards/ProtectedRoute';
 import UserDashboard from './Pages/Dashboards/User-Dashboard.js';
 import AdminDashboard from './Pages/Dashboards/Admin-Dashboard.js';
+import AddBook from './Components/AddBook.js';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route element={<ProtectedRoute requiredRole="admin" />}>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Route>
+        <Route path="/add-book" component={<AddBook/>} />
       </Routes>
     </BrowserRouter>
   );
