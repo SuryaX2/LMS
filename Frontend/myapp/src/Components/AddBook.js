@@ -20,7 +20,7 @@ const AddBook = () => {
             quantity
         };
 
-        axios.post('http://localhost:3001/api/books', newBook)
+        axios.post('http://localhost:3001/api/books/save-book', newBook)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
         setAuthor("");

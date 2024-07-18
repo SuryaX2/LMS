@@ -17,7 +17,7 @@ const AdminDashboard = () => {
 	}, [isAuthenticated, navigate]);
 
 	const fetchBooks = () => {
-		axios.get('http://localhost:3001/api/books')
+		axios.get('http://localhost:3001/api/books/get-books')
 			.then(res => setBooks(res.data))
 			.catch(err => console.log(err));
 	};

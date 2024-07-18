@@ -3,7 +3,7 @@ import Book from '../models/Books.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/save-book', async (req, res) => {
   try {
     const newBook = new Book(req.body);
     await newBook.save();
@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/get-books', async (req, res) => {
   try {
     const books = await Book.find().exec();
     res.json(books);
