@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
-import { Container, Navbar, Nav, Button, Table, Modal, Form, Dropdown } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Table, Modal, Form, Dropdown, Card } from 'react-bootstrap';
+import { FaBook, FaUser, FaSignOutAlt, FaPencilAlt, FaTrash } from 'react-icons/fa';
 
 const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
@@ -63,23 +64,23 @@ const AdminDashboard = () => {
   };
 
   return (
-    <Container fluid className="p-0">
-      <Navbar bg="light" expand="lg" className="mb-3">
+    <div className="bg-light min-vh-100">
+      <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
         <Container>
-          <Navbar.Brand>Admin Dashboard</Navbar.Brand>
+          <Navbar.Brand href="#home"><FaBook className="me-2" />Admin Dashboard</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav>
-              <Button variant="primary" className="me-2" onClick={() => handleNavigation('/add-book')}>
+              <Button variant="outline-light" className="me-2" onClick={() => handleNavigation('/add-book')}>
                 Add Book
               </Button>
-              <Dropdown>
-                <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                  <img src="https://t3.ftcdn.net/jpg/00/07/32/48/360_F_7324855_mx4CEBWTr81XLOrlQccCROtP2uNR7xbk.jpg" alt="Avatar" width="30" height="30" className="rounded-circle" />
+              <Dropdown align="end">
+                <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
+                  <FaUser className="me-2" />Admin
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleNavigation('/admin-dashboard')}>Dashboard</Dropdown.Item>
-                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleNavigation('/admin-dashboard')}><FaBook className="me-2" />Dashboard</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}><FaSignOutAlt className="me-2" />Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav>
@@ -88,36 +89,44 @@ const AdminDashboard = () => {
       </Navbar>
 
       <Container>
-        <h2 className="mb-3">Books</h2>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>ISBN</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Borrowed By</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {books.map(book => (
-              <tr key={book._id}>
-                <td>{book.title}</td>
-                <td>{book.author}</td>
-                <td>{book.isbn}</td>
-                <td>₹{book.price}</td>
-                <td>{book.quantity}</td>
-                <td>{book.borrowedBy ? `${book.borrowedBy.name} (${book.borrowedBy.email})` : 'Available'}</td>
-                <td>
-                  <Button variant="warning" size="sm" className="me-2" onClick={() => handleEditBook(book)}>Edit</Button>
-                  <Button variant="danger" size="sm" onClick={() => handleDeleteBook(book._id)}>Delete</Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <Card className="shadow-sm">
+          <Card.Body>
+            <h2 className="mb-4">Book Inventory</h2>
+            <Table responsive hover className="align-middle">
+              <thead className="bg-light">
+                <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>ISBN</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Borrowed By</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {books.map(book => (
+                  <tr key={book._id}>
+                    <td>{book.title}</td>
+                    <td>{book.author}</td>
+                    <td>{book.isbn}</td>
+                    <td>₹{book.price}</td>
+                    <td>{book.quantity}</td>
+                    <td>{book.borrowedBy ? `${book.borrowedBy.name} (${book.borrowedBy.email})` : 'Available'}</td>
+                    <td>
+                      <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
+                        <FaPencilAlt />
+                      </Button>
+                      <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book._id)}>
+                        <FaTrash />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Card.Body>
+        </Card>
       </Container>
 
       <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)}>
@@ -152,7 +161,7 @@ const AdminDashboard = () => {
           </Form>
         </Modal.Body>
       </Modal>
-    </Container>
+    </div>
   );
 };
 
