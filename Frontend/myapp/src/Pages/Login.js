@@ -8,6 +8,12 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      // navigate('/login');
+    }
+  });
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
