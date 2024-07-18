@@ -98,7 +98,7 @@ const AdminDashboard = () => {
           <Card.Body>
             <h2 className="mb-4">Book Inventory</h2>
             <Table responsive hover className="align-middle">
-              <thead className="bg-light">
+              <thead className="bg-light text-center">
                 <tr>
                   <th>Title</th>
                   <th>Author</th>
