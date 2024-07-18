@@ -1,109 +1,125 @@
-// src/components/AddBook.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
+import AddIcon from '@mui/icons-material/Add';
+import BookIcon from '@mui/icons-material/Book';
 
 const AddBook = () => {
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [isbn, setIsbn] = useState('');
-    const [price, setPrice] = useState('');
-    const [quantity, setQuantity] = useState('');
+    const [book, setBook] = useState({
+        title: '',
+        author: '',
+        isbn: '',
+        price: '',
+        quantity: ''
+    });
+
+    const handleInputChange = (e) => {
+        setBook({ ...book, [e.target.name]: e.target.value });
+    };
 
     const handleAddBook = (e) => {
         e.preventDefault();
 
-        const newBook = {
-            title,
-            author,
-            isbn,
-            price,
-            quantity
-        };
-
-        axios.post('http://localhost:3001/api/books/save-book', newBook)
-            .then(res => console.log(res.data))
+        axios.post('http://localhost:3001/api/books/save-book', book)
+            .then(res => {
+                console.log(res.data);
+                setBook({
+                    title: '',
+                    author: '',
+                    isbn: '',
+                    price: '',
+                    quantity: ''
+                });
+            })
             .catch(err => console.log(err));
-        setAuthor("");
-        setIsbn("");
-        setPrice("");
-        setQuantity("");
-        setTitle("");
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-2xl p-6 bg-white rounded-3xl shadow-lg">
-                <h2 className="text-2xl font-bold mb-2">Add a New Book</h2>
-                <form onSubmit={handleAddBook}>
-                    <div className="mb-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Title
-                        </label>
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            className="w-full px-4 py-2 border rounded"
-                            required
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Author
-                        </label>
-                        <input
-                            type="text"
-                            value={author}
-                            onChange={(e) => setAuthor(e.target.value)}
-                            className="w-full px-4 py-2 border rounded"
-                            required
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            ISBN
-                        </label>
-                        <input
-                            type="text"
-                            value={isbn}
-                            onChange={(e) => setIsbn(e.target.value)}
-                            className="w-full px-4 py-2 border rounded"
-                            required
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Price
-                        </label>
-                        <input
-                            type="number"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            className="w-full px-4 py-2 border rounded"
-                            required
-                        />
-                    </div>
-                    <div className="mb-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Quantity
-                        </label>
-                        <input
-                            type="number"
-                            value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
-                            className="w-full px-4 py-2 border rounded"
-                            required
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                    >
-                        Add Book
-                    </button>
-                </form>
-            </div>
-        </div>
+        <Container fluid className="bg-light min-vh-100 d-flex align-items-center justify-content-center py-5">
+            <Card className="shadow-lg" style={{ maxWidth: '800px', width: '100%' }}>
+                <Card.Body className="p-5">
+                    <Row>
+                        <Col md={5} className="mb-4 mb-md-0">
+                            <div className="h-100 d-flex flex-column justify-content-center align-items-center bg-primary text-white rounded p-4">
+                                <BookIcon style={{ fontSize: 80 }} />
+                                <h2 className="mt-4 text-center">Add a New Book</h2>
+                                <p className="text-center mt-3">Expand your library with new titles</p>
+                            </div>
+                        </Col>
+                        <Col md={7}>
+                            <Form onSubmit={handleAddBook}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Title</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="title"
+                                        value={book.title}
+                                        onChange={handleInputChange}
+                                        required
+                                        placeholder="Enter book title"
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Author</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="author"
+                                        value={book.author}
+                                        onChange={handleInputChange}
+                                        required
+                                        placeholder="Enter author name"
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>ISBN</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="isbn"
+                                        value={book.isbn}
+                                        onChange={handleInputChange}
+                                        required
+                                        placeholder="Enter ISBN"
+                                    />
+                                </Form.Group>
+                                <Row>
+                                    <Col md={6}>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Price</Form.Label>
+                                            <Form.Control
+                                                type="number"
+                                                name="price"
+                                                value={book.price}
+                                                onChange={handleInputChange}
+                                                required
+                                                placeholder="Enter price"
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md={6}>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Quantity</Form.Label>
+                                            <Form.Control
+                                                type="number"
+                                                name="quantity"
+                                                value={book.quantity}
+                                                onChange={handleInputChange}
+                                                required
+                                                placeholder="Enter quantity"
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <div className="d-grid mt-4">
+                                    <Button variant="primary" type="submit" size="lg">
+                                        <AddIcon className="me-2" /> Add Book
+                                    </Button>
+                                </div>
+                            </Form>
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Card>
+        </Container>
     );
 };
 
