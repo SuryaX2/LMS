@@ -1,4 +1,3 @@
-// src/components/AdminDashboard.js
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
@@ -12,24 +11,41 @@ const AdminDashboard = () => {
 
 	useEffect(() => {
 		if (!isAuthenticated) {
-			// navigate('/login');
+			navigate('/login');
 		}
+		fetchBooks();
+	}, [isAuthenticated, navigate]);
+
+	const fetchBooks = () => {
 		axios.get('http://localhost:3001/api/books')
 			.then(res => setBooks(res.data))
 			.catch(err => console.log(err));
-	}, [isAuthenticated, navigate]);
+	};
 
 	const handleLogout = () => {
 		logout();
 		navigate('/login');
 	};
-	
+
 	const handleDropdownToggle = () => {
 		setDropdownOpen(!dropdownOpen);
 	};
 
 	const handleNavigation = (path) => {
 		navigate(path);
+	};
+
+	const handleEditBook = (bookId) => {
+		navigate(`/edit-book/${bookId}`);
+	};
+
+	const handleDeleteBook = (bookId) => {
+		axios.delete(`http://localhost:3001/api/books/${bookId}`)
+			.then(res => {
+				// Refresh the books list after deletion
+				fetchBooks();
+			})
+			.catch(err => console.log(err));
 	};
 
 	return (
@@ -71,6 +87,10 @@ const AdminDashboard = () => {
 								) : (
 									<p>Available</p>
 								)}
+								<div className="mt-2">
+									<button onClick={() => handleEditBook(book._id)} className="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 mr-2">Edit</button>
+									<button onClick={() => handleDeleteBook(book._id)} className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
+								</div>
 							</div>
 						</li>
 					))}
