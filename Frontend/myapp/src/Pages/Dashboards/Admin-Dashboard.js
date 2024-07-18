@@ -43,6 +43,7 @@ const AdminDashboard = () => {
 		axios.delete(`http://localhost:3001/api/books/${bookId}`)
 			.then(res => {
 				// Refresh the books list after deletion
+				console.log(res.message);
 				fetchBooks();
 			})
 			.catch(err => console.log(err));
