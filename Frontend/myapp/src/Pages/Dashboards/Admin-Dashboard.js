@@ -73,28 +73,37 @@ const AdminDashboard = () => {
 			</div>
 			<div className="mt-4">
 				<h2 className="text-xl font-bold">Books</h2>
-				<ul className="mt-2">
-					{books.map(book => (
-						<li key={book._id} className="mb-2">
-							<div className="p-4 bg-gray-200 rounded">
-								<h3 className="font-bold">{book.title}</h3>
-								<p>Author: {book.author}</p>
-								<p>ISBN: {book.isbn}</p>
-								<p>Price: ${book.price}</p>
-								<p>Quantity: {book.quantity}</p>
-								{book.borrowedBy ? (
-									<p>Borrowed By: {book.borrowedBy.name} ({book.borrowedBy.email})</p>
-								) : (
-									<p>Available</p>
-								)}
-								<div className="mt-2">
+				<table className="min-w-full divide-y divide-gray-200">
+					<thead className="bg-gray-50">
+						<tr>
+							<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+							<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
+							<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ISBN</th>
+							<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+							<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+							<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Borrowed By</th>
+							<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+						</tr>
+					</thead>
+					<tbody className="bg-white divide-y divide-gray-200">
+						{books.map(book => (
+							<tr key={book._id}>
+								<td className="px-6 py-4 text-center whitespace-nowrap">{book.title}</td>
+								<td className="px-6 py-4 text-center whitespace-nowrap">{book.author}</td>
+								<td className="px-6 py-4 text-center whitespace-nowrap">{book.isbn}</td>
+								<td className="px-6 py-4 text-center whitespace-nowrap">₹{book.price}</td>
+								<td className="px-6 py-4 text-center whitespace-nowrap">{book.quantity}</td>
+								<td className="px-6 py-4 text-center whitespace-nowrap">
+									{book.borrowedBy ? `${book.borrowedBy.name} (${book.borrowedBy.email})` : 'Available'}
+								</td>
+								<td className="px-6 py-4 text-center whitespace-nowrap">
 									<button onClick={() => handleEditBook(book._id)} className="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 mr-2">Edit</button>
 									<button onClick={() => handleDeleteBook(book._id)} className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
-								</div>
-							</div>
-						</li>
-					))}
-				</ul>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
 			</div>
 		</div>
 	);
