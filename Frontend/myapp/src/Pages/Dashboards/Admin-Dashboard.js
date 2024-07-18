@@ -151,7 +151,7 @@ const AdminDashboard = () => {
                   name="author"
                   value={editingBook.author}
                   onChange={handleInputChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="mb-2">
@@ -163,7 +163,7 @@ const AdminDashboard = () => {
                   name="isbn"
                   value={editingBook.isbn}
                   onChange={handleInputChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="mb-2">
@@ -175,7 +175,7 @@ const AdminDashboard = () => {
                   name="price"
                   value={editingBook.price}
                   onChange={handleInputChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="mb-2">
@@ -187,7 +187,7 @@ const AdminDashboard = () => {
                   name="quantity"
                   value={editingBook.quantity}
                   onChange={handleInputChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="flex items-center justify-between">
