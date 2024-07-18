@@ -22,8 +22,8 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute requiredRole="admin" />}>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/add-book" element={<AddBook />} />
         </Route>
-        <Route path="/add-book" element={<AddBook />} />
       </Routes>
     </BrowserRouter>
   );

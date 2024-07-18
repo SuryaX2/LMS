@@ -12,7 +12,7 @@ const AdminDashboard = () => {
 
 	useEffect(() => {
 		if (!isAuthenticated) {
-			navigate('/login');
+			// navigate('/login');
 		}
 		axios.get('http://localhost:3001/api/books')
 			.then(res => setBooks(res.data))
