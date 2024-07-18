@@ -127,7 +127,7 @@ const AdminDashboard = () => {
       {/* Edit Modal */}
       {editModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-          <div className="relative top-5 mx-auto p-5 border w-1/2 shadow-lg rounded-2xl bg-white">
+          <div className="relative top-5 mx-auto p-5 border w-1/3 shadow-lg rounded-2xl bg-white">
             <h3 className="text-center font-bold mb-4">Edit Book</h3>
             <form onSubmit={handleEditSubmit}>
               <div className="mb-2">
