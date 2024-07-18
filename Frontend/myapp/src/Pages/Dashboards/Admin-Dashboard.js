@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 import { Container, Navbar, Nav, Button, Table, Modal, Form, Dropdown, Card } from 'react-bootstrap';
-import { FaBook, FaUser, FaSignOutAlt, FaPencilAlt, FaTrash } from 'react-icons/fa';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 
 const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
@@ -67,20 +72,20 @@ const AdminDashboard = () => {
     <div className="bg-light min-vh-100">
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
         <Container>
-          <Navbar.Brand href="#home"><FaBook className="me-2" />Admin Dashboard</Navbar.Brand>
+          <Navbar.Brand href="#home"><MenuBookIcon className="me-2" />Admin Dashboard</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav>
               <Button variant="outline-light" className="me-2" onClick={() => handleNavigation('/add-book')}>
-                Add Book
+                <AddIcon className="me-1" />Add Book
               </Button>
               <Dropdown align="end">
                 <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
-                  <FaUser className="me-2" />Admin
+                  <PersonIcon className="me-2" />Admin
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleNavigation('/admin-dashboard')}><FaBook className="me-2" />Dashboard</Dropdown.Item>
-                  <Dropdown.Item onClick={handleLogout}><FaSignOutAlt className="me-2" />Logout</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleNavigation('/admin-dashboard')}><MenuBookIcon className="me-2" />Dashboard</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}><LogoutIcon className="me-2" />Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav>
@@ -115,10 +120,10 @@ const AdminDashboard = () => {
                     <td>{book.borrowedBy ? `${book.borrowedBy.name} (${book.borrowedBy.email})` : 'Available'}</td>
                     <td>
                       <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
-                        <FaPencilAlt />
+                        <EditIcon fontSize="small" />
                       </Button>
                       <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book._id)}>
-                        <FaTrash />
+                        <DeleteIcon fontSize="small" />
                       </Button>
                     </td>
                   </tr>
@@ -135,23 +140,23 @@ const AdminDashboard = () => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleEditSubmit}>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-1">
               <Form.Label>Title</Form.Label>
               <Form.Control type="text" name="title" value={editingBook?.title || ''} onChange={handleInputChange} />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-1">
               <Form.Label>Author</Form.Label>
               <Form.Control type="text" name="author" value={editingBook?.author || ''} onChange={handleInputChange} />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-1">
               <Form.Label>ISBN</Form.Label>
               <Form.Control type="text" name="isbn" value={editingBook?.isbn || ''} onChange={handleInputChange} />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-1">
               <Form.Label>Price</Form.Label>
               <Form.Control type="number" name="price" value={editingBook?.price || ''} onChange={handleInputChange} />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-1">
               <Form.Label>Quantity</Form.Label>
               <Form.Control type="number" name="quantity" value={editingBook?.quantity || ''} onChange={handleInputChange} />
             </Form.Group>
