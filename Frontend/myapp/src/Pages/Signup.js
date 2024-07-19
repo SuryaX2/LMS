@@ -7,13 +7,10 @@ import {
     Typography,
     TextField,
     Button,
-    FormControlLabel,
-    Radio,
-    RadioGroup,
     Box,
     Alert
 } from '@mui/material';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { PersonAdd, Email, Lock, CheckCircle } from '@mui/icons-material';
 
 const theme = createTheme({
