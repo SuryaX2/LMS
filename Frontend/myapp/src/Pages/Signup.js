@@ -13,7 +13,7 @@ import {
   Box, 
   Alert
 } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { PersonAdd, Email, Lock, CheckCircle } from '@mui/icons-material';
 
 const theme = createTheme({
@@ -26,6 +26,34 @@ const theme = createTheme({
     },
   },
 });
+
+const StyledRadio = styled(Radio)(({ theme }) => ({
+  '&.MuiRadio-root': {
+    color: theme.palette.grey[400],
+  },
+  '&.Mui-checked': {
+    color: theme.palette.primary.main,
+  },
+  '& .MuiSvgIcon-root': {
+    fontSize: 28,
+  },
+  '&:hover': {
+    backgroundColor: 'transparent',
+  },
+}));
+
+const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
+  '.MuiFormControlLabel-label': {
+    fontSize: '1rem',
+    fontWeight: 500,
+    color: theme.palette.text.primary,
+  },
+  '&:hover': {
+    '& .MuiRadio-root': {
+      backgroundColor: 'rgba(25, 118, 210, 0.04)',
+    },
+  },
+}));
 
 const Signup = () => {
     const [username, setUsername] = useState('');
@@ -97,10 +125,16 @@ const Signup = () => {
                             name="role" 
                             value={role} 
                             onChange={(e) => setRole(e.target.value)}
-                            sx={{justifyContent: 'center', mb: 2}}
+                            sx={{
+                                justifyContent: 'center', 
+                                mb: 2,
+                                '& .MuiRadio-root': {
+                                    padding: '12px',
+                                },
+                            }}
                         >
-                            <FormControlLabel value="user" control={<Radio />} label="User" />
-                            <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+                            <StyledFormControlLabel value="user" control={<StyledRadio />} label="User" />
+                            <StyledFormControlLabel value="admin" control={<StyledRadio />} label="Admin" />
                         </RadioGroup>
                         <TextField
                             margin="normal"
