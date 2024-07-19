@@ -16,7 +16,7 @@ const Login = () => {
     if (!isAuthenticated) {
       navigate('/login');
     }
-  });
+  }, [isAuthenticated, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -43,7 +43,7 @@ const Login = () => {
       <Card className="shadow-lg border-0 rounded-lg" style={{ width: '100%', maxWidth: '400px' }}>
         <Card.Body className="p-5">
           <div className="text-center mb-4">
-            <LoginIcon style={{ fontSize: 50, color: '#3a5ccc' }} />
+            <LoginIcon className='mr-4' style={{ fontSize: 50, color: '#3a5ccc' }} />
             <h2 className="mt-3 font-weight-bold" style={{color: '#3a5ccc'}}>Login</h2>
           </div>
           {error && <Alert variant="danger" className="text-center mb-4">{error}</Alert>}
