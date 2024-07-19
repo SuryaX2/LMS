@@ -40,7 +40,7 @@ const Login = () => {
 
   return (
     <Container fluid className="d-flex align-items-center justify-content-center min-vh-100" style={{background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'}}>
-      <Card className="shadow-lg border-0 rounded-lg" style={{ width: '100%', maxWidth: '400px' }}>
+      <Card className="shadow-lg border-0 rounded-lg w-full max-w-md">
         <Card.Body className="p-5">
           <div className="text-center mb-4">
             <LoginIcon className='mr-4' style={{ fontSize: 50, color: '#3a5ccc' }} />

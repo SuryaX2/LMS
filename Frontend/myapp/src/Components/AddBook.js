@@ -111,7 +111,7 @@ const AddBook = () => {
                                 </Row>
                                 <div className="d-grid mt-4">
                                     <Button variant="primary" type="submit" size="lg">
-                                        <AddIcon className="me-2" /> Add Book
+                                        <AddIcon className="me-2 mb-1" /> Add Book
                                     </Button>
                                 </div>
                             </Form>
