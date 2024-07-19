@@ -100,7 +100,7 @@ const Signup = () => {
                                     onChange={(e) => setRole(e.target.value)}
                                     autoComplete="off"
                                 />
-                                <label className="btn btn-outline-primary" htmlFor="user">User</label>
+                                <label className="btn btn-outline-primary" htmlFor="user">Users</label>
 
                                 <input
                                     type="radio"
@@ -178,7 +178,7 @@ const Signup = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 3, mb: 1 ,padding:1.5}}
                         >
                             Sign Up
                         </Button>
