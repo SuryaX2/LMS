@@ -39,18 +39,18 @@ const Login = () => {
   };
 
   return (
-    <Container fluid className="d-flex align-items-center justify-content-center min-vh-100" style={{background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'}}>
+    <Container fluid className="d-flex align-items-center justify-content-center min-vh-100" style={{ background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}>
       <Card className="shadow-lg border-0 rounded-lg w-full max-w-md">
         <Card.Body className="p-5">
           <div className="text-center mb-4">
             <LoginIcon className='mr-4' style={{ fontSize: 50, color: '#3a5ccc' }} />
-            <h2 className="mt-3 font-weight-bold" style={{color: '#3a5ccc'}}>Login</h2>
+            <h2 className="mt-3 font-weight-bold" style={{ color: '#3a5ccc' }}>Login</h2>
           </div>
           {error && <Alert variant="danger" className="text-center mb-4">{error}</Alert>}
           <Form onSubmit={handleLogin}>
             <Form.Group className="mb-4" controlId="email">
               <Form.Label className="d-flex align-items-center mb-2">
-                <Email className="me-2" style={{color: '#3a5ccc'}} />
+                <Email className="me-2" style={{ color: '#3a5ccc' }} />
                 Email address
               </Form.Label>
               <Form.Control
@@ -64,7 +64,7 @@ const Login = () => {
             </Form.Group>
             <Form.Group className="mb-4" controlId="password">
               <Form.Label className="d-flex align-items-center mb-2">
-                <Lock className="me-2" style={{color: '#3a5ccc'}} />
+                <Lock className="me-2" style={{ color: '#3a5ccc' }} />
                 Password
               </Form.Label>
               <Form.Control
@@ -77,19 +77,19 @@ const Login = () => {
                 className="py-2"
               />
             </Form.Group>
-            <Button 
-              variant="primary" 
-              type="submit" 
+            <Button
+              variant="primary"
+              type="submit"
               className="w-100 py-2 mb-4 text-uppercase font-weight-bold"
-              style={{background: '#3a5ccc', borderColor: '#3a5ccc'}}
+              style={{ background: '#3a5ccc', borderColor: '#3a5ccc' }}
             >
               Login
             </Button>
             <div className="d-flex justify-content-between align-items-center">
               <span className="text-muted">
-                Not a Member? <a href='/signup' style={{color: '#3a5ccc'}} className='font-weight-bold text-decoration-none'>Sign Up</a>
+                Not a Member? <a href='/signup' style={{ color: '#3a5ccc' }} className='font-weight-bold text-decoration-none'>Sign Up</a>
               </span>
-              <a href="/forgot" style={{color: '#3a5ccc'}} className="font-weight-bold text-decoration-none">Forgot password?</a>
+              <a href="/forgot" style={{ color: '#3a5ccc' }} className="font-weight-bold text-decoration-none">Forgot password?</a>
             </div>
           </Form>
         </Card.Body>
