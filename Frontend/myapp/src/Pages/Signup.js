@@ -119,23 +119,33 @@ const Signup = () => {
                     </Typography>
                     {error && <Alert severity="error" sx={{width: '100%', mb: 2}}>{error}</Alert>}
                     <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
-                        <RadioGroup 
-                            row 
-                            aria-label="role" 
-                            name="role" 
-                            value={role} 
-                            onChange={(e) => setRole(e.target.value)}
-                            sx={{
-                                justifyContent: 'center', 
-                                mb: 2,
-                                '& .MuiRadio-root': {
-                                    padding: '12px',
-                                },
-                            }}
-                        >
-                            <StyledFormControlLabel value="user" control={<StyledRadio />} label="User" />
-                            <StyledFormControlLabel value="admin" control={<StyledRadio />} label="Admin" />
-                        </RadioGroup>
+                    <div className="mb-4 text-center">
+                                    <div className="btn-group" role="group" aria-label="User role">
+                                        <input 
+                                            type="radio" 
+                                            className="btn-check" 
+                                            name="role" 
+                                            id="user" 
+                                            value="user" 
+                                            checked={role === 'user'} 
+                                            onChange={(e) => setRole(e.target.value)} 
+                                            autoComplete="off"
+                                        />
+                                        <label className="btn btn-outline-primary" htmlFor="user">User</label>
+
+                                        <input 
+                                            type="radio" 
+                                            className="btn-check" 
+                                            name="role" 
+                                            id="admin" 
+                                            value="admin" 
+                                            checked={role === 'admin'} 
+                                            onChange={(e) => setRole(e.target.value)} 
+                                            autoComplete="off"
+                                        />
+                                        <label className="btn btn-outline-primary" htmlFor="admin">Admin</label>
+                                    </div>
+                                </div>
                         <TextField
                             margin="normal"
                             required
