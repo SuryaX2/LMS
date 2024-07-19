@@ -197,7 +197,7 @@ const AdminDashboard = () => {
       <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)} size="lg">
         <Modal.Header closeButton className="bg-light">
           <Modal.Title>
-            <BookIcon className="me-2 text-primary" />
+            <BookIcon className="me-2 text-success" />
             Edit Book
           </Modal.Title>
         </Modal.Header>
