@@ -194,38 +194,60 @@ const AdminDashboard = () => {
         </Card>
       </Container>
 
-      <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Book</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleEditSubmit}>
-            <Form.Group className="mb-1">
-              <Form.Label>Title</Form.Label>
-              <Form.Control type="text" name="title" value={editingBook?.title || ''} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group className="mb-1">
-              <Form.Label>Author</Form.Label>
-              <Form.Control type="text" name="author" value={editingBook?.author || ''} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group className="mb-1">
-              <Form.Label>ISBN</Form.Label>
-              <Form.Control type="text" name="isbn" value={editingBook?.isbn || ''} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group className="mb-1">
-              <Form.Label>Price</Form.Label>
-              <Form.Control type="number" name="price" value={editingBook?.price || ''} onChange={handleInputChange} />
-            </Form.Group>
-            <Form.Group className="mb-1">
-              <Form.Label>Quantity</Form.Label>
-              <Form.Control type="number" name="quantity" value={editingBook?.quantity || ''} onChange={handleInputChange} />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)} size="lg">
+  <Modal.Header closeButton className="bg-light">
+    <Modal.Title>
+      <BookIcon className="me-2 text-primary" />
+      Edit Book
+    </Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <Form onSubmit={handleEditSubmit}>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Title</Form.Label>
+            <Form.Control type="text" name="title" value={editingBook?.title || ''} onChange={handleInputChange} />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>Author</Form.Label>
+            <Form.Control type="text" name="author" value={editingBook?.author || ''} onChange={handleInputChange} />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+          <Form.Group className="mb-3">
+            <Form.Label>ISBN</Form.Label>
+            <Form.Control type="text" name="isbn" value={editingBook?.isbn || ''} onChange={handleInputChange} />
+          </Form.Group>
+        </Col>
+        <Col md={3}>
+          <Form.Group className="mb-3">
+            <Form.Label>Price</Form.Label>
+            <Form.Control type="number" name="price" value={editingBook?.price || ''} onChange={handleInputChange} />
+          </Form.Group>
+        </Col>
+        <Col md={3}>
+          <Form.Group className="mb-3">
+            <Form.Label>Quantity</Form.Label>
+            <Form.Control type="number" name="quantity" value={editingBook?.quantity || ''} onChange={handleInputChange} />
+          </Form.Group>
+        </Col>
+      </Row>
+    </Form>
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setEditModalOpen(false)}>
+      Cancel
+    </Button>
+    <Button variant="primary" onClick={handleEditSubmit}>
+      Save Changes
+    </Button>
+  </Modal.Footer>
+</Modal>
     </div>
   );
 };
