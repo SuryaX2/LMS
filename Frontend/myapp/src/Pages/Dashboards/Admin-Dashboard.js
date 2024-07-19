@@ -2,13 +2,17 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
-import { Container, Navbar, Nav, Button, Table, Modal, Form, Dropdown, Card } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Table, Modal, Form, Dropdown, Card, Badge, Row, Col } from 'react-bootstrap';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import BookIcon from '@mui/icons-material/Book';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 
 const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
@@ -68,6 +72,17 @@ const AdminDashboard = () => {
     setEditingBook({ ...editingBook, [e.target.name]: e.target.value });
   };
 
+  const calculateTotalInventory = () => {
+    const totalBooks = books.length;
+    const totalQuantity = books.reduce((sum, book) => sum + book.quantity, 0);
+    const totalValue = books.reduce((sum, book) => sum + (book.price * book.quantity), 0);
+    const borrowedBooks = books.filter(book => book.borrowedBy).length;
+
+    return { totalBooks, totalQuantity, totalValue, borrowedBooks };
+  };
+
+  const { totalBooks, totalQuantity, totalValue, borrowedBooks } = calculateTotalInventory();
+
   return (
     <div className="bg-light min-vh-100">
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
@@ -94,44 +109,89 @@ const AdminDashboard = () => {
       </Navbar>
 
       <Container>
+        <Row className="mb-4">
+          <Col md={3}>
+            <Card className="text-center h-100 shadow-sm">
+              <Card.Body>
+                <BookIcon style={{ fontSize: 48, color: '#007bff' }} />
+                <Card.Title>Total Books</Card.Title>
+                <Card.Text className="h2">{totalBooks}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={3}>
+            <Card className="text-center h-100 shadow-sm">
+              <Card.Body>
+                <InventoryIcon style={{ fontSize: 48, color: '#28a745' }} />
+                <Card.Title>Total Quantity</Card.Title>
+                <Card.Text className="h2">{totalQuantity}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={3}>
+            <Card className="text-center h-100 shadow-sm">
+              <Card.Body>
+                <AttachMoneyIcon style={{ fontSize: 48, color: '#ffc107' }} />
+                <Card.Title>Total Value</Card.Title>
+                <Card.Text className="h2">₹{totalValue.toFixed(2)}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={3}>
+            <Card className="text-center h-100 shadow-sm">
+              <Card.Body>
+                <LocalLibraryIcon style={{ fontSize: 48, color: '#dc3545' }} />
+                <Card.Title>Borrowed Books</Card.Title>
+                <Card.Text className="h2">{borrowedBooks}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
         <Card className="shadow-sm">
-          <Card.Body>
-            <h2 className="mb-4">Book Inventory</h2>
-            <Table responsive hover className="align-middle">
-              <thead className="bg-light text-center">
-                <tr>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>ISBN</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Borrowed By</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {books.map(book => (
-                  <tr key={book._id}>
-                    <td>{book.title}</td>
-                    <td>{book.author}</td>
-                    <td>{book.isbn}</td>
-                    <td>₹{book.price}</td>
-                    <td>{book.quantity}</td>
-                    <td>{book.borrowedBy ? `${book.borrowedBy.name} (${book.borrowedBy.email})` : 'Available'}</td>
-                    <td>
-                      <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
-                        <EditIcon fontSize="small" />
-                      </Button>
-                      <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book._id)}>
-                        <DeleteIcon fontSize="small" />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Card.Body>
-        </Card>
+  <Card.Body>
+    <h2 className="mb-4">Book Inventory</h2>
+    <Table responsive hover className="align-middle">
+      <thead>
+        <tr className="bg-light text-center">
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody className='text-center'>
+        {books.map(book => (
+          <tr key={book._id}>
+            <td><strong>{book.title}</strong></td>
+            <td>{book.author}</td>
+            <td>{book.isbn}</td>
+            <td>₹{book.price.toFixed(2)}</td>
+            <td>{book.quantity}</td>
+            <td>
+              {book.borrowedBy ? (
+                <span className="text-warning">Borrowed</span>
+              ) : (
+                <span className="text-success">Available</span>
+              )}
+            </td>
+            <td>
+              <Button variant="outline-success" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
+              <EditIcon fontSize="small" />
+              </Button>
+              <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book._id)}>
+              <DeleteIcon fontSize="small" />
+              </Button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  </Card.Body>
+</Card>
       </Container>
 
       <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)}>
