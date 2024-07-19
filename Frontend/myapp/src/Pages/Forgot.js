@@ -9,9 +9,27 @@ import {
   Button, 
   Box, 
   Alert,
-  CircularProgress
+  CircularProgress,
+  ThemeProvider,
+  createTheme,
+  CssBaseline
 } from '@mui/material';
 import { LockReset, Email } from '@mui/icons-material';
+
+// Create a custom theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+    background: {
+      default: '#f4f5fd',
+    },
+  },
+});
 
 const Forgot = () => {
     const [email, setEmail] = useState('');
@@ -58,86 +76,106 @@ const Forgot = () => {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Box
                 sx={{
-                    marginTop: 8,
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
                     display: 'flex',
-                    flexDirection: 'column',
                     alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'background.default',
                 }}
             >
-                <Paper elevation={3} sx={{ padding: 4, width: '100%' }}>
-                    <Typography component="h1" variant="h5" align="center" gutterBottom>
-                        Forgot Password
-                    </Typography>
-                    {!emailVerified ? (
-                        <Box component="form" onSubmit={handleEmailSubmit} noValidate>
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                startIcon={<Email />}
-                                disabled={loading}
-                            >
-                                {loading ? <CircularProgress size={24} /> : 'Verify Email'}
-                            </Button>
-                        </Box>
-                    ) : (
-                        <Box component="form" onSubmit={handlePasswordSubmit} noValidate>
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="newPassword"
-                                label="New Password"
-                                type="password"
-                                id="newPassword"
-                                autoComplete="new-password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="confirmPassword"
-                                label="Confirm Password"
-                                type="password"
-                                id="confirmPassword"
-                                autoComplete="new-password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                startIcon={<LockReset />}
-                                disabled={loading}
-                            >
-                                {loading ? <CircularProgress size={24} /> : 'Reset Password'}
-                            </Button>
-                        </Box>
-                    )}
-                    {message && <Alert severity="error" sx={{ mt: 2 }}>{message}</Alert>}
-                </Paper>
+                <Container maxWidth="xs">
+                    <Paper 
+                        elevation={6} 
+                        sx={{ 
+                            padding: 4, 
+                            display: 'flex', 
+                            flexDirection: 'column', 
+                            alignItems: 'center',
+                            backgroundColor: 'white',
+                        }}
+                    >
+                        <Typography component="h1" variant="h4" gutterBottom color="primary" fontWeight="bold">
+                            Forgot Password
+                        </Typography>
+                        {!emailVerified ? (
+                            <Box component="form" onSubmit={handleEmailSubmit} noValidate sx={{ mt: 2, width: '100%' }}>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    variant="outlined"
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2, py: 1.5 }}
+                                    startIcon={loading ? <CircularProgress size={24} color="inherit" /> : <Email />}
+                                    disabled={loading}
+                                >
+                                    {loading ? 'Verifying...' : 'Verify Email'}
+                                </Button>
+                            </Box>
+                        ) : (
+                            <Box component="form" onSubmit={handlePasswordSubmit} noValidate sx={{ mt: 2, width: '100%' }}>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="newPassword"
+                                    label="New Password"
+                                    type="password"
+                                    id="newPassword"
+                                    autoComplete="new-password"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    variant="outlined"
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="confirmPassword"
+                                    label="Confirm Password"
+                                    type="password"
+                                    id="confirmPassword"
+                                    autoComplete="new-password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    variant="outlined"
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2, py: 1.5 }}
+                                    startIcon={loading ? <CircularProgress size={24} color="inherit" /> : <LockReset />}
+                                    disabled={loading}
+                                >
+                                    {loading ? 'Resetting...' : 'Reset Password'}
+                                </Button>
+                            </Box>
+                        )}
+                        {message && <Alert severity="error" sx={{ mt: 2, width: '100%' }}>{message}</Alert>}
+                    </Paper>
+                </Container>
             </Box>
-        </Container>
+        </ThemeProvider>
     );
 };
 
