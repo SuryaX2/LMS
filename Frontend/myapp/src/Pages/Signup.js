@@ -27,33 +27,7 @@ const theme = createTheme({
     },
 });
 
-const StyledRadio = styled(Radio)(({ theme }) => ({
-    '&.MuiRadio-root': {
-        color: theme.palette.grey[400],
-    },
-    '&.Mui-checked': {
-        color: theme.palette.primary.main,
-    },
-    '& .MuiSvgIcon-root': {
-        fontSize: 28,
-    },
-    '&:hover': {
-        backgroundColor: 'transparent',
-    },
-}));
 
-const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
-    '.MuiFormControlLabel-label': {
-        fontSize: '1rem',
-        fontWeight: 500,
-        color: theme.palette.text.primary,
-    },
-    '&:hover': {
-        '& .MuiRadio-root': {
-            backgroundColor: 'rgba(25, 118, 210, 0.04)',
-        },
-    },
-}));
 
 const Signup = () => {
     const [username, setUsername] = useState('');
@@ -111,11 +85,11 @@ const Signup = () => {
                     backgroundColor: 'rgba(255, 255, 255, 0.8)',
                     backdropFilter: 'blur(10px)'
                 }}>
+                    <Typography gutterBottom color="primary" fontWeight="bold" component="h1" variant="h4">
+                        Broaden Your Horizon
+                    </Typography>
                     <Typography component="h1" variant="h4" gutterBottom color="primary" fontWeight="bold">
                         Sign Up
-                    </Typography>
-                    <Typography variant="subtitle1" gutterBottom>
-                        Broaden Your Horizon
                     </Typography>
                     {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
                     <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
