@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { 
+  Container, 
+  Paper, 
+  Typography, 
+  TextField, 
+  Button, 
+  Box, 
+  Alert,
+  CircularProgress
+} from '@mui/material';
+import { LockReset, Email } from '@mui/icons-material';
 
 const Forgot = () => {
     const [email, setEmail] = useState('');
@@ -8,10 +19,12 @@ const Forgot = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
     const [emailVerified, setEmailVerified] = useState(false);
-    const Navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const response = await axios.post('http://localhost:3001/api/auth/verify-email', { email });
             if (response.data.success) {
@@ -23,6 +36,7 @@ const Forgot = () => {
         } catch (error) {
             setMessage('An error occurred. Please try again.');
         }
+        setLoading(false);
     };
 
     const handlePasswordSubmit = async (e) => {
@@ -31,81 +45,99 @@ const Forgot = () => {
             setMessage('Passwords do not match.');
             return;
         }
+        setLoading(true);
         try {
             const response = await axios.post('http://localhost:3001/api/auth/reset-password', { email, newPassword });
             setMessage(response.data.message);
             if (response.data.success)
-                Navigate("/login");
+                navigate("/login");
         } catch (error) {
             setMessage('An error occurred. Please try again.');
         }
+        setLoading(false);
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6">Forgot Password</h2>
-                {!emailVerified ? (
-                    <form onSubmit={handleEmailSubmit}>
-                        <div className="mb-4">
-                            <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-                                Email Address
-                            </label>
-                            <input
-                                type="email"
+        <Container component="main" maxWidth="xs">
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Paper elevation={3} sx={{ padding: 4, width: '100%' }}>
+                    <Typography component="h1" variant="h5" align="center" gutterBottom>
+                        Forgot Password
+                    </Typography>
+                    {!emailVerified ? (
+                        <Box component="form" onSubmit={handleEmailSubmit} noValidate>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
                                 id="email"
-                                className="w-full px-3 py-2 border rounded"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                required
                             />
-                        </div>
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-                        >
-                            Verify Email
-                        </button>
-                    </form>
-                ) : (
-                    <form onSubmit={handlePasswordSubmit}>
-                        <div className="mb-4">
-                            <label htmlFor="newPassword" className="block text-gray-700 font-bold mb-2">
-                                New Password
-                            </label>
-                            <input
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                startIcon={<Email />}
+                                disabled={loading}
+                            >
+                                {loading ? <CircularProgress size={24} /> : 'Verify Email'}
+                            </Button>
+                        </Box>
+                    ) : (
+                        <Box component="form" onSubmit={handlePasswordSubmit} noValidate>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="newPassword"
+                                label="New Password"
                                 type="password"
                                 id="newPassword"
-                                className="w-full px-3 py-2 border rounded"
+                                autoComplete="new-password"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
-                                required
                             />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="confirmPassword" className="block text-gray-700 font-bold mb-2">
-                                Confirm Password
-                            </label>
-                            <input
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="confirmPassword"
+                                label="Confirm Password"
                                 type="password"
                                 id="confirmPassword"
-                                className="w-full px-3 py-2 border rounded"
+                                autoComplete="new-password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
                             />
-                        </div>
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-                        >
-                            Reset Password
-                        </button>
-                    </form>
-                )}
-                {message && <p className="mt-4 text-red-500">{message}</p>}
-            </div>
-        </div>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                startIcon={<LockReset />}
+                                disabled={loading}
+                            >
+                                {loading ? <CircularProgress size={24} /> : 'Reset Password'}
+                            </Button>
+                        </Box>
+                    )}
+                    {message && <Alert severity="error" sx={{ mt: 2 }}>{message}</Alert>}
+                </Paper>
+            </Box>
+        </Container>
     );
 };
 
