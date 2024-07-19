@@ -87,7 +87,7 @@ const AdminDashboard = () => {
     <div className="bg-light min-vh-100">
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
         <Container>
-          <Navbar.Brand href="#home"><MenuBookIcon className="me-2" />Admin Dashboard</Navbar.Brand>
+          <Navbar.Brand href="#home"><MenuBookIcon className="me-2 mb-2" />Admin Dashboard</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav>
