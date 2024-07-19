@@ -78,7 +78,7 @@ const Signup = () => {
                     alignItems: 'center',
                     padding: 4,
                     backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                    backdropFilter: 'blur(10px)'
+                    backdropFilter: 'blur(10px)'    
                 }}>
                     <Typography gutterBottom color="primary" fontWeight="bold" component="h1" variant="h4">
                         Broaden Your Horizon
