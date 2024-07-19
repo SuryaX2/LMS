@@ -149,49 +149,49 @@ const AdminDashboard = () => {
         </Row>
 
         <Card className="shadow-sm">
-  <Card.Body>
-    <h2 className="mb-4">Book Inventory</h2>
-    <Table responsive hover className="align-middle">
-      <thead>
-        <tr className="bg-light text-center">
-          <th>Title</th>
-          <th>Author</th>
-          <th>ISBN</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody className='text-center'>
-        {books.map(book => (
-          <tr key={book._id}>
-            <td><strong>{book.title}</strong></td>
-            <td>{book.author}</td>
-            <td>{book.isbn}</td>
-            <td>₹{book.price.toFixed(2)}</td>
-            <td>{book.quantity}</td>
-            <td>
-              {book.borrowedBy ? (
-                <span className="text-warning">Borrowed</span>
-              ) : (
-                <span className="text-success">Available</span>
-              )}
-            </td>
-            <td>
-              <Button variant="outline-success" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
-              <EditIcon fontSize="small" />
-              </Button>
-              <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book._id)}>
-              <DeleteIcon fontSize="small" />
-              </Button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-  </Card.Body>
-</Card>
+          <Card.Body>
+            <h2 className="mb-4">Book Inventory</h2>
+            <Table responsive hover className="align-middle">
+              <thead>
+                <tr className="bg-light text-center">
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>ISBN</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody className='text-center'>
+                {books.map(book => (
+                  <tr key={book._id}>
+                    <td><strong>{book.title}</strong></td>
+                    <td>{book.author}</td>
+                    <td>{book.isbn}</td>
+                    <td>₹{book.price.toFixed(2)}</td>
+                    <td>{book.quantity}</td>
+                    <td>
+                      {book.borrowedBy ? (
+                        <span className="text-warning">Borrowed</span>
+                      ) : (
+                        <span className="text-success">Available</span>
+                      )}
+                    </td>
+                    <td>
+                      <Button variant="outline-success" size="sm" className="me-2" onClick={() => handleEditBook(book)}>
+                        <EditIcon fontSize="small" />
+                      </Button>
+                      <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book._id)}>
+                        <DeleteIcon fontSize="small" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Card.Body>
+        </Card>
       </Container>
 
       <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)}>
