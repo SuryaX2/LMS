@@ -1,58 +1,58 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Container, 
-  Paper, 
-  Typography, 
-  TextField, 
-  Button, 
-  FormControlLabel, 
-  Radio, 
-  RadioGroup, 
-  Box, 
-  Alert
+import {
+    Container,
+    Paper,
+    Typography,
+    TextField,
+    Button,
+    FormControlLabel,
+    Radio,
+    RadioGroup,
+    Box,
+    Alert
 } from '@mui/material';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { PersonAdd, Email, Lock, CheckCircle } from '@mui/icons-material';
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
+    palette: {
+        primary: {
+            main: '#1976d2',
+        },
+        secondary: {
+            main: '#f50057',
+        },
     },
-    secondary: {
-      main: '#f50057',
-    },
-  },
 });
 
 const StyledRadio = styled(Radio)(({ theme }) => ({
-  '&.MuiRadio-root': {
-    color: theme.palette.grey[400],
-  },
-  '&.Mui-checked': {
-    color: theme.palette.primary.main,
-  },
-  '& .MuiSvgIcon-root': {
-    fontSize: 28,
-  },
-  '&:hover': {
-    backgroundColor: 'transparent',
-  },
+    '&.MuiRadio-root': {
+        color: theme.palette.grey[400],
+    },
+    '&.Mui-checked': {
+        color: theme.palette.primary.main,
+    },
+    '& .MuiSvgIcon-root': {
+        fontSize: 28,
+    },
+    '&:hover': {
+        backgroundColor: 'transparent',
+    },
 }));
 
 const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
-  '.MuiFormControlLabel-label': {
-    fontSize: '1rem',
-    fontWeight: 500,
-    color: theme.palette.text.primary,
-  },
-  '&:hover': {
-    '& .MuiRadio-root': {
-      backgroundColor: 'rgba(25, 118, 210, 0.04)',
+    '.MuiFormControlLabel-label': {
+        fontSize: '1rem',
+        fontWeight: 500,
+        color: theme.palette.text.primary,
     },
-  },
+    '&:hover': {
+        '& .MuiRadio-root': {
+            backgroundColor: 'rgba(25, 118, 210, 0.04)',
+        },
+    },
 }));
 
 const Signup = () => {
@@ -102,10 +102,10 @@ const Signup = () => {
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
-                <Paper elevation={6} sx={{ 
-                    marginTop: 8, 
-                    display: 'flex', 
-                    flexDirection: 'column', 
+                <Paper elevation={6} sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     padding: 4,
                     backgroundColor: 'rgba(255, 255, 255, 0.8)',
@@ -117,35 +117,35 @@ const Signup = () => {
                     <Typography variant="subtitle1" gutterBottom>
                         Broaden Your Horizon
                     </Typography>
-                    {error && <Alert severity="error" sx={{width: '100%', mb: 2}}>{error}</Alert>}
+                    {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
                     <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
-                    <div className="mb-4 text-center">
-                                    <div className="btn-group" role="group" aria-label="User role">
-                                        <input 
-                                            type="radio" 
-                                            className="btn-check" 
-                                            name="role" 
-                                            id="user" 
-                                            value="user" 
-                                            checked={role === 'user'} 
-                                            onChange={(e) => setRole(e.target.value)} 
-                                            autoComplete="off"
-                                        />
-                                        <label className="btn btn-outline-primary" htmlFor="user">User</label>
+                        <div className="mb-4 text-center">
+                            <div className="btn-group" role="group" aria-label="User role">
+                                <input
+                                    type="radio"
+                                    className="btn-check"
+                                    name="role"
+                                    id="user"
+                                    value="user"
+                                    checked={role === 'user'}
+                                    onChange={(e) => setRole(e.target.value)}
+                                    autoComplete="off"
+                                />
+                                <label className="btn btn-outline-primary" htmlFor="user">User</label>
 
-                                        <input 
-                                            type="radio" 
-                                            className="btn-check" 
-                                            name="role" 
-                                            id="admin" 
-                                            value="admin" 
-                                            checked={role === 'admin'} 
-                                            onChange={(e) => setRole(e.target.value)} 
-                                            autoComplete="off"
-                                        />
-                                        <label className="btn btn-outline-primary" htmlFor="admin">Admin</label>
-                                    </div>
-                                </div>
+                                <input
+                                    type="radio"
+                                    className="btn-check"
+                                    name="role"
+                                    id="admin"
+                                    value="admin"
+                                    checked={role === 'admin'}
+                                    onChange={(e) => setRole(e.target.value)}
+                                    autoComplete="off"
+                                />
+                                <label className="btn btn-outline-primary" htmlFor="admin">Admin</label>
+                            </div>
+                        </div>
                         <TextField
                             margin="normal"
                             required
