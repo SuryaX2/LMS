@@ -72,7 +72,7 @@ const Signup = () => {
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="sm">
                 <Paper elevation={6} sx={{
-                    marginTop: 4,
+                    marginTop: 3,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
