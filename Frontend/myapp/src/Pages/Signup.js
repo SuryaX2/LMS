@@ -1,13 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { 
+  Container, 
+  Paper, 
+  Typography, 
+  TextField, 
+  Button, 
+  FormControlLabel, 
+  Radio, 
+  RadioGroup, 
+  Box, 
+  Alert
+} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { PersonAdd, Email, Lock, CheckCircle } from '@mui/icons-material';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#f50057',
+    },
+  },
+});
 
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [role, setRole] = useState('user'); // Added state for role
+    const [role, setRole] = useState('user');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -16,7 +41,7 @@ const Signup = () => {
         setEmail('');
         setPassword('');
         setConfirmPassword('');
-        setRole('user'); // Reset role to default
+        setRole('user');
     };
 
     const handleSignup = async (e) => {
@@ -47,86 +72,107 @@ const Signup = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-[url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover font-sans p-2">
-            <div className="bg-transparent bg-opacity-40 shadow-lg backdrop-blur-sm p-4 rounded-lg w-full max-w-md mx-4 h-auto max-h-screen overflow-y-auto ">
-                <h1 className="text-center text-white text-3xl mt-1 mb-2">BROADEN YOUR HORIZON</h1>
-                <h2 className="text-white text-lg mt-2 mb-1 pt-1 border-t border-white">Sign Up Page</h2>
-                {error && <p className="text-red-500">{error}</p>}
-                <div className="mb-0 flex items-center space-x-4">
-                    <label className="text-white mb-2.5">Role:</label>
-                    <div className="flex items-center space-x-4 ">
-                        <label className="text-white flex">
-                            <input
-                                type="radio"
-                                value="user"
-                                checked={role === 'user'}
-                                onChange={(e) => setRole(e.target.value)}
-                                className='mt-1.5 mr-2'
-                            />
-                            User
-                        </label>
-                        <label className="text-white flex">
-                            <input
-                                type="radio"
-                                value="admin"
-                                checked={role === 'admin'}
-                                onChange={(e) => setRole(e.target.value)}
-                                className='mt-1.5 mr-2'
-                            />
-                            Admin
-                        </label>
-                    </div>
-                </div>
-                <form onSubmit={handleSignup} className="flex flex-col">
-                    <div className="mb-0">
-                        <label className="text-white block mb-1">Username:</label>
-                        <input
-                            type="text"
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <Paper elevation={6} sx={{ 
+                    marginTop: 8, 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center',
+                    padding: 4,
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    backdropFilter: 'blur(10px)'
+                }}>
+                    <Typography component="h1" variant="h4" gutterBottom color="primary" fontWeight="bold">
+                        Sign Up
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                        Broaden Your Horizon
+                    </Typography>
+                    {error && <Alert severity="error" sx={{width: '100%', mb: 2}}>{error}</Alert>}
+                    <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
+                        <RadioGroup 
+                            row 
+                            aria-label="role" 
+                            name="role" 
+                            value={role} 
+                            onChange={(e) => setRole(e.target.value)}
+                            sx={{justifyContent: 'center', mb: 2}}
+                        >
+                            <FormControlLabel value="user" control={<Radio />} label="User" />
+                            <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+                        </RadioGroup>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
+                            autoFocus
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            required
-                            className="w-full p-2 border border-gray-300 rounded"
+                            InputProps={{
+                                startAdornment: <PersonAdd sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                            }}
                         />
-                    </div>
-                    <div className="mb-0">
-                        <label className="text-white block mb-1">Email:</label>
-                        <input
-                            type="email"
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            required
-                            className="w-full p-2 border border-gray-300 rounded"
+                            InputProps={{
+                                startAdornment: <Email sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                            }}
                         />
-                    </div>
-                    <div className="mb-0">
-                        <label className="text-white block mb-1">Password:</label>
-                        <input
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
                             type="password"
+                            id="password"
+                            autoComplete="new-password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            required
-                            className="w-full p-2 border border-gray-300 rounded"
+                            InputProps={{
+                                startAdornment: <Lock sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                            }}
                         />
-                    </div>
-                    <div className="mb-0">
-                        <label className="text-white block mb-1">Confirm Password:</label>
-                        <input
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="confirmPassword"
+                            label="Confirm Password"
                             type="password"
+                            id="confirmPassword"
+                            autoComplete="new-password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                            className="w-full p-2 border border-gray-300 rounded"
+                            InputProps={{
+                                startAdornment: <CheckCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                            }}
                         />
-                    </div>
-                    <button
-                        type="submit"
-                        className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 mt-3"
-                    >
-                        Sign Up
-                    </button>
-                </form>
-            </div>
-        </div>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Sign Up
+                        </Button>
+                    </Box>
+                </Paper>
+            </Container>
+        </ThemeProvider>
     );
 };
 
