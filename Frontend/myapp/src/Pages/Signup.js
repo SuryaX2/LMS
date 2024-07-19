@@ -27,8 +27,6 @@ const theme = createTheme({
     },
 });
 
-
-
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
