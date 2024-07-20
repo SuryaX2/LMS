@@ -9,15 +9,12 @@ import {
     Button,
     Box,
     Alert,
-    Grid,
+    Checkbox,
     FormControlLabel,
-    Radio,
-    RadioGroup,
-    FormControl,
-    FormLabel
+    Link
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { PersonAdd, Email, Lock, CheckCircle, LockOpen } from '@mui/icons-material';
+import { PersonAdd, Email, Lock, CheckCircle, LockOutlined } from '@mui/icons-material';
 
 const theme = createTheme({
     palette: {
