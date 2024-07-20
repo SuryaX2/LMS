@@ -1,161 +1,129 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { PersonAdd, Email, Lock, CheckCircle } from '@mui/icons-material';
+import { useNavigate, Link } from 'react-router-dom';
+import { Email, Lock, LockOpen } from '@mui/icons-material';
 
 const Signup = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('user');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
+    const [role, setRole] = useState('user');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-  const clearFormFields = () => {
-    setUsername('');
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-    setRole('user');
-  };
+    const clearFormFields = () => {
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setRole('user');
+    };
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
+    const handleSignup = async (e) => {
+        e.preventDefault();
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
 
-    try {
-      const response = await axios.post('http://localhost:3001/api/auth/signup', {
-        username,
-        email,
-        password,
-        role
-      });
+        try {
+            const response = await axios.post('http://localhost:3001/api/auth/signup', {
+                username,
+                email,
+                password,
+                role
+            });
 
-      if (response.data.success) {
-        clearFormFields();
-        navigate('/login');
-      } else {
-        setError(response.data.message);
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    }
-  };
+            if (response.data.success) {
+                clearFormFields();
+                navigate('/login');
+            } else {
+                setError(response.data.message);
+            }
+        } catch (err) {
+            setError('An error occurred. Please try again.');
+        }
+    };
 
-  return (
-    <div className="container">
-      <div className="row justify-content-center mt-5">
-        <div className="col-md-6">
-          <div className="card shadow-lg">
-            <div className="card-body p-5">
-              <h2 className="card-title text-center text-primary mb-4">Broaden Your Horizon</h2>
-              <h3 className="text-center mb-4">Sign Up</h3>
-              {error && <div className="alert alert-danger" role="alert">{error}</div>}
-              <form onSubmit={handleSignup}>
-                <div className="mb-4 text-center">
-                  <div className="btn-group" role="group" aria-label="User role">
-                    <input
-                      type="radio"
-                      className="btn-check"
-                      name="role"
-                      id="user"
-                      value="user"
-                      checked={role === 'user'}
-                      onChange={(e) => setRole(e.target.value)}
-                      autoComplete="off"
-                    />
-                    <label className="btn btn-outline-primary" htmlFor="user">User</label>
-
-                    <input
-                      type="radio"
-                      className="btn-check"
-                      name="role"
-                      id="admin"
-                      value="admin"
-                      checked={role === 'admin'}
-                      onChange={(e) => setRole(e.target.value)}
-                      autoComplete="off"
-                    />
-                    <label className="btn btn-outline-primary" htmlFor="admin">Admin</label>
-                  </div>
+    return (
+        <div className="container-fluid vh-100">
+            <div className="row h-100">
+                <div className="col-md-8 d-none d-md-block" style={{
+                    backgroundImage: 'url("https://source.unsplash.com/random/1600x900?nature")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                }}></div>
+                <div className="col-md-4 d-flex align-items-center bg-light">
+                    <div className="w-100 p-4">
+                        <div className="text-center mb-4">
+                            <LockOpen style={{ fontSize: 48, color: '#7b1fa2' }} />
+                            <h2 className="mt-2">Sign in</h2>
+                        </div>
+                        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+                        <form onSubmit={handleSignup}>
+                            <div className="mb-3">
+                                <label htmlFor="email" className="form-label">Email Address *</label>
+                                <div className="input-group">
+                                    <span className="input-group-text bg-white border-end-0">
+                                        <Email color="action" />
+                                    </span>
+                                    <input
+                                        type="email"
+                                        className="form-control border-start-0"
+                                        id="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                        placeholder="Enter your email"
+                                    />
+                                </div>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="password" className="form-label">Password *</label>
+                                <div className="input-group">
+                                    <span className="input-group-text bg-white border-end-0">
+                                        <Lock color="action" />
+                                    </span>
+                                    <input
+                                        type="password"
+                                        className="form-control border-start-0"
+                                        id="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                        placeholder="Enter your password"
+                                    />
+                                </div>
+                            </div>
+                            <div className="mb-3 form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    id="rememberMe"
+                                    checked={rememberMe}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                />
+                                <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
+                            </div>
+                            <button type="submit" className="btn btn-primary w-100 mb-3">
+                                SIGN IN
+                            </button>
+                            <div className="d-flex justify-content-between">
+                                <Link to="/forgot-password" className="text-decoration-none">Forgot password?</Link>
+                                <Link to="/signup" className="text-decoration-none">Don't have an account? Sign Up</Link>
+                            </div>
+                        </form>
+                        <div className="mt-4 text-center">
+                            <small className="text-muted">&copy; Your Website {new Date().getFullYear()}</small>
+                        </div>
+                    </div>
                 </div>
-                <div className="form-floating mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="username"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="username">
-                    <PersonAdd className="me-2" />
-                    Username
-                  </label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="name@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="email">
-                    <Email className="me-2" />
-                    Email address
-                  </label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="password">
-                    <Lock className="me-2" />
-                    Password
-                  </label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="confirmPassword"
-                    placeholder="Confirm Password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="confirmPassword">
-                    <CheckCircle className="me-2" />
-                    Confirm Password
-                  </label>
-                </div>
-                <div className="d-grid">
-                  <button type="submit" className="btn btn-primary btn-lg">
-                    Sign Up
-                  </button>
-                </div>
-              </form>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Signup;
