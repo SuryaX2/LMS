@@ -9,12 +9,15 @@ import {
     Button,
     Box,
     Alert,
-    Checkbox,
+    Grid,
     FormControlLabel,
-    Link
+    Radio,
+    RadioGroup,
+    FormControl,
+    FormLabel
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { PersonAdd, Email, Lock, CheckCircle, LockOutlined } from '@mui/icons-material';
+import { PersonAdd, Email, Lock, CheckCircle, LockOpen } from '@mui/icons-material';
 
 const theme = createTheme({
     palette: {
@@ -73,141 +76,131 @@ const Signup = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="lg" sx={{
-                height: '100vh',
-                display: 'flex',
-                backgroundColor: 'background.default',
-            }}>
-                <Paper elevation={6} sx={{
-                    marginTop: 'auto',
-                    marginBottom: 'auto',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    width: '100%',
-                    height: '80vh',
-                    overflow: 'hidden',
-                }}>
-                    <Box
-                        sx={{
-                            flex: 2,
-                            backgroundImage: 'url(https://source.unsplash.com/random/1600x900?nature)',
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                        }}
-                    />
-                    <Box
-                        sx={{
-                            flex: 1,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: 4,
-                        }}
-                    >
-                        <LockOutlined sx={{ color: 'primary.main', fontSize: 40, mb: 2 }} />
-                        <Typography component="h1" variant="h5" gutterBottom>
-                            Sign Up
-                        </Typography>
-                        {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
-                        <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
-                            {/* Keep the existing radio buttons for user/admin role */}
-                            <div className="mb-4 text-center">
-                                <div className="btn-group" role="group" aria-label="User role">
-                                    {/* ... (keep existing radio buttons) */}
-                                </div>
-                            </div>
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="username"
-                                label="Username"
-                                name="username"
-                                autoComplete="username"
-                                autoFocus
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                InputProps={{
-                                    startAdornment: <PersonAdd sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                }}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                InputProps={{
-                                    startAdornment: <Email sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                }}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="new-password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                InputProps={{
-                                    startAdornment: <Lock sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                }}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="confirmPassword"
-                                label="Confirm Password"
-                                type="password"
-                                id="confirmPassword"
-                                autoComplete="new-password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                InputProps={{
-                                    startAdornment: <CheckCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                }}
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
+            <Container component="main" maxWidth="lg" sx={{ height: '100vh' }}>
+                <Grid container sx={{ height: '100%' }}>
+                    <Grid item xs={false} sm={4} md={7} sx={{
+                        backgroundImage: 'url(https://source.unsplash.com/random/1600x900?nature)',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }} />
+                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                        <Box
+                            sx={{
+                                my: 8,
+                                mx: 4,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <LockOpen sx={{ m: 1, fontSize: 48, color: 'primary.main' }} />
+                            <Typography component="h1" variant="h5" gutterBottom>
                                 Sign Up
-                            </Button>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
+                            </Typography>
+                            {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
+                            <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
+                                <FormControl component="fieldset" sx={{ mb: 2 }}>
+                                    <FormLabel component="legend">User Role</FormLabel>
+                                    <RadioGroup
+                                        row
+                                        aria-label="role"
+                                        name="role"
+                                        value={role}
+                                        onChange={(e) => setRole(e.target.value)}
+                                    >
+                                        <FormControlLabel value="user" control={<Radio />} label="User" />
+                                        <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+                                    </RadioGroup>
+                                </FormControl>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="username"
+                                    label="Username"
+                                    name="username"
+                                    autoComplete="username"
+                                    autoFocus
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: <PersonAdd sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                    }}
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: <Email sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                    }}
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="new-password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: <Lock sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                    }}
+                                />
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="confirmPassword"
+                                    label="Confirm Password"
+                                    type="password"
+                                    id="confirmPassword"
+                                    autoComplete="new-password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: <CheckCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                                    }}
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Sign Up
+                                </Button>
+                                <Grid container justifyContent="flex-end">
+                                    <Grid item>
+                                        <Link to="/login" variant="body2">
+                                            Already have an account? Sign in
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                            <Box mt={5}>
+                                <Typography variant="body2" color="text.secondary" align="center">
+                                    {'Copyright © '}
+                                    <Link color="inherit" href="https://your-website.com/">
+                                        Your Website
+                                    </Link>{' '}
+                                    {new Date().getFullYear()}
+                                    {'.'}
+                                </Typography>
                             </Box>
                         </Box>
-                        <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 5 }}>
-                            {"Copyright © "}
-                            <Link color="inherit" href="https://your-website.com/">
-                                Your Website
-                            </Link>{" "}
-                            {new Date().getFullYear()}
-                            {"."}
-                        </Typography>
-                    </Box>
-                </Paper>
+                    </Grid>
+                </Grid>
             </Container>
         </ThemeProvider>
     );
