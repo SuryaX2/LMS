@@ -76,7 +76,7 @@ const Signup = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" sx={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
+            <Container component="main" sx={{ height: '100%',width:'100vw'}}>
                 <Grid container sx={{ height: '100%' }}>
                     <Grid item xs={false} sm={4} md={7} sx={{
                         backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
@@ -84,7 +84,7 @@ const Signup = () => {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }} />
-                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{ overflowY: 'auto' }}>
+                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                         <Box
                             sx={{
                                 my: 8,
@@ -182,22 +182,13 @@ const Signup = () => {
                                 </Button>
                                 <Grid container justifyContent="flex-end">
                                     <Grid item>
-                                        <Link to="/login" variant="body2">
-                                            Already have an account? Sign in
+                                        <Link to="/login" className='no-underline'>
+                                            Sign in
                                         </Link>
                                     </Grid>
                                 </Grid>
                             </Box>
-                            <Box mt={5}>
-                                <Typography variant="body2" color="text.secondary" align="center">
-                                    {'Copyright © '}
-                                    <Link color="inherit" href="https://your-website.com/">
-                                        Your Website
-                                    </Link>{' '}
-                                    {new Date().getFullYear()}
-                                    {'.'}
-                                </Typography>
-                            </Box>
+                            
                         </Box>
                     </Grid>
                 </Grid>
