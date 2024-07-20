@@ -186,7 +186,7 @@ const Signup = () => {
                                     <Grid item>
                                         <span>Already have an account? </span>
                                         <Link to="/login" className='no-underline'>
-                                            Sign in
+                                            Log in
                                         </Link>
                                     </Grid>
                                 </Grid>
