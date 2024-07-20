@@ -76,133 +76,133 @@ const Signup = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" sx={{ height: '100%',width:'100vw'}}>
-                <Grid container sx={{ height: '100%' }}>
-                    <Grid item xs={false} sm={4} md={7} sx={{
-                        backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }} />
-                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                        <Box
-                            sx={{
-                                my: 8,
-                                mx: 4,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <LockOpen sx={{ m: 1, fontSize: 48, color: 'primary.main' }} />
-                            <Typography component="h1" variant="h5" gutterBottom>
-                                Sign Up
-                            </Typography>
-                            {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
-                            <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
-                                <FormControl component="fieldset" sx={{ mb: 2 }}>
-                                    <FormLabel component="legend">User Role</FormLabel>
-                                    <RadioGroup
-                                        row
-                                        aria-label="role"
-                                        name="role"
-                                        value={role}
-                                        onChange={(e) => setRole(e.target.value)}
-                                    >
-                                        <FormControlLabel value="user" control={<Radio />} label="User" />
-                                        <FormControlLabel value="admin" control={<Radio />} label="Admin" />
-                                    </RadioGroup>
-                                </FormControl>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="username"
-                                    label="Username"
-                                    name="username"
-                                    autoComplete="username"
-                                    autoFocus
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <PersonAdd sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    }}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <Email sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    }}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="new-password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <Lock sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    }}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="confirmPassword"
-                                    label="Confirm Password"
-                                    type="password"
-                                    id="confirmPassword"
-                                    autoComplete="new-password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <CheckCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    }}
-                                />
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                >
-                                    Sign Up
-                                </Button>
-                                <Grid container justifyContent="flex-end">
-                                    <Grid item>
-                                        <Link to="/login" variant="body2">
-                                            Already have an account? Sign in
-                                        </Link>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                            <Box mt={5}>
-                                <Typography variant="body2" color="text.secondary" align="center">
-                                    {'Copyright © '}
-                                    <Link color="inherit" href="https://your-website.com/">
-                                        Your Website
-                                    </Link>{' '}
-                                    {new Date().getFullYear()}
-                                    {'.'}
-                                </Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
+    <Container component="main" sx={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
+      <Grid container sx={{ height: '100%' }}>
+        <Grid item xs={false} sm={4} md={7} sx={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{ overflowY: 'auto' }}>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <LockOpen sx={{ m: 1, fontSize: 48, color: 'primary.main' }} />
+            <Typography component="h1" variant="h5" gutterBottom>
+              Sign Up
+            </Typography>
+            {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
+            <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
+              <FormControl component="fieldset" sx={{ mb: 2 }}>
+                <FormLabel component="legend">User Role</FormLabel>
+                <RadioGroup
+                  row
+                  aria-label="role"
+                  name="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  <FormControlLabel value="user" control={<Radio />} label="User" />
+                  <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+                </RadioGroup>
+              </FormControl>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                InputProps={{
+                  startAdornment: <PersonAdd sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                InputProps={{
+                  startAdornment: <Email sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  startAdornment: <Lock sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
+                autoComplete="new-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                InputProps={{
+                  startAdornment: <CheckCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                }}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link to="/login" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
                 </Grid>
-            </Container>
-        </ThemeProvider>
+              </Grid>
+            </Box>
+            <Box mt={5}>
+              <Typography variant="body2" color="text.secondary" align="center">
+                {'Copyright © '}
+                <Link color="inherit" href="https://your-website.com/">
+                  Your Website
+                </Link>{' '}
+                {new Date().getFullYear()}
+                {'.'}
+              </Typography>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </Container>
+  </ThemeProvider>
     );
 };
 
