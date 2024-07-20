@@ -1,192 +1,161 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {
-    Container,
-    Paper,
-    Typography,
-    TextField,
-    Button,
-    Box,
-    Alert
-} from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { PersonAdd, Email, Lock, CheckCircle } from '@mui/icons-material';
 
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#1976d2',
-        },
-        secondary: {
-            main: '#f50057',
-        },
-    },
-});
-
 const Signup = () => {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [role, setRole] = useState('user');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('user');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-    const clearFormFields = () => {
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
-        setRole('user');
-    };
+  const clearFormFields = () => {
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    setRole('user');
+  };
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
+  const handleSignup = async (e) => {
+    e.preventDefault();
 
-        if (password !== confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
 
-        try {
-            const response = await axios.post('http://localhost:3001/api/auth/signup', {
-                username,
-                email,
-                password,
-                role
-            });
+    try {
+      const response = await axios.post('http://localhost:3001/api/auth/signup', {
+        username,
+        email,
+        password,
+        role
+      });
 
-            if (response.data.success) {
-                clearFormFields();
-                navigate('/login');
-            } else {
-                setError(response.data.message);
-            }
-        } catch (err) {
-            setError('An error occurred. Please try again.');
-        }
-    };
+      if (response.data.success) {
+        clearFormFields();
+        navigate('/login');
+      } else {
+        setError(response.data.message);
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    }
+  };
 
-    return (
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="sm">
-                <Paper elevation={6} sx={{
-                    marginTop: 3,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    padding: 4,
-                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                    backdropFilter: 'blur(10px)'
-                }}>
-                    <Typography gutterBottom color="primary" fontWeight="bold" component="h1" variant="h4">
-                        Broaden Your Horizon
-                    </Typography>
-                    <Typography component="h1" variant="h4" gutterBottom color="primary" fontWeight="bold">
-                        Sign Up
-                    </Typography>
-                    {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
-                    <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
-                        <div className="mb-4 text-center">
-                            <div className="btn-group" role="group" aria-label="User role">
-                                <input
-                                    type="radio"
-                                    className="btn-check"
-                                    name="role"
-                                    id="user"
-                                    value="user"
-                                    checked={role === 'user'}
-                                    onChange={(e) => setRole(e.target.value)}
-                                    autoComplete="off"
-                                />
-                                <label className="btn btn-outline-primary" htmlFor="user">Users</label>
+  return (
+    <div className="container">
+      <div className="row justify-content-center mt-5">
+        <div className="col-md-6">
+          <div className="card shadow-lg">
+            <div className="card-body p-5">
+              <h2 className="card-title text-center text-primary mb-4">Broaden Your Horizon</h2>
+              <h3 className="text-center mb-4">Sign Up</h3>
+              {error && <div className="alert alert-danger" role="alert">{error}</div>}
+              <form onSubmit={handleSignup}>
+                <div className="mb-4 text-center">
+                  <div className="btn-group" role="group" aria-label="User role">
+                    <input
+                      type="radio"
+                      className="btn-check"
+                      name="role"
+                      id="user"
+                      value="user"
+                      checked={role === 'user'}
+                      onChange={(e) => setRole(e.target.value)}
+                      autoComplete="off"
+                    />
+                    <label className="btn btn-outline-primary" htmlFor="user">User</label>
 
-                                <input
-                                    type="radio"
-                                    className="btn-check"
-                                    name="role"
-                                    id="admin"
-                                    value="admin"
-                                    checked={role === 'admin'}
-                                    onChange={(e) => setRole(e.target.value)}
-                                    autoComplete="off"
-                                />
-                                <label className="btn btn-outline-primary" htmlFor="admin">Admin</label>
-                            </div>
-                        </div>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="username"
-                            autoFocus
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            InputProps={{
-                                startAdornment: <PersonAdd sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                            }}
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            InputProps={{
-                                startAdornment: <Email sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                            }}
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="new-password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            InputProps={{
-                                startAdornment: <Lock sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                            }}
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="confirmPassword"
-                            label="Confirm Password"
-                            type="password"
-                            id="confirmPassword"
-                            autoComplete="new-password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            InputProps={{
-                                startAdornment: <CheckCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                            }}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 1, padding: 1.5 }}
-                        >
-                            Sign Up
-                        </Button>
-                    </Box>
-                </Paper>
-            </Container>
-        </ThemeProvider>
-    );
+                    <input
+                      type="radio"
+                      className="btn-check"
+                      name="role"
+                      id="admin"
+                      value="admin"
+                      checked={role === 'admin'}
+                      onChange={(e) => setRole(e.target.value)}
+                      autoComplete="off"
+                    />
+                    <label className="btn btn-outline-primary" htmlFor="admin">Admin</label>
+                  </div>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="username">
+                    <PersonAdd className="me-2" />
+                    Username
+                  </label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    placeholder="name@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="email">
+                    <Email className="me-2" />
+                    Email address
+                  </label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="password">
+                    <Lock className="me-2" />
+                    Password
+                  </label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                  <label htmlFor="confirmPassword">
+                    <CheckCircle className="me-2" />
+                    Confirm Password
+                  </label>
+                </div>
+                <div className="d-grid">
+                  <button type="submit" className="btn btn-primary btn-lg">
+                    Sign Up
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Signup;
