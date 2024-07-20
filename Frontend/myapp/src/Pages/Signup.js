@@ -76,7 +76,7 @@ const Signup = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="sm" sx={{ height: '100vh'}}>
+            <Container component="main" sx={{ height: '100%',width:'100vw'}}>
                 <Grid container sx={{ height: '100%' }}>
                     <Grid item xs={false} sm={4} md={7} sx={{
                         backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
