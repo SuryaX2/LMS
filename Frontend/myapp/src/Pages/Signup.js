@@ -182,7 +182,7 @@ const Signup = () => {
                                 </Button>
                                 <Grid container justifyContent="flex-end">
                                     <Grid item>
-                                        Already have an account?
+                                        <span>Already have an account? </span> 
                                         <Link to="/login" className='no-underline'>
                                             Sign in
                                         </Link>
