@@ -8,61 +8,35 @@ const UserDashboard = () => {
   const [books, setBooks] = useState([]);
   const [userBooks, setUserBooks] = useState([]);
   const [error, setError] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
+    } else {
+      fetchBooks();
     }
-    fetchBooks();
-
-    function handleLogout() {
-      logout();
-      navigate('/login');
-    }
-
-    async function fetchBooks() {
-      try {
-        const response = await axios.get('http://localhost:3001/api/books', {
-          headers: {
-            Authorization: `Bearer ${isAuthenticated.token}`,
-          },
-        });
-        setBooks(response.data);
-      } catch (err) {
-        setError('Failed to fetch books');
-      }
-    }
-
-    async function fetchUserBooks() {
-      try {
-        const response = await axios.get('http://localhost:3001/api/user/books', {
-          headers: {
-            Authorization: `Bearer ${isAuthenticated.token}`,
-          },
-        });
-        setUserBooks(response.data);
-      } catch (err) {
-        setError('Failed to fetch user books');
-      }
-    }
-
-    fetchBooks();
-    fetchUserBooks();
   }, [isAuthenticated, navigate]);
+
+  function handleLogout() {
+    logout();
+    navigate('/login');
+  }
+
+  async function fetchBooks() {
+    try {
+      const res = await axios.get('http://localhost:3001/api/books/get-books');
+      setBooks(res.data);
+    } catch (err) {
+      console.error('Failed to fetch books', err);
+    }
+  }
 
   async function handleBorrow(bookId) {
     try {
-      const response = await axios.post(
-        'http://localhost:3001/api/books/borrow',
-        { bookId },
-        {
-          headers: {
-            Authorization: `Bearer ${isAuthenticated.token}`,
-          },
-        }
-      );
-      setUserBooks([...userBooks, response.data]);
+      const res = await axios.post('http://localhost:3001/api/books-borrow', { bookId });
+      setUserBooks([...userBooks, res.data]);
     } catch (err) {
       setError('Failed to borrow book');
     }
@@ -70,24 +44,34 @@ const UserDashboard = () => {
 
   async function handleReturn(bookId) {
     try {
-      await axios.post(
-        'http://localhost:3001/api/books/return',
-        { bookId },
-        {
-          headers: {
-            Authorization: `Bearer ${isAuthenticated.token}`,
-          },
-        }
-      );
+      await axios.post('http://localhost:3001/api/books-return', { bookId });
       setUserBooks(userBooks.filter((book) => book.id !== bookId));
     } catch (err) {
       setError('Failed to return book');
     }
   }
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const goToDashboard = () => {
+    navigate('/user-dashboard');
+  };
+
   return (
     <div className="dashboard">
-      <h1>Welcome to your Dashboard</h1>
+      <div className="navbar">
+      <div className="navbar-profile" onClick={toggleDropdown}>
+        <img src="/path-to-profile-icon.png" alt="Profile Icon" className="profile-icon" />
+        {dropdownOpen && (
+          <div className="dropdown-menu">
+            <button onClick={goToDashboard}>Dashboard</button>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        )}
+      </div>
+    </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <h2>Your Borrowed Books</h2>
       <ul>
