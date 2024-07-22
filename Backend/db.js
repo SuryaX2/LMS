@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const uri = "mongodb://localhost:27017/signup";
 
 const connectToMongo = async () => {
@@ -6,7 +7,7 @@ const connectToMongo = async () => {
         await mongoose.connect(uri);
         console.log("Conection successful");
     } catch (error) {
-        console.log("Error: " + error);
+        console.error("Error: " + error);
     }
 }
 
