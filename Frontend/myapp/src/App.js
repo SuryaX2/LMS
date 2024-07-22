@@ -10,23 +10,23 @@ import AdminDashboard from './Pages/Dashboards/Admin-Dashboard.js';
 import AddBook from './Components/AddBook.js';
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgot" element={<Forgot />} />
-        <Route element={<ProtectedRoute requiredRole="user" />}>
-          <Route path="/user-dashboard" element={<UserDashboard />} />
-        </Route>
-        <Route element={<ProtectedRoute requiredRole="admin" />}>
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/add-book" element={<AddBook />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/signup" element={<Signup />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/forgot" element={<Forgot />} />
+				<Route element={<ProtectedRoute requiredRole="user" />}>
+					<Route path="/user-dashboard" element={<UserDashboard />} />
+				</Route>
+				<Route element={<ProtectedRoute requiredRole="admin" />}>
+					<Route path="/admin-dashboard" element={<AdminDashboard />} />
+					<Route path="/add-book" element={<AddBook />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
+	);
 }
 
 export default App;
