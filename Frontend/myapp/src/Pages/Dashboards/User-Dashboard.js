@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../context/AuthContext.js';
+import { AuthContext } from '../../context/AuthContext.js';
 
 const UserDashboard = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
@@ -15,6 +15,11 @@ const UserDashboard = () => {
       navigate('/login');
       return;
     }
+
+    const handleLogout = () => {
+      logout();
+      navigate('/login');
+    };
 
     const fetchBooks = async () => {
       try {
