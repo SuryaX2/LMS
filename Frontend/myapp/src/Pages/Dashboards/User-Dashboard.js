@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../context/AuthContext';
+import AuthContext from '../../context/AuthContext.js';
 
 const UserDashboard = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
@@ -20,7 +20,7 @@ const UserDashboard = () => {
       try {
         const response = await axios.get('http://localhost:3001/api/books', {
           headers: {
-            Authorization: `Bearer ${authState.token}`,
+            Authorization: `Bearer ${isAuthenticated.token}`,
           },
         });
         setBooks(response.data);
@@ -33,7 +33,7 @@ const UserDashboard = () => {
       try {
         const response = await axios.get('http://localhost:3001/api/user/books', {
           headers: {
-            Authorization: `Bearer ${authState.token}`,
+            Authorization: `Bearer ${isAuthenticated.token}`,
           },
         });
         setUserBooks(response.data);
@@ -44,7 +44,7 @@ const UserDashboard = () => {
 
     fetchBooks();
     fetchUserBooks();
-  }, [authState, navigate]);
+  }, [isAuthenticated, navigate]);
 
   const handleBorrow = async (bookId) => {
     try {
@@ -53,7 +53,7 @@ const UserDashboard = () => {
         { bookId },
         {
           headers: {
-            Authorization: `Bearer ${authState.token}`,
+            Authorization: `Bearer ${isAuthenticated.token}`,
           },
         }
       );
@@ -70,7 +70,7 @@ const UserDashboard = () => {
         { bookId },
         {
           headers: {
-            Authorization: `Bearer ${authState.token}`,
+            Authorization: `Bearer ${isAuthenticated.token}`,
           },
         }
       );
