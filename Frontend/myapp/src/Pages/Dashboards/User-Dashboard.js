@@ -13,15 +13,15 @@ const UserDashboard = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
-      return;
     }
+    fetchBooks();
 
-    const handleLogout = () => {
+    function handleLogout() {
       logout();
       navigate('/login');
-    };
+    }
 
-    const fetchBooks = async () => {
+    async function fetchBooks() {
       try {
         const response = await axios.get('http://localhost:3001/api/books', {
           headers: {
@@ -32,9 +32,9 @@ const UserDashboard = () => {
       } catch (err) {
         setError('Failed to fetch books');
       }
-    };
+    }
 
-    const fetchUserBooks = async () => {
+    async function fetchUserBooks() {
       try {
         const response = await axios.get('http://localhost:3001/api/user/books', {
           headers: {
@@ -45,13 +45,13 @@ const UserDashboard = () => {
       } catch (err) {
         setError('Failed to fetch user books');
       }
-    };
+    }
 
     fetchBooks();
     fetchUserBooks();
   }, [isAuthenticated, navigate]);
 
-  const handleBorrow = async (bookId) => {
+  async function handleBorrow(bookId) {
     try {
       const response = await axios.post(
         'http://localhost:3001/api/books/borrow',
@@ -66,9 +66,9 @@ const UserDashboard = () => {
     } catch (err) {
       setError('Failed to borrow book');
     }
-  };
+  }
 
-  const handleReturn = async (bookId) => {
+  async function handleReturn(bookId) {
     try {
       await axios.post(
         'http://localhost:3001/api/books/return',
@@ -83,7 +83,7 @@ const UserDashboard = () => {
     } catch (err) {
       setError('Failed to return book');
     }
-  };
+  }
 
   return (
     <div className="dashboard">
