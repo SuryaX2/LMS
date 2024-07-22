@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-
 const uri = "mongodb://localhost:27017/signup"
 
 const connectToMongo = async () => {
