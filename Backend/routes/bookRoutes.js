@@ -1,10 +1,11 @@
 import express from "express"
-import { getBooks, borrowBook, returnBook, getUserBooks } from '../controllers/bookController.js';
 const router = express.Router();
+import bookController from '../controllers/bookController.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
-router.get('/get-books', getBooks);
-router.post('/borrow', borrowBook);
-router.post('/return', returnBook);
-router.get('/user-books/:userId', getUserBooks);
+router.get('/books', authMiddleware, bookController.getBooks);
+router.get('/user/books', authMiddleware, bookController.getUserBooks);
+router.post('/books/borrow', authMiddleware, bookController.borrowBook);
+router.post('/books/return', authMiddleware, bookController.returnBook);
 
 export default router;

@@ -58,7 +58,7 @@ const UserDashboard = () => {
   async function handleBorrow(bookId) {
     if (user && user._id) {
       try {
-        const res = await axios.post('http://localhost:3001/api/books/borrow', { bookId, userId: user._id });
+        const res = await axios.post('http://localhost:3001/api/books-borrow', { bookId, userId: user._id });
         setBooks(books.map(book => book._id === bookId ? { ...book, quantity: book.quantity - 1 } : book));
         setUserBooks([...userBooks, res.data]);
         setError(''); // Clear any previous errors
@@ -73,7 +73,7 @@ const UserDashboard = () => {
   async function handleReturn(bookId) {
     if (user && user._id) {
       try {
-        const res = await axios.post('http://localhost:3001/api/books/return', { bookId, userId: user._id });
+        const res = await axios.post('http://localhost:3001/api/books-return', { bookId, userId: user._id });
         setBooks(books.map(book => book._id === bookId ? { ...book, quantity: book.quantity + 1 } : book));
         setUserBooks(userBooks.filter(book => book._id !== bookId));
         setError(''); // Clear any previous errors

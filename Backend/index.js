@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/auth", userRoutes);
 app.use('/api/books', adminRouter);
-app.use('/api/books', bookRouter);
+app.use('/api', bookRouter);
 
 app.listen(PORT, () => {
     console.log(`Server Listening at ${PORT}`);

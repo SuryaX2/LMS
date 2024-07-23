@@ -1,74 +1,55 @@
 import Book from '../models/Books.js';
 
-export const getBooks = async (req, res) => {
+exports.getBooks = async (req, res) => {
     try {
         const books = await Book.find();
         res.json(books);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching books', error: error.message });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to fetch books' });
     }
 };
 
-export const borrowBook = async (req, res) => {
-    const { bookId, userId } = req.body;
+exports.getUserBooks = async (req, res) => {
     try {
-        const book = await Book.findById(bookId);
-        if (!book) {
-            return res.status(404).json({ message: 'Book not found' });
-        }
-        if (book.quantity < 1) {
-            return res.status(400).json({ message: 'Book is not available' });
+        const user = await User.findById(req.user.id).populate('borrowedBooks');
+        res.json(user.borrowedBooks);
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to fetch user books' });
+    }
+};
+
+exports.borrowBook = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        const book = await Book.findById(req.body.bookId);
+
+        if (!book || user.borrowedBooks.includes(book.id)) {
+            return res.status(400).json({ message: 'Cannot borrow this book' });
         }
 
-        book.quantity -= 1;
-        book.borrowedBy.push({ user: userId });
-        await book.save();
+        user.borrowedBooks.push(book);
+        await user.save();
 
         res.json(book);
-    } catch (error) {
-        res.status(500).json({ message: 'Error borrowing book', error: error.message });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to borrow book' });
     }
 };
 
-export const returnBook = async (req, res) => {
-    const { bookId, userId } = req.body;
+exports.returnBook = async (req, res) => {
     try {
-        const book = await Book.findById(bookId);
-        if (!book) {
-            return res.status(404).json({ message: 'Book not found' });
+        const user = await User.findById(req.user.id);
+        const bookIndex = user.borrowedBooks.indexOf(req.body.bookId);
+
+        if (bookIndex === -1) {
+            return res.status(400).json({ message: 'Cannot return this book' });
         }
 
-        const borrowIndex = book.borrowedBy.findIndex(
-            borrow => borrow.user.toString() === userId && !borrow.returnDate
-        );
+        user.borrowedBooks.splice(bookIndex, 1);
+        await user.save();
 
-        if (borrowIndex === -1) {
-            return res.status(400).json({ message: 'Book was not borrowed by this user' });
-        }
-
-        book.borrowedBy[borrowIndex].returnDate = new Date();
-        book.quantity += 1;
-        await book.save();
-
-        res.json(book);
-    } catch (error) {
-        res.status(500).json({ message: 'Error returning book', error: error.message });
+        res.json({ message: 'Book returned successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to return book' });
     }
 };
-
-export const getUserBooks = async (req, res) => {
-    const { userId } = req.params;
-    try {
-        const books = await Book.find({
-            'borrowedBy': {
-                $elemMatch: {
-                    user: userId,
-                    returnDate: null
-                }
-            }
-        });
-        res.json(books);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching user books', error: error.message });
-    }
-}
