@@ -3,7 +3,7 @@ import Book from '../models/Books.js';
 
 const router = express.Router();
 
-router.post('/api/books-borrow', async (req, res) => {
+router.post('/books-borrow', async (req, res) => {
     const { bookId, userId } = req.body;
     try {
         const book = await Book.findById(bookId);
@@ -21,7 +21,7 @@ router.post('/api/books-borrow', async (req, res) => {
     }
 });
 
-router.post('/api/books-return', async (req, res) => {
+router.post('/books-return', async (req, res) => {
     const { bookId } = req.body;
     try {
         const book = await Book.findById(bookId);
