@@ -69,6 +69,7 @@ const UserDashboard = () => {
           if (bookIndex !== -1) {
             updatedBooks[bookIndex].quantity += 1;
           } else {
+            // Fetch the book details again to add it back to the available books
             axios.get(`http://localhost:3001/api/books/get-book/${bookId}`).then(response => {
               updatedBooks.push(response.data);
               setBooks(updatedBooks);

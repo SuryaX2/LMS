@@ -3,14 +3,14 @@ import Book from '../models/Books.js';
 
 const router = express.Router();
 
-router.get('/books/get-books', async (req, res) => {
+router.get('/books/get-books',  async (req, res) => {
     try {
-        const books = await Book.find();
-        res.json(books);
+      const books = await Book.find().exec();
+      res.json(books);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch books' });
+      res.status(500).json({ message: 'Error fetching books' });
     }
-});
+  });
 
 router.get('/books/get-user-books', async (req, res) => {
     try {
