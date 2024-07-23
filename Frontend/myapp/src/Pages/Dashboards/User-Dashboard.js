@@ -62,13 +62,13 @@ const UserDashboard = () => {
     <div className="dashboard">
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
         <Container>
-          <Navbar.Brand href="#home"><MenuBookIcon className="me-2 mb-2" />Admin Dashboard</Navbar.Brand>
+          <Navbar.Brand href="#home"><MenuBookIcon className="me-2 mb-2" />User Dashboard</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav>
               <Dropdown align="end">
                 <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
-                  <PersonIcon className="me-2" />Admin
+                  <PersonIcon className="me-2" />User
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => handleNavigation('/admin-dashboard')}><MenuBookIcon className="me-2" />Dashboard</Dropdown.Item>
