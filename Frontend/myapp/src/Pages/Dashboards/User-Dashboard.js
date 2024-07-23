@@ -2,13 +2,16 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext.js';
+import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const UserDashboard = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
   const [books, setBooks] = useState([]);
   const [userBooks, setUserBooks] = useState([]);
   const [error, setError] = useState('');
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,27 +54,31 @@ const UserDashboard = () => {
     }
   }
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  const goToDashboard = () => {
-    navigate('/user-dashboard');
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
   return (
     <div className="dashboard">
-      <div className="navbar">
-      <div className="navbar-profile" onClick={toggleDropdown}>
-        <img src="/path-to-profile-icon.png" alt="Profile Icon" className="profile-icon" />
-        {dropdownOpen && (
-          <div className="dropdown-menu">
-            <button onClick={goToDashboard}>Dashboard</button>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
-        )}
-      </div>
-    </div>
+      <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
+        <Container>
+          <Navbar.Brand href="#home"><MenuBookIcon className="me-2 mb-2" />Admin Dashboard</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+            <Nav>
+              <Dropdown align="end">
+                <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
+                  <PersonIcon className="me-2" />Admin
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => handleNavigation('/admin-dashboard')}><MenuBookIcon className="me-2" />Dashboard</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}><LogoutIcon className="me-2" />Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <h2>Your Borrowed Books</h2>
       <ul>
