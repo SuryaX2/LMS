@@ -84,7 +84,7 @@ const UserDashboard = () => {
       <ul>
         {userBooks.map((book) => (
           <li key={book.id}>
-            {book.title} <button onClick={() => handleReturn(book.id)}>Return</button>
+            {book.title} <button onClick={() => handleReturn(book._id)}>Return</button>
           </li>
         ))}
       </ul>
@@ -92,7 +92,7 @@ const UserDashboard = () => {
       <ul>
         {books.map((book) => (
           <li key={book.id}>
-            {book.title} <button onClick={() => handleBorrow(book.id)}>Borrow</button>
+            {book.title} <button onClick={() => handleBorrow(book._id)}>Borrow</button>
           </li>
         ))}
       </ul>
