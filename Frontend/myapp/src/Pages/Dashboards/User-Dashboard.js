@@ -9,14 +9,16 @@ const UserDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch available and borrowed books
     fetchBooks();
   }, []);
 
   const fetchBooks = async () => {
     try {
-      const availableBooks = await axios.get('/api/books/available');
-      const borrowedBooks = await axios.get('/api/books/borrowed');
+      const availableBooks = await axios.get('http://localhost:3001/api/books/available');
+      const userId = getCurrentUserId();
+      const borrowedBooks = await axios.get('http://localhost:3001/api/books/borrowed', {
+        params: { userId }
+      });
       setBooks(availableBooks.data);
       setBorrowedBooks(borrowedBooks.data);
     } catch (error) {
@@ -24,10 +26,29 @@ const UserDashboard = () => {
     }
   };
 
+  const getCurrentUserId = () => {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    return user ? user._id : null;
+  };
+
   const handleBorrowBook = async (bookId) => {
     try {
-      await axios.post(`/api/books/borrow/${bookId}`);
-      fetchBooks(); // Refresh the book lists
+      const userId = getCurrentUserId();
+      await axios.post(`http://localhost:3001/api/books/borrow/${bookId}`, { userId });
+
+      // Update state immediately
+      setBooks((prevBooks) => {
+        return prevBooks.map((book) => {
+          if (book._id === bookId) {
+            return { ...book, quantity: book.quantity - 1 };
+          }
+          return book;
+        }).filter(book => book.quantity > 0);
+      });
+      setBorrowedBooks((prevBorrowedBooks) => [
+        ...prevBorrowedBooks,
+        books.find(book => book._id === bookId)
+      ]);
     } catch (error) {
       console.error(error);
     }
@@ -35,15 +56,24 @@ const UserDashboard = () => {
 
   const handleReturnBook = async (bookId) => {
     try {
-      await axios.post(`/api/books/return/${bookId}`);
-      fetchBooks(); // Refresh the book lists
+      await axios.post(`http://localhost:3001/api/books/return/${bookId}`);
+
+      // Update state immediately
+      setBorrowedBooks((prevBorrowedBooks) => prevBorrowedBooks.filter(book => book._id !== bookId));
+      setBooks((prevBooks) => {
+        const returnedBook = borrowedBooks.find(book => book._id === bookId);
+        if (returnedBook) {
+          return [...prevBooks, { ...returnedBook, quantity: returnedBook.quantity + 1 }];
+        }
+        return prevBooks;
+      });
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
   const handleLogout = () => {
-    // Handle logout logic
+    localStorage.removeItem('currentUser');
     navigate('/login');
   };
 
@@ -86,20 +116,23 @@ const UserDashboard = () => {
             <tr>
               <th className="py-2">Title</th>
               <th className="py-2">Author</th>
+              <th className="py-2">Quantity</th>
               <th className="py-2">Action</th>
             </tr>
           </thead>
           <tbody>
             {books.map((book) => (
-              <tr key={book.id}>
+              <tr key={book._id}>
                 <td className="py-2">{book.title}</td>
                 <td className="py-2">{book.author}</td>
+                <td className="py-2">{book.quantity}</td>
                 <td className="py-2">
                   <button
                     className="bg-blue-500 text-white px-4 py-2 rounded"
-                    onClick={() => handleBorrowBook(book.id)}
+                    onClick={() => handleBorrowBook(book._id)}
+                    disabled={book.quantity === 0}
                   >
-                    Borrow
+                    {book.quantity > 0 ? 'Borrow' : 'Out of Stock'}
                   </button>
                 </td>
               </tr>
@@ -118,13 +151,13 @@ const UserDashboard = () => {
           </thead>
           <tbody>
             {borrowedBooks.map((book) => (
-              <tr key={book.id}>
+              <tr key={book._id}>
                 <td className="py-2">{book.title}</td>
                 <td className="py-2">{book.author}</td>
                 <td className="py-2">
                   <button
                     className="bg-green-500 text-white px-4 py-2 rounded"
-                    onClick={() => handleReturnBook(book.id)}
+                    onClick={() => handleReturnBook(book._id)}
                   >
                     Return
                   </button>

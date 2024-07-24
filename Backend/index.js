@@ -2,7 +2,7 @@ import express from "express";
 import cors from 'cors';
 import userRoutes from "./routes/user.js";
 import adminRouter from "./routes/admin.js";
-// import bookRouter from "./routes/bookRoutes.js";
+import bookRouter from "./routes/bookRoutes.js";
 import connectToMongo from "./db.js";
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/auth", userRoutes);
 app.use('/api/books', adminRouter);
-// app.use('/api', bookRouter);
+app.use('/api/books', bookRouter);
 
 app.listen(PORT, () => {
     console.log(`Server Listening at ${PORT}`);
