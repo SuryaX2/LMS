@@ -68,6 +68,7 @@ router.post('/return', authenticateToken, async (req, res) => {
     book.returnDate = null;
 
     await book.save();
+    res.status(200).send('Book returned successfully');
     res.json(book);
   } catch (error) {
     res.status(500).json({ message: error.message });
