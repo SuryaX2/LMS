@@ -3,21 +3,21 @@ import Book from '../models/Books.js';
 
 const router = express.Router();
 
-// Fetch all available books
-router.get('/available', async (req, res) => {
+
+// Get all books
+router.get('/', async (req, res) => {
   try {
-    const books = await Book.find({ borrowedBy: null });
+    const books = await Book.find();
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Fetch all borrowed books for a specific user
-router.get('/borrowed', async (req, res) => {
+// Get borrowed books by user
+router.get('/borrowed/:userId', async (req, res) => {
   try {
-    const { userId } = req.query;
-    const books = await Book.find({ borrowedBy: userId });
+    const books = await Book.find({ borrowedBy: req.params.userId });
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -25,43 +25,48 @@ router.get('/borrowed', async (req, res) => {
 });
 
 // Borrow a book
-router.post('/borrow/:id', async (req, res) => {
+router.post('/borrow', async (req, res) => {
   try {
-    const { id } = req.params;
-    const { userId } = req.body;
-
-    const book = await Book.findById(id);
-    if (!book) return res.status(404).json({ message: 'Book not found' });
-
-    if (book.quantity === 0) return res.status(400).json({ message: 'No copies available' });
-
+    const { bookId, userId } = req.body;
+    const book = await Book.findById(bookId);
+    
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+    
+    if (book.quantity <= 0) {
+      return res.status(400).json({ message: 'Book not available' });
+    }
+    
+    book.quantity -= 1;
     book.borrowedBy = userId;
     book.borrowedDate = new Date();
-    book.returnDate = null;
-    book.quantity -= 1;
-
+    book.returnDate = new Date(new Date().setDate(new Date().getDate() + 14)); // 2 weeks from now
+    
     await book.save();
-    res.json({ message: 'Book borrowed successfully' });
+    res.json(book);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
 // Return a book
-router.post('/return/:id', async (req, res) => {
+router.post('/return', async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const book = await Book.findById(id);
-    if (!book) return res.status(404).json({ message: 'Book not found' });
-
+    const { bookId } = req.body;
+    const book = await Book.findById(bookId);
+    
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+    
+    book.quantity += 1;
     book.borrowedBy = null;
     book.borrowedDate = null;
-    book.returnDate = new Date();
-    book.quantity += 1;
-
+    book.returnDate = null;
+    
     await book.save();
-    res.json({ message: 'Book returned successfully' });
+    res.json(book);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

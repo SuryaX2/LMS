@@ -1,172 +1,240 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Menu, Transition } from '@headlessui/react';
+import { UserCircleIcon } from '@heroicons/react/solid';
 
 const UserDashboard = () => {
-  const [books, setBooks] = useState([]);
+  const [user, setUser] = useState(null);
+  const [availableBooks, setAvailableBooks] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchBooks();
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+    if (userInfo) {
+      setUser(userInfo);
+      fetchBooks(userInfo.userId);
+    } else {
+      setLoading(false);
+    }
   }, []);
 
-  const fetchBooks = async () => {
+  async function fetchBooks(userId) {
     try {
-      const availableBooks = await axios.get('http://localhost:3001/api/books/available');
-      const userId = getCurrentUserId();
-      const borrowedBooks = await axios.get('http://localhost:3001/api/books/borrowed', {
-        params: { userId }
-      });
-      setBooks(availableBooks.data);
-      setBorrowedBooks(borrowedBooks.data);
+      setLoading(true);
+      const availableResponse = await axios.get('http://localhost:3001/api/books');
+      setAvailableBooks(availableResponse.data.filter(book => book.quantity > 0));
+
+      const borrowedResponse = await axios.get(`http://localhost:3001/api/books/borrowed/${userId}`);
+      setBorrowedBooks(borrowedResponse.data);
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching books:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const handleBorrow = async (bookId) => {
+    if (!user) {
+      console.error('User not logged in');
+      return;
+    }
+    try {
+      await axios.post('http://localhost:3001/api/books/borrow', { bookId, userId: user.userId });
+      fetchBooks(user.userId);
+    } catch (error) {
+      console.error('Error borrowing book:', error);
     }
   };
 
-  const getCurrentUserId = () => {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    return user ? user._id : null;
-  };
-
-  const handleBorrowBook = async (bookId) => {
-    try {
-      const userId = getCurrentUserId();
-      await axios.post(`http://localhost:3001/api/books/borrow/${bookId}`, { userId });
-
-      // Update state immediately
-      setBooks((prevBooks) => {
-        return prevBooks.map((book) => {
-          if (book._id === bookId) {
-            return { ...book, quantity: book.quantity - 1 };
-          }
-          return book;
-        }).filter(book => book.quantity > 0);
-      });
-      setBorrowedBooks((prevBorrowedBooks) => [
-        ...prevBorrowedBooks,
-        books.find(book => book._id === bookId)
-      ]);
-    } catch (error) {
-      console.error(error);
+  const handleReturn = async (bookId) => {
+    if (!user) {
+      console.error('User not logged in');
+      return;
     }
-  };
-
-  const handleReturnBook = async (bookId) => {
     try {
-      await axios.post(`http://localhost:3001/api/books/return/${bookId}`);
-
-      // Update state immediately
-      setBorrowedBooks((prevBorrowedBooks) => prevBorrowedBooks.filter(book => book._id !== bookId));
-      setBooks((prevBooks) => {
-        const returnedBook = borrowedBooks.find(book => book._id === bookId);
-        if (returnedBook) {
-          return [...prevBooks, { ...returnedBook, quantity: returnedBook.quantity + 1 }];
-        }
-        return prevBooks;
-      });
+      await axios.post('http://localhost:3001/api/books/return', { bookId });
+      fetchBooks(user.userId);
     } catch (error) {
-      console.error(error);
+      console.error('Error returning book:', error);
     }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    navigate('/login');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>Please log in to view the dashboard.</div>;
+  }
+
   return (
-    <div>
-      <nav className="bg-gray-800 p-4">
-        <div className="flex items-center justify-between">
-          <div className="text-white text-xl">LMS Dashboard</div>
-          <div className="relative">
-            <img
-              src="/path/to/avatar.png"
-              alt="Avatar"
-              className="w-10 h-10 rounded-full cursor-pointer"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            />
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-                <button
-                  className="block px-4 py-2 text-gray-800 w-full text-left hover:bg-gray-100"
-                  onClick={() => navigate('/dashboard')}
+    <div className="min-h-screen bg-gray-100">
+      <nav className="bg-white shadow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex-shrink-0 flex items-center">
+              <h2>User Dashboard</h2>
+            </div>
+            <div className="ml-3 relative">
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+                    <UserCircleIcon className="h-5 w-5" aria-hidden="true" />
+                  </Menu.Button>
+                </div>
+                <Transition
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
                 >
-                  Dashboard
-                </button>
-                <button
-                  className="block px-4 py-2 text-gray-800 w-full text-left hover:bg-gray-100"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+                    <div className="py-1">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#home"
+                            className={`${
+                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                            } block px-4 py-2 text-sm`}
+                          >
+                            Dashboard
+                          </a>
+                        )}
+                      </Menu.Item>
+                    </div>
+                    <div className="py-1">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="/login"
+                            onClick={handleLogout}
+                            className={`${
+                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                            } block px-4 py-2 text-sm`}
+                          >
+                            Logout
+                          </a>
+                        )}
+                      </Menu.Item>
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+            </div>
           </div>
         </div>
       </nav>
 
-      <div className="p-4">
-        <h2 className="text-2xl font-bold mb-4">Available Books</h2>
-        <table className="min-w-full bg-white">
-          <thead>
-            <tr>
-              <th className="py-2">Title</th>
-              <th className="py-2">Author</th>
-              <th className="py-2">Quantity</th>
-              <th className="py-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {books.map((book) => (
-              <tr key={book._id}>
-                <td className="py-2">{book.title}</td>
-                <td className="py-2">{book.author}</td>
-                <td className="py-2">{book.quantity}</td>
-                <td className="py-2">
-                  <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                    onClick={() => handleBorrowBook(book._id)}
-                    disabled={book.quantity === 0}
-                  >
-                    {book.quantity > 0 ? 'Borrow' : 'Out of Stock'}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="px-4 py-6 sm:px-0">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Available Books</h2>
+          <div className="flex flex-col">
+            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Title
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Author
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Quantity
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {availableBooks.map((book) => (
+                        <tr key={book._id}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{book.title}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{book.author}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{book.quantity}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button
+                              onClick={() => handleBorrow(book._id)}
+                              className="text-indigo-600 hover:text-indigo-900"
+                            >
+                              Borrow
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <h2 className="text-2xl font-bold mt-8 mb-4">Borrowed Books</h2>
-        <table className="min-w-full bg-white">
-          <thead>
-            <tr>
-              <th className="py-2">Title</th>
-              <th className="py-2">Author</th>
-              <th className="py-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {borrowedBooks.map((book) => (
-              <tr key={book._id}>
-                <td className="py-2">{book.title}</td>
-                <td className="py-2">{book.author}</td>
-                <td className="py-2">
-                  <button
-                    className="bg-green-500 text-white px-4 py-2 rounded"
-                    onClick={() => handleReturnBook(book._id)}
-                  >
-                    Return
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          <h2 className="text-2xl font-semibold text-gray-900 mt-12 mb-6">Borrowed Books</h2>
+          <div className="flex flex-col">
+            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Title
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Author
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Borrow Date
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Return Date
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {borrowedBooks.map((book) => (
+                        <tr key={book._id}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{book.title}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{book.author}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {new Date(book.borrowedDate).toLocaleDateString()}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {new Date(book.returnDate).toLocaleDateString()}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button
+                              onClick={() => handleReturn(book._id)}
+                              className="text-indigo-600 hover:text-indigo-900"
+                            >
+                              Return
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
