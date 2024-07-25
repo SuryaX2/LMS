@@ -132,17 +132,12 @@ const UserDashboard = () => {
 
       <Container className="py-5">
         <Row className="mb-4">
-          <Col>
-            <h1 className="mb-4 fw-bold text-primary">Welcome, {user.username}!</h1>
-          </Col>
-        </Row>
-        <Row className="mb-4">
           <Col md={6}>
             <Card className="h-100 shadow-sm">
               <Card.Body className="p-4">
                 <h3 className="mb-4 fw-bold text-primary">Quick Stats</h3>
-                <p className="fs-5">Total Available Books: <Badge bg="primary" className="fs-6">{availableBooks.length}</Badge></p>
-                <p className="fs-5">Your Borrowed Books: <Badge bg="success" className="fs-6">{borrowedBooks.length}</Badge></p>
+                <p className="fs-5">Total Available Books: <Badge bg="primary" className="fs-6 ml-5">{availableBooks.length}</Badge></p>
+                <p className="fs-5">Your Borrowed Books: <Badge bg="success" className="fs-6 ml-4">{borrowedBooks.length}</Badge></p>
               </Card.Body>
             </Card>
           </Col>
@@ -151,7 +146,6 @@ const UserDashboard = () => {
               <Card.Body className="p-4">
                 <h3 className="mb-4 fw-bold text-primary">Library Rules</h3>
                 <ul className="fs-5">
-                  <li>You can borrow up to 5 books at a time.</li>
                   <li>Return period is 14 days from the borrow date.</li>
                   <li>Late returns may incur a fee.</li>
                 </ul>
