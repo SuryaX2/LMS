@@ -11,6 +11,8 @@ const UserDashboard = () => {
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
     if (userInfo) {
       setUser(userInfo);
       fetchBooks(userInfo.userId);
@@ -54,7 +56,7 @@ const UserDashboard = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:3001/api/books/borrow', 
+      await axios.post('http://localhost:3001/api/books/borrow',
         { bookId, userId: user.userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );

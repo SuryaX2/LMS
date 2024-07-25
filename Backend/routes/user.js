@@ -5,6 +5,7 @@ import { validationResult } from 'express-validator';
 import User from '../models/user.js'
 
 const router = express.Router();
+const key = 'your_jwt_secret';
 
 router.post("/signup", async (req, res) => {
     const errors = validationResult(req);
@@ -43,7 +44,9 @@ router.post('/login', async (req, res) => {
             if (!passcom) {
                 res.status(401).json({ success: false, message: 'Invalid email or password' });
             } else {
-                const accessToken = jwt.sign({ userId: user._id }, 'your_jwt_secret');
+                console.log('User ID:', user._id);
+                const accessToken = jwt.sign({ userId: user._id }, key,{ expiresIn: '1h' });
+                console.log(accessToken);
                 res.json({
                     accessToken: accessToken, 
                     userId: user._id ,
