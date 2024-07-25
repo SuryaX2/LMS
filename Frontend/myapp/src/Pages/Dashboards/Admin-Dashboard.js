@@ -29,7 +29,7 @@ const AdminDashboard = () => {
   }, [isAuthenticated, navigate]);
 
   const fetchBooks = () => {
-    axios.get('http://localhost:3001/api/books/get-books')
+    axios.get('http://localhost:3001/api/admin/get-books')
       .then(res => setBooks(res.data))
       .catch(err => console.log(err));
   };
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteBook = (bookId) => {
-    axios.delete(`http://localhost:3001/api/books/${bookId}`)
+    axios.delete(`http://localhost:3001/api/admin/${bookId}`)
       .then(res => {
         console.log(res.message);
         fetchBooks();
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:3001/api/books/${editingBook._id}`, editingBook)
+    axios.put(`http://localhost:3001/api/admin/${editingBook._id}`, editingBook)
       .then(res => {
         console.log(res.message);
         setEditModalOpen(false);

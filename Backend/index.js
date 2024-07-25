@@ -13,7 +13,7 @@ connectToMongo();
 app.use(express.json());
 app.use(cors());
 app.use("/api/auth", userRoutes);
-app.use('/api/books', adminRouter);
+app.use('/api/admin', adminRouter);
 app.use('/api/books', bookRouter);
 
 app.listen(PORT, () => {
