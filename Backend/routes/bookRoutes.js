@@ -1,5 +1,6 @@
 import express from 'express';
 import Book from '../models/Books.js';
+import authenticateToken from '../middleware/authToken.js';
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get borrowed books by user
-router.get('/borrowed/:userId', async (req, res) => {
+router.get('/borrowed/:userId', authenticateToken, async (req, res) => {
   try {
     const books = await Book.find({ borrowedBy: req.params.userId });
     res.json(books);
@@ -25,25 +26,26 @@ router.get('/borrowed/:userId', async (req, res) => {
 });
 
 // Borrow a book
-router.post('/borrow', async (req, res) => {
+router.post('/borrow', authenticateToken, async (req, res) => {
   try {
     const { bookId, userId } = req.body;
     const book = await Book.findById(bookId);
-    
+
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
-    
+
     if (book.quantity <= 0) {
       return res.status(400).json({ message: 'Book not available' });
     }
-    
+
     book.quantity -= 1;
     book.borrowedBy = userId;
     book.borrowedDate = new Date();
     book.returnDate = new Date(new Date().setDate(new Date().getDate() + 14)); // 2 weeks from now
-    
+
     await book.save();
+    res.status(200).send('Book borrowed successfully');
     res.json(book);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -51,20 +53,20 @@ router.post('/borrow', async (req, res) => {
 });
 
 // Return a book
-router.post('/return', async (req, res) => {
+router.post('/return', authenticateToken, async (req, res) => {
   try {
     const { bookId } = req.body;
     const book = await Book.findById(bookId);
-    
+
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
-    
+
     book.quantity += 1;
     book.borrowedBy = null;
     book.borrowedDate = null;
     book.returnDate = null;
-    
+
     await book.save();
     res.json(book);
   } catch (error) {
