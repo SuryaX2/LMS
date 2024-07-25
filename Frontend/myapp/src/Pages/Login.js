@@ -7,6 +7,7 @@ import { Email, Lock, Login as LoginIcon } from '@mui/icons-material';
 
 const Login = () => {
   const [email, setEmail] = useState('');
+  const [user, setUser] = useState(null);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { isAuthenticated, login } = useContext(AuthContext);
@@ -27,7 +28,9 @@ const Login = () => {
       if (response.data.success) {
         const role = response.data.role;
         localStorage.setItem('role', role);
+        localStorage.setItem('user', JSON.stringify({ userId: response.data.userId }));
         if (role === 'user') {
+          setUser({ userId: response.data.userId });
           navigate('/user-dashboard');
         } else if (role === 'admin') {
           navigate('/admin-dashboard');

@@ -62,7 +62,7 @@ const UserDashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    window.location.href = '/login';
+    setUser(null);
   };
 
   if (loading) {
@@ -102,9 +102,8 @@ const UserDashboard = () => {
                         {({ active }) => (
                           <a
                             href="#home"
-                            className={`${
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                            } block px-4 py-2 text-sm`}
+                            className={`${active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                              } block px-4 py-2 text-sm`}
                           >
                             Dashboard
                           </a>
@@ -117,9 +116,8 @@ const UserDashboard = () => {
                           <a
                             href="/login"
                             onClick={handleLogout}
-                            className={`${
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                            } block px-4 py-2 text-sm`}
+                            className={`${active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                              } block px-4 py-2 text-sm`}
                           >
                             Logout
                           </a>
