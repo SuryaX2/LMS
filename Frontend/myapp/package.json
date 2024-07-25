@@ -7,6 +7,8 @@
     "@emotion/styled": "^11.11.5",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^1.0.6",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.16.1",
     "@mui/material": "^5.16.1",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
@@ -22,7 +24,7 @@
     "react-router-bootstrap": "^0.26.3",
     "react-router-dom": "^6.24.1",
     "react-scripts": "5.0.1",
-    "styled-components": "^6.1.11",
+    "styled-components": "^6.1.12",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

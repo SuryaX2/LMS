@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Menu, Transition } from '@headlessui/react';
-import { UserCircleIcon } from '@heroicons/react/solid';
+import { Container, Navbar, Nav, Card, Table, Button, Spinner, Row, Col, Badge } from 'react-bootstrap';
+import { AccountCircle, ExitToApp, Book, BookmarkBorder, Dashboard, LibraryBooks } from '@material-ui/icons';
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
@@ -85,173 +85,156 @@ const UserDashboard = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <Spinner animation="border" role="status" variant="primary">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
   }
 
   if (!user) {
-    return <div>Please log in to view the dashboard.</div>;
+    return (
+      <Container className="mt-5">
+        <Card className="text-center shadow" style={{ maxWidth: '400px', margin: 'auto' }}>
+          <Card.Body className="p-5">
+            <Card.Title as="h2" className="mb-4 fw-bold">Welcome to the Library</Card.Title>
+            <Card.Text className="mb-4">Please log in to view the dashboard.</Card.Text>
+            <Button variant="primary" href="/login" size="lg" className="px-4 py-2">Log In</Button>
+          </Card.Body>
+        </Card>
+      </Container>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex-shrink-0 flex items-center">
-              <h2>User Dashboard</h2>
-            </div>
-            <div className="ml-3 relative">
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                    <UserCircleIcon className="h-5 w-5" aria-hidden="true" />
-                  </Menu.Button>
-                </div>
-                <Transition
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                    <div className="py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#home"
-                            className={`${active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                              } block px-4 py-2 text-sm`}
-                          >
-                            Dashboard
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </div>
-                    <div className="py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="/login"
-                            onClick={handleLogout}
-                            className={`${active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                              } block px-4 py-2 text-sm`}
-                          >
-                            Logout
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-vh-100 bg-light">
+      <Navbar bg="primary" variant="dark" expand="lg" className="shadow-sm">
+        <Container>
+          <Navbar.Brand href="#home" className="d-flex align-items-center">
+            <LibraryBooks className="me-2" />
+            <span className="fw-bold">Library Dashboard</span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+            <Nav>
+              <Nav.Link href="#home" className="d-flex align-items-center">
+                <Dashboard className="me-1" /> Dashboard
+              </Nav.Link>
+              <Nav.Link onClick={handleLogout} className="d-flex align-items-center">
+                <ExitToApp className="me-1" /> Logout
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Available Books</h2>
-          <div className="flex flex-col">
-            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Title
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Author
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Quantity
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {availableBooks.map((book) => (
-                        <tr key={book._id}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{book.title}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{book.author}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{book.quantity}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button
-                              onClick={() => handleBorrow(book._id)}
-                              className="text-indigo-600 hover:text-indigo-900"
-                            >
-                              Borrow
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+      <Container className="py-5">
+        <Row className="mb-4">
+          <Col>
+            <h1 className="mb-4 fw-bold text-primary">Welcome, {user.username}!</h1>
+          </Col>
+        </Row>
+        <Row className="mb-4">
+          <Col md={6}>
+            <Card className="h-100 shadow-sm">
+              <Card.Body className="p-4">
+                <h3 className="mb-4 fw-bold text-primary">Quick Stats</h3>
+                <p className="fs-5">Total Available Books: <Badge bg="primary" className="fs-6">{availableBooks.length}</Badge></p>
+                <p className="fs-5">Your Borrowed Books: <Badge bg="success" className="fs-6">{borrowedBooks.length}</Badge></p>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={6}>
+            <Card className="h-100 shadow-sm">
+              <Card.Body className="p-4">
+                <h3 className="mb-4 fw-bold text-primary">Library Rules</h3>
+                <ul className="fs-5">
+                  <li>You can borrow up to 5 books at a time.</li>
+                  <li>Return period is 14 days from the borrow date.</li>
+                  <li>Late returns may incur a fee.</li>
+                </ul>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <Card className="mb-5 shadow-sm">
+          <Card.Header as="h5" className="bg-primary text-white py-3">
+            <Book className="me-2" /> Available Books
+          </Card.Header>
+          <Card.Body className="p-0">
+            <Table striped bordered hover responsive className="mb-0">
+              <thead className="bg-light">
+                <tr>
+                  <th className="py-3 px-4">Title</th>
+                  <th className="py-3 px-4">Author</th>
+                  <th className="py-3 px-4">Quantity</th>
+                  <th className="py-3 px-4">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {availableBooks.map((book) => (
+                  <tr key={book._id}>
+                    <td className="py-3 px-4">{book.title}</td>
+                    <td className="py-3 px-4">{book.author}</td>
+                    <td className="py-3 px-4">{book.quantity}</td>
+                    <td className="py-3 px-4">
+                      <Button
+                        variant="outline-primary"
+                        size="sm"
+                        onClick={() => handleBorrow(book._id)}
+                        className="px-3 py-2 fw-bold"
+                      >
+                        Borrow
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Card.Body>
+        </Card>
 
-          <h2 className="text-2xl font-semibold text-gray-900 mt-12 mb-6">Borrowed Books</h2>
-          <div className="flex flex-col">
-            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Title
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Author
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Borrow Date
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Return Date
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {borrowedBooks.map((book) => (
-                        <tr key={book._id}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{book.title}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{book.author}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {new Date(book.borrowedDate).toLocaleDateString()}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {new Date(book.returnDate).toLocaleDateString()}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button
-                              onClick={() => handleReturn(book._id)}
-                              className="text-indigo-600 hover:text-indigo-900"
-                            >
-                              Return
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+        <Card className="shadow-sm">
+          <Card.Header as="h5" className="bg-success text-white py-3">
+            <BookmarkBorder className="me-2" /> Your Borrowed Books
+          </Card.Header>
+          <Card.Body className="p-0">
+            <Table striped bordered hover responsive className="mb-0">
+              <thead className="bg-light">
+                <tr>
+                  <th className="py-3 px-4">Title</th>
+                  <th className="py-3 px-4">Author</th>
+                  <th className="py-3 px-4">Borrow Date</th>
+                  <th className="py-3 px-4">Return Date</th>
+                  <th className="py-3 px-4">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {borrowedBooks.map((book) => (
+                  <tr key={book._id}>
+                    <td className="py-3 px-4">{book.title}</td>
+                    <td className="py-3 px-4">{book.author}</td>
+                    <td className="py-3 px-4">{new Date(book.borrowedDate).toLocaleDateString()}</td>
+                    <td className="py-3 px-4">{new Date(book.returnDate).toLocaleDateString()}</td>
+                    <td className="py-3 px-4">
+                      <Button
+                        variant="outline-success"
+                        size="sm"
+                        onClick={() => handleReturn(book._id)}
+                        className="px-3 py-2 fw-bold"
+                      >
+                        Return
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Card.Body>
+        </Card>
+      </Container>
     </div>
   );
 };
