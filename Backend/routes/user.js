@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
                 console.log(accessToken);
                 res.json({
                     accessToken: accessToken, 
-                    userId: user._id ,
+                    userId: user._id,
                     success: true, 
                     role: user.role
                 });
