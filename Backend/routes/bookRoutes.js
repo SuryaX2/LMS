@@ -45,8 +45,7 @@ router.post('/borrow', authenticateToken, async (req, res) => {
     book.returnDate = new Date(new Date().setDate(new Date().getDate() + 14)); // 2 weeks from now
 
     await book.save();
-    res.status(200).send('Book borrowed successfully');
-    res.json(book);
+    res.status(200).json({ message: 'Book borrowed successfully', book });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -68,8 +67,7 @@ router.post('/return', authenticateToken, async (req, res) => {
     book.returnDate = null;
 
     await book.save();
-    res.status(200).send('Book returned successfully');
-    res.json(book);
+    res.status(200).json({ message: 'Book returned successfully', book });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
