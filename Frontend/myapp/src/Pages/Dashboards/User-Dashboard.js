@@ -40,7 +40,11 @@ const UserDashboard = () => {
       return;
     }
     try {
-      await axios.post('http://localhost:3001/api/books/borrow', { bookId, userId: user.userId });
+      const token = localStorage.getItem('token');
+      await axios.post('http://localhost:3001/api/books/borrow', 
+        { bookId, userId: user.userId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       fetchBooks(user.userId);
     } catch (error) {
       console.error('Error borrowing book:', error);

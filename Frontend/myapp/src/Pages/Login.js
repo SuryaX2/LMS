@@ -29,6 +29,7 @@ const Login = () => {
         const role = response.data.role;
         localStorage.setItem('role', role);
         localStorage.setItem('user', JSON.stringify({ userId: response.data.userId }));
+        localStorage.setItem('token', response.data.accessToken);
         if (role === 'user') {
           setUser({ userId: response.data.userId });
           navigate('/user-dashboard');
