@@ -1,5 +1,6 @@
 import express from 'express';
 import b1 from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
 import User from '../models/user.js'
 
@@ -42,7 +43,13 @@ router.post('/login', async (req, res) => {
             if (!passcom) {
                 res.status(401).json({ success: false, message: 'Invalid email or password' });
             } else {
-                res.json({ success: true, role: user.role });
+                const accessToken = jwt.sign({ userId: user._id }, 'your_jwt_secret');
+                res.json({
+                    accessToken: accessToken, 
+                    userId: user._id ,
+                    success: true, 
+                    role: user.role
+                });
             }
         } else {
             return res.json({ success: false, message: "User not found" });
