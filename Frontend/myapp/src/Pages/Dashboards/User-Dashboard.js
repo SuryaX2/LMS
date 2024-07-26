@@ -161,6 +161,7 @@ const UserDashboard = () => {
             <Table striped bordered hover responsive className="mb-0">
               <thead className="bg-light">
                 <tr>
+                  <th className="py-3 px-4">Cover</th>
                   <th className="py-3 px-4">Title</th>
                   <th className="py-3 px-4">Author</th>
                   <th className="py-3 px-4">Quantity</th>
@@ -170,6 +171,22 @@ const UserDashboard = () => {
               <tbody>
                 {availableBooks.map((book) => (
                   <tr key={book._id}>
+                    <td className="py-3 px-4">
+                      <div 
+                        className="book-cover" 
+                        style={{
+                          width: '50px', 
+                          height: '75px', 
+                          backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                          transition: 'transform 0.3s ease-in-out',
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      />
+                    </td>
                     <td className="py-3 px-4">{book.title}</td>
                     <td className="py-3 px-4">{book.author}</td>
                     <td className="py-3 px-4">{book.quantity}</td>
@@ -198,6 +215,7 @@ const UserDashboard = () => {
             <Table striped bordered hover responsive className="mb-0">
               <thead className="bg-light">
                 <tr>
+                  <th className="py-3 px-4">Cover</th>
                   <th className="py-3 px-4">Title</th>
                   <th className="py-3 px-4">Author</th>
                   <th className="py-3 px-4">Borrow Date</th>
@@ -208,6 +226,22 @@ const UserDashboard = () => {
               <tbody>
                 {borrowedBooks.map((book) => (
                   <tr key={book._id}>
+                    <td className="py-3 px-4">
+                      <div 
+                        className="book-cover" 
+                        style={{
+                          width: '50px', 
+                          height: '75px', 
+                          backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                          transition: 'transform 0.3s ease-in-out',
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      />
+                    </td>
                     <td className="py-3 px-4">{book.title}</td>
                     <td className="py-3 px-4">{book.author}</td>
                     <td className="py-3 px-4">{new Date(book.borrowedDate).toLocaleDateString()}</td>
