@@ -177,7 +177,9 @@ const AdminDashboard = () => {
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
                           transition: 'transform 0.3s ease-in-out',
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          borderRadius: '8px', // Added border radius
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)' // Optional: added a subtle shadow
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.3)'}
                         onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
