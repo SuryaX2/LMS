@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
 import BookIcon from '@mui/icons-material/Book';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const AddBook = () => {
     const [book, setBook] = useState({
@@ -10,17 +11,31 @@ const AddBook = () => {
         author: '',
         isbn: '',
         price: '',
-        quantity: ''
+        quantity: '',
+        avatar: null
     });
 
     const handleInputChange = (e) => {
-        setBook({ ...book, [e.target.name]: e.target.value });
+        if (e.target.name === 'avatar') {
+            setBook({ ...book, avatar: e.target.files[0] });
+        } else {
+            setBook({ ...book, [e.target.name]: e.target.value });
+        }
     };
 
     const handleAddBook = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:3001/api/admin/save-book', book)
+        const formData = new FormData();
+        for (const key in book) {
+            formData.append(key, book[key]);
+        }
+
+        axios.post('http://localhost:3001/api/admin/save-book', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
             .then(res => {
                 console.log(res.data);
                 setBook({
@@ -28,7 +43,8 @@ const AddBook = () => {
                     author: '',
                     isbn: '',
                     price: '',
-                    quantity: ''
+                    quantity: '',
+                    avatar: null
                 });
             })
             .catch(err => console.log(err));
@@ -109,6 +125,16 @@ const AddBook = () => {
                                         </Form.Group>
                                     </Col>
                                 </Row>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Upload Avatar</Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        name="avatar"
+                                        onChange={handleInputChange}
+                                        required
+                                        accept="image/*"
+                                    />
+                                </Form.Group>
                                 <div className="d-grid mt-4">
                                     <Button variant="primary" type="submit" size="lg">
                                         <AddIcon className="me-2 mb-1" /> Add Book

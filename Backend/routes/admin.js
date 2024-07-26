@@ -6,16 +6,23 @@ import { upload } from '../middleware/multer.middleware.js';
 
 const router = express.Router();
 
-router.post('/save-book', upload.single('avatar'), async (req, res) => {
+router.post('/save-book', upload.fields([
+  {
+    name: "avatar",
+    maxCount: 1
+  }
+]), async (req, res) => {
   try {
-    if (!req.file) {
+    if (!req.files || !req.files.avatar) {
       return res.status(400).json({ message: 'Avatar is Required' });
     }
-    const avatarLocalPath = req.file.path;
+
+    const avatarLocalPath = req.files.avatar[0].path;
     const avatar = await uploadOnCloudinary(avatarLocalPath);
     if (!avatar) {
       return res.status(500).json({ message: 'Error uploading avatar' });
     }
+    
     const newBook = new Book({
       ...req.body,
       avatar: avatar.url,
