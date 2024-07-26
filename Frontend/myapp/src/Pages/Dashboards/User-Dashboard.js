@@ -183,7 +183,7 @@ const UserDashboard = () => {
                           transition: 'transform 0.3s ease-in-out',
                           cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.4)'}
                         onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       />
                     </td>
@@ -238,7 +238,7 @@ const UserDashboard = () => {
                           transition: 'transform 0.3s ease-in-out',
                           cursor: 'pointer'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.4)'}
                         onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                       />
                     </td>
