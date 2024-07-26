@@ -172,11 +172,11 @@ const UserDashboard = () => {
                 {availableBooks.map((book) => (
                   <tr key={book._id}>
                     <td className="py-3 px-4">
-                      <div 
-                        className="book-cover" 
+                      <div
+                        className="book-cover"
                         style={{
-                          width: '50px', 
-                          height: '75px', 
+                          width: '50px',
+                          height: '75px',
                           backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
@@ -227,11 +227,11 @@ const UserDashboard = () => {
                 {borrowedBooks.map((book) => (
                   <tr key={book._id}>
                     <td className="py-3 px-4">
-                      <div 
-                        className="book-cover" 
+                      <div
+                        className="book-cover"
                         style={{
-                          width: '50px', 
-                          height: '75px', 
+                          width: '50px',
+                          height: '75px',
                           backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
