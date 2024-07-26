@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
 import BookIcon from '@mui/icons-material/Book';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const AddBook = () => {
     const [book, setBook] = useState({

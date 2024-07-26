@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Navbar, Nav, Card, Table, Button, Spinner, Row, Col, Badge } from 'react-bootstrap';
-import { AccountCircle, ExitToApp, Book, BookmarkBorder, Dashboard, LibraryBooks } from '@material-ui/icons';
+import { ExitToApp, Book, BookmarkBorder, Dashboard, LibraryBooks } from '@material-ui/icons';
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);

@@ -32,6 +32,7 @@ const Login = () => {
         localStorage.setItem('token', response.data.accessToken);
         if (role === 'user') {
           setUser({ userId: response.data.userId });
+          console.log(user)
           navigate('/user-dashboard');
         } else if (role === 'admin') {
           navigate('/admin-dashboard');
