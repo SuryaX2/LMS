@@ -6,7 +6,7 @@ import { upload } from '../middleware/multer.middleware.js';
 
 const router = express.Router();
 
-router.post('/save-book', upload.single('avatar'),async (req, res) => {
+router.post('/save-book', upload.single('avatar'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'Avatar is Required' });
