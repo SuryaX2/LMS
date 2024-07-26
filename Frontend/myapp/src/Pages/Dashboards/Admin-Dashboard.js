@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import axios from 'axios'; 
+import axios from 'axios';
 import { Container, Navbar, Nav, Button, Table, Modal, Form, Dropdown, Card, Row, Col } from 'react-bootstrap';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import PersonIcon from '@mui/icons-material/Person';
@@ -154,6 +154,7 @@ const AdminDashboard = () => {
             <Table responsive hover className="align-middle">
               <thead>
                 <tr className="bg-light text-center">
+                  <th>Cover</th>
                   <th>Title</th>
                   <th>Author</th>
                   <th>ISBN</th>
@@ -166,6 +167,22 @@ const AdminDashboard = () => {
               <tbody className='text-center'>
                 {books.map(book => (
                   <tr key={book._id}>
+                    <td>
+                      <div 
+                        className="book-cover" 
+                        style={{
+                          width: '50px', 
+                          height: '75px', 
+                          backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                          transition: 'transform 0.3s ease-in-out',
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      />
+                    </td>
                     <td><strong>{book.title}</strong></td>
                     <td>{book.author}</td>
                     <td>{book.isbn}</td>
