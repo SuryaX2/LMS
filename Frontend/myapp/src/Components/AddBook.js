@@ -20,7 +20,7 @@ const AddBook = () => {
     const handleAddBook = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:3001/api/books/save-book', book)
+        axios.post('http://localhost:3001/api/admin/save-book', book)
             .then(res => {
                 console.log(res.data);
                 setBook({

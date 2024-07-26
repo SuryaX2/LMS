@@ -22,6 +22,10 @@ const BookSchema = new Schema({
         type: Number,
         required: true
     },
+    avatar: {
+        type: String, // cloudinary url
+        required: true,
+    },
     borrowedBy: {
         type: Schema.Types.ObjectId,
         ref: 'User',
