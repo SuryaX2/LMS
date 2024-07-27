@@ -148,11 +148,10 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {books.map(book => (
             <div key={book._id} className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
-              <div 
-                className="h-64 bg-cover bg-center"
-                style={{
-                  backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
-                }}
+              <img 
+                src={book.avatar || '/placeholder-cover.jpg'} 
+                alt={book.title}
+                className="w-full h-96 object-cover object-center"
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
