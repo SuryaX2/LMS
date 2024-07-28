@@ -14,9 +14,6 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 
-// Add this in your index.html or App.js to include Poppins font
-// <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -148,14 +145,18 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {books.map(book => (
             <div key={book._id} className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
-              <img 
-                src={book.avatar || '/placeholder-cover.jpg'} 
-                alt={book.title}
-                className="w-full h-96 object-cover object-center"
-              />
+              <div className="relative h-80 overflow-hidden group">
+                <img 
+                  src={book.avatar || '/placeholder-cover.jpg'} 
+                  alt={book.title}
+                  className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-300 transform translate-y-full group-hover:translate-y-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-100  p-4 flex flex-col justify-end">
+                </div>
+              </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
-                <p className="text-gray-600 mb-2">Author: {book.author}</p>
+                  <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
+                  <p className="text-gray-600">Author: {book.author}</p>
                 <p className="text-gray-600 mb-2">ISBN: {book.isbn}</p>
                 <p className="text-gray-600 mb-2">Price: ₹{book.price.toFixed(2)}</p>
                 <p className="text-gray-600 mb-2">Quantity: {book.quantity}</p>
