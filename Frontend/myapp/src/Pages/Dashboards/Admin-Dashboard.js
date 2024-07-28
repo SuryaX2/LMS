@@ -149,9 +149,9 @@ const AdminDashboard = () => {
                 <img
                   src={book.avatar || '/placeholder-cover.jpg'}
                   alt={book.title}
-                  className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-300 transform translate-y-full group-hover:translate-y-0"
+                  className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-300 transform translate-y-full group-hover:translate-y-0 opacity-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-100  p-4 flex flex-col justify-end">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-400  p-4 flex flex-col justify-end opacity-30">
                 </div>
               </div>
               <div className="p-6">
