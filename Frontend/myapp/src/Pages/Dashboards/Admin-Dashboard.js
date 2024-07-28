@@ -146,8 +146,8 @@ const AdminDashboard = () => {
           {books.map(book => (
             <div key={book._id} className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
               <div className="relative h-80 overflow-hidden group">
-                <img 
-                  src={book.avatar || '/placeholder-cover.jpg'} 
+                <img
+                  src={book.avatar || '/placeholder-cover.jpg'}
                   alt={book.title}
                   className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-300 transform translate-y-full group-hover:translate-y-0"
                 />
@@ -155,8 +155,8 @@ const AdminDashboard = () => {
                 </div>
               </div>
               <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
-                  <p className="text-gray-600">Author: {book.author}</p>
+                <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
+                <p className="text-gray-600">Author: {book.author}</p>
                 <p className="text-gray-600 mb-2">ISBN: {book.isbn}</p>
                 <p className="text-gray-600 mb-2">Price: ₹{book.price.toFixed(2)}</p>
                 <p className="text-gray-600 mb-2">Quantity: {book.quantity}</p>
