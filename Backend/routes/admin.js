@@ -22,7 +22,7 @@ router.post('/save-book', upload.fields([
     if (!avatar) {
       return res.status(500).json({ message: 'Error uploading avatar' });
     }
-    
+
     const newBook = new Book({
       ...req.body,
       avatar: avatar.url,
