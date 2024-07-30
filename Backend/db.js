@@ -8,7 +8,7 @@ const connectToMongo = async () => {
         console.log("Conection successful");
     } catch (error) {
         console.error("Error: " + error);
-    }   
+    }
 }
 
 export default connectToMongo;
