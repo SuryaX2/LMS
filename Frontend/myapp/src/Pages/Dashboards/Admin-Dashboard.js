@@ -178,24 +178,26 @@ const AdminDashboard = () => {
           {books.map((book) => (
             <div
               key={book._id}
-              className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
-              style={{
-                backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                height: '400px', // Increased height for larger cards
-              }}
+              className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl flex flex-col"
+              style={{ height: '450px' }}
             >
-              <div className="bg-white bg-opacity-80 p-6 h-full flex flex-col justify-between">
+              <div className="h-64 overflow-hidden">
+                <img
+                  src={book.avatar || '/placeholder-cover.jpg'}
+                  alt={book.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4 flex-grow flex flex-col justify-between">
                 <div>
                   <h3 className="text-xl font-semibold mb-2 text-gray-800">
                     {book.title}
                   </h3>
                   <p className="text-gray-600">Author: {book.author}</p>
-                  <p className="text-gray-600 mb-2">ISBN: {book.isbn}</p>
-                  <p className="text-gray-600 mb-2">Price: ₹{book.price.toFixed(2)}</p>
-                  <p className="text-gray-600 mb-2">Quantity: {book.quantity}</p>
-                  <p className="mb-4">
+                  <p className="text-gray-600">ISBN: {book.isbn}</p>
+                  <p className="text-gray-600">Price: ₹{book.price.toFixed(2)}</p>
+                  <p className="text-gray-600">Quantity: {book.quantity}</p>
+                  <p>
                     Status:{' '}
                     {book.borrowedBy ? (
                       <span className="text-yellow-600 font-semibold">Borrowed</span>
@@ -204,7 +206,7 @@ const AdminDashboard = () => {
                     )}
                   </p>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between mt-4">
                   <Button
                     variant="outline-primary"
                     size="sm"
