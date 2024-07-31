@@ -141,12 +141,12 @@ const AdminDashboard = () => {
                 alt={book.title}
                 className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
               <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
-                <h3 className="text-2xl font-bold mb-2">{book.title}</h3>
-                <p className="text-sm mb-1">Author: {book.author}</p>
-                <p className="text-sm mb-1">ISBN: {book.isbn}</p>
-                <p className="text-sm mb-1">Price: ₹{book.price.toFixed(2)}</p>
+                <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
+                <p className="text-sm mb-1 opacity-90">By {book.author}</p>
+                <p className="text-sm mb-1 opacity-80">ISBN: {book.isbn}</p>
+                <p className="text-sm mb-1 font-semibold">Price: <span className="text-yellow-300">₹{book.price.toFixed(2)}</span></p>
                 <p className="text-sm mb-1">Quantity: {book.quantity}</p>
                 <p className="mb-4">
                   Status: {book.borrowedBy ? (
@@ -155,11 +155,21 @@ const AdminDashboard = () => {
                     <span className="text-green-300 font-semibold">Available</span>
                   )}
                 </p>
-                <div className="flex justify-between">
-                  <Button variant="outline-light" size="sm" onClick={() => handleEditBook(book)} className="flex items-center">
+                <div className="flex justify-between mt-2">
+                  <Button 
+                    variant="outline-light" 
+                    size="sm" 
+                    onClick={() => handleEditBook(book)} 
+                    className="flex items-center bg-white/20 hover:bg-white/30 transition duration-300"
+                  >
                     <Edit fontSize="small" className="mr-1" /> Edit
                   </Button>
-                  <Button variant="outline-danger" size="sm" onClick={() => handleDeleteBook(book._id)} className="flex items-center">
+                  <Button 
+                    variant="outline-danger" 
+                    size="sm" 
+                    onClick={() => handleDeleteBook(book._id)} 
+                    className="flex items-center bg-red-500/20 hover:bg-red-500/30 transition duration-300"
+                  >
                     <Delete fontSize="small" className="mr-1" /> Delete
                   </Button>
                 </div>
