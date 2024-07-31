@@ -183,29 +183,30 @@ const AdminDashboard = () => {
                 backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
+                height: '400px', // Increased height for larger cards
               }}
             >
-              <div className="bg-black bg-opacity-60 p-6 h-full flex flex-col justify-between">
+              <div className="bg-white bg-opacity-80 p-6 h-full flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xl font-semibold mb-2 text-white">
+                  <h3 className="text-xl font-semibold mb-2 text-gray-800">
                     {book.title}
                   </h3>
-                  <p className="text-gray-300">Author: {book.author}</p>
-                  <p className="text-gray-300 mb-2">ISBN: {book.isbn}</p>
-                  <p className="text-gray-300 mb-2">Price: ₹{book.price.toFixed(2)}</p>
-                  <p className="text-gray-300 mb-2">Quantity: {book.quantity}</p>
+                  <p className="text-gray-600">Author: {book.author}</p>
+                  <p className="text-gray-600 mb-2">ISBN: {book.isbn}</p>
+                  <p className="text-gray-600 mb-2">Price: ₹{book.price.toFixed(2)}</p>
+                  <p className="text-gray-600 mb-2">Quantity: {book.quantity}</p>
                   <p className="mb-4">
                     Status:{' '}
                     {book.borrowedBy ? (
-                      <span className="text-yellow-300 font-semibold">Borrowed</span>
+                      <span className="text-yellow-600 font-semibold">Borrowed</span>
                     ) : (
-                      <span className="text-green-300 font-semibold">Available</span>
+                      <span className="text-green-600 font-semibold">Available</span>
                     )}
                   </p>
                 </div>
                 <div className="flex justify-between">
                   <Button
-                    variant="outline-light"
+                    variant="outline-primary"
                     size="sm"
                     onClick={() => handleEditBook(book)}
                     className="flex items-center"
