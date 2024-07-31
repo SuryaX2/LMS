@@ -156,18 +156,18 @@ const AdminDashboard = () => {
                   )}
                 </p>
                 <div className="flex justify-between mt-2">
-                  <Button 
-                    variant="outline-light" 
-                    size="sm" 
-                    onClick={() => handleEditBook(book)} 
+                  <Button
+                    variant="outline-light"
+                    size="sm"
+                    onClick={() => handleEditBook(book)}
                     className="flex items-center bg-white/20 hover:bg-white/30 transition duration-300"
                   >
                     <Edit fontSize="small" className="mr-1" /> Edit
                   </Button>
-                  <Button 
-                    variant="outline-danger" 
-                    size="sm" 
-                    onClick={() => handleDeleteBook(book._id)} 
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => handleDeleteBook(book._id)}
                     className="flex items-center bg-red-500/20 hover:bg-red-500/30 transition duration-300"
                   >
                     <Delete fontSize="small" className="mr-1" /> Delete
