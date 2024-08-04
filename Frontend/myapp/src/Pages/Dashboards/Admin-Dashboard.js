@@ -75,7 +75,7 @@ const AdminDashboard = () => {
   const { totalBooks, totalQuantity, totalValue, borrowedBooks } = calculateTotalInventory();
 
   return (
-    <div className="bg-gray-100 min-h-screen font-sans">
+    <div className="bg-gray-900 min-h-screen font-sans">
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
         <Container>
           <Navbar.Brand href="#home" className="flex items-center">
