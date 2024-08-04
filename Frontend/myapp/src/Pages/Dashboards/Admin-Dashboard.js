@@ -138,14 +138,6 @@ const AdminDashboard = () => {
               Book Inventory
               <span className="absolute bottom-0 left-0 w-1/3 h-1 bg-blue-500 rounded-full"></span>
             </h2>
-            <Button
-              variant="primary"
-              className="flex items-center bg-blue-500 hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
-              onClick={() => handleNavigation('/add-book')}
-            >
-              <Add className="mr-1" />
-              Add New Book
-            </Button>
           </div>
           <p className="text-gray-600 mt-2">Manage your library's collection with ease</p>
         </div>
