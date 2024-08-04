@@ -141,7 +141,7 @@ const AdminDashboard = () => {
                 alt={book.title}
                 className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
               <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
                 <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
                 <p className="text-sm mb-1 opacity-90">By {book.author}</p>
