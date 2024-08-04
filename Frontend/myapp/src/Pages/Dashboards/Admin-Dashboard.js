@@ -132,7 +132,24 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <h2 className="text-2xl font-semibold mb-4">Book Inventory</h2>
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold text-gray-800 relative">
+              Book Inventory
+              <span className="absolute bottom-0 left-0 w-1/3 h-1 bg-blue-500 rounded-full"></span>
+            </h2>
+            <Button
+              variant="primary"
+              className="flex items-center bg-blue-500 hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105"
+              onClick={() => handleNavigation('/add-book')}
+            >
+              <Add className="mr-1" />
+              Add New Book
+            </Button>
+          </div>
+          <p className="text-gray-600 mt-2">Manage your library's collection with ease</p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {books.map(book => (
             <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
