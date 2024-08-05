@@ -39,8 +39,9 @@ router.get('/get-books', async (req, res) => {
     const books = await Book.find().exec();
     const user = await User.findById(books.borrowedBy)
     res.json({
-      username : user.username
-    },books);
+      username: user.username,
+      books
+    });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching books' });
   }
