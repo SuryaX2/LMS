@@ -171,7 +171,6 @@ const AdminDashboard = () => {
                     <span className="text-green-300 font-semibold">None</span>
                   )}
                 </p>
-                {/* <p className="text-sm mb-1">Borrowed By: {book.borrowedBy.username}</p> */}
                 <div className="flex justify-between mt-2">
                   <Button
                     variant="outline-light"
