@@ -1,5 +1,6 @@
 import express from 'express';
 import Book from '../models/Books.js';
+import User from '../models/user.js'
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { upload } from '../middleware/multer.middleware.js';
 
@@ -37,7 +38,10 @@ router.post('/save-book', upload.fields([
 router.get('/get-books', async (req, res) => {
   try {
     const books = await Book.find().exec();
-    res.json(books);
+    const id = await user.findById(books.borrowedBy)
+    res.json({
+      user
+    });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching books' });
   }
