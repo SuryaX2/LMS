@@ -37,10 +37,10 @@ router.post('/save-book', upload.fields([
 router.get('/get-books', async (req, res) => {
   try {
     const books = await Book.find().exec();
-    const id = await user.findById(books.borrowedBy)
+    const user = await User.findById(books.borrowedBy)
     res.json({
-      user
-    });
+      username : user.username
+    },books);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching books' });
   }
