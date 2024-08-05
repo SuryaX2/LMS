@@ -144,7 +144,7 @@ const AdminDashboard = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {books.map(book => (
-            <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
+            <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
               <img
                 src={book.avatar || '/placeholder-cover.jpg'}
                 alt={book.title}
@@ -153,18 +153,25 @@ const AdminDashboard = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
               <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
                 <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
-                <p className="text-sm mb-1 opacity-90">By {book.author}</p>
-                <p className="text-sm mb-1 opacity-80">ISBN: {book.isbn}</p>
+                <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
+                <p className="text-sm mb-1  font-semibold opacity-80">ISBN: {book.isbn}</p>
                 <p className="text-sm mb-1 font-semibold">Price: <span className="text-yellow-300">₹{book.price.toFixed(2)}</span></p>
-                <p className="text-sm mb-1">Quantity: {book.quantity}</p>
-                <p className="mb-4">
+                <p className="text-sm mb-1 font-semibold">Quantity: {book.quantity}</p>
+                <p className="mb-1 font-semibold">
                   Status: {book.borrowedBy ? (
                     <span className="text-yellow-300 font-semibold">Borrowed</span>
                   ) : (
                     <span className="text-green-300 font-semibold">Available</span>
                   )}
                 </p>
-                <p className="text-sm mb-1">Borrowed By: {book.borrowedBy.username}</p>
+                <p className="mb-2 font-semibold">
+                  Borrowed By: {book.borrowedBy ? (
+                    <span className="text-yellow-300 font-semibold">{book.borrowedBy.username}</span>
+                  ) : (
+                    <span className="text-green-300 font-semibold">None</span>
+                  )}
+                </p>
+                {/* <p className="text-sm mb-1">Borrowed By: {book.borrowedBy.username}</p> */}
                 <div className="flex justify-between mt-2">
                   <Button
                     variant="outline-light"
