@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
 import BookIcon from '@mui/icons-material/Book';
+import { useNavigate } from 'react-router-dom';
 
 const AddBook = () => {
     const [book, setBook] = useState({
@@ -13,6 +14,7 @@ const AddBook = () => {
         quantity: '',
         avatar: null
     });
+  const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         if (e.target.name === 'avatar') {
@@ -45,6 +47,7 @@ const AddBook = () => {
                     quantity: '',
                     avatar: null
                 });
+                navigate('/admin-dashboard')
             })
             .catch(err => console.log(err));
     };
