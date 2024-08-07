@@ -51,7 +51,6 @@ router.get('/get-books', async (req, res) => {
   }
 });
 
-
 // Update a book by ID
 router.put('/:id', async (req, res) => {
   try {
