@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
-import { Container, Navbar, Nav, Dropdown, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap';
 import { Book, Person, Logout, MenuBook } from '@mui/icons-material';
 
 const UserDashboard = () => {
