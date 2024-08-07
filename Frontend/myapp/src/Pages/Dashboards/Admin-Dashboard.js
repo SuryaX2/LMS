@@ -183,20 +183,38 @@ const AdminDashboard = () => {
                 <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
                 <p className="text-sm mb-1  font-semibold opacity-80">ISBN: {book.isbn}</p>
                 <p className="text-sm mb-1 font-semibold">Price: <span className="text-yellow-300">₹{book.price.toFixed(2)}</span></p>
-                <p className="text-sm mb-1 font-semibold">Quantity: <span className="text-yellow-300">{book.quantity}</span></p>
-                <div className="mt-2 flex space-x-2">
-                  <button
+                <p className="text-sm mb-1 font-semibold">Quantity: {book.quantity}</p>
+                <p className="mb-1 font-semibold">
+                  Status: {book.borrowedBy ? (
+                    <span className="text-yellow-300 font-semibold">Borrowed</span>
+                  ) : (
+                    <span className="text-green-300 font-semibold">Available</span>
+                  )}
+                </p>
+                <p className="mb-2 font-semibold">
+                  Borrowed By: {book.borrowedBy ? (
+                    <span className="text-yellow-300 font-semibold">{book.borrowedBy.username}</span>
+                  ) : (
+                    <span className="text-green-300 font-semibold">None</span>
+                  )}
+                </p>
+                <div className="flex justify-between mt-2">
+                  <Button
+                    variant="outline-light"
+                    size="sm"
                     onClick={() => handleEditBook(book)}
-                    className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                    className="flex items-center bg-white/20 hover:bg-white/30 transition duration-300"
                   >
-                    <Edit fontSize="small" />
-                  </button>
-                  <button
+                    <Edit fontSize="small" className="mr-1" /> Edit
+                  </Button>
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
                     onClick={() => handleDeleteBook(book._id)}
-                    className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+                    className="flex items-center bg-red-500/20 hover:bg-red-500/30 transition duration-300"
                   >
-                    <Delete fontSize="small" />
-                  </button>
+                    <Delete fontSize="small" className="mr-1" /> Delete
+                  </Button>
                 </div>
               </div>
             </div>
