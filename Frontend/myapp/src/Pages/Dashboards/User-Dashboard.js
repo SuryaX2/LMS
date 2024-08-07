@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useNavigate } from 'react';
 import axios from 'axios';
-import { Container, Navbar, Nav, Card, Table, Button, Spinner, Row, Col, Badge } from 'react-bootstrap';
-import { ExitToApp, Book, BookmarkBorder, Dashboard, LibraryBooks } from '@material-ui/icons';
+import { Container, Navbar, Nav, Card, Button, Spinner, Dropdown } from 'react-bootstrap';
+import { Book, Person, Logout, MenuBook } from '@material-ui/icons';
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
   const [availableBooks, setAvailableBooks] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('user'));
@@ -48,6 +49,10 @@ const UserDashboard = () => {
       setLoading(false);
     }
   }
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
 
   const handleBorrow = async (bookId) => {
     if (!user) {
@@ -109,159 +114,71 @@ const UserDashboard = () => {
   }
 
   return (
-    <div className="min-vh-100 bg-light">
-      <Navbar bg="primary" variant="dark" expand="lg" className="shadow-sm">
+    <div className="bg-gray-100 min-h-screen font-sans">
+      <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
         <Container>
-          <Navbar.Brand href="#home" className="d-flex align-items-center">
-            <LibraryBooks className="me-2" />
-            <span className="fw-bold">Library Dashboard</span>
+          <Navbar.Brand href="#home" className="flex items-center">
+            <MenuBook className="mr-2" />
+            <span className="font-semibold">User Dashboard</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav>
-              <Nav.Link href="#home" className="d-flex align-items-center">
-                <Dashboard className="me-1" /> Dashboard
-              </Nav.Link>
-              <Nav.Link onClick={handleLogout} className="d-flex align-items-center">
-                <ExitToApp className="me-1" /> Logout
-              </Nav.Link>
+              <Dropdown align="end">
+                <Dropdown.Toggle variant="outline-light" id="dropdown-basic" className="flex items-center">
+                  <Person className="mr-2" />
+                  {user?.username || 'User'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => handleNavigation('/user-dashboard')} className="flex items-center">
+                    <Book className="mr-2" />Dashboard
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout} className="flex items-center">
+                    <Logout className="mr-2" />Logout
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
-      <Container className="py-5">
-        <Row className="mb-4">
-          <Col md={6}>
-            <Card className="h-100 shadow-sm">
-              <Card.Body className="p-4">
-                <h3 className="mb-4 fw-bold text-primary">Quick Stats</h3>
-                <p className="fs-5">Total Available Books: <Badge bg="primary" className="fs-6 ml-5">{availableBooks.length}</Badge></p>
-                <p className="fs-5">Your Borrowed Books: <Badge bg="success" className="fs-6 ml-4">{borrowedBooks.length}</Badge></p>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={6}>
-            <Card className="h-100 shadow-sm">
-              <Card.Body className="p-4">
-                <h3 className="mb-4 fw-bold text-primary">Library Rules</h3>
-                <ul className="fs-5">
-                  <li>Return period is 14 days from the borrow date.</li>
-                  <li>Late returns may incur a fee.</li>
-                </ul>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <Card className="mb-5 shadow-sm">
-          <Card.Header as="h5" className="bg-primary text-white py-3">
-            <Book className="me-2" /> Available Books
-          </Card.Header>
-          <Card.Body className="p-0">
-            <Table striped bordered hover responsive className="mb-0">
-              <thead className="bg-light">
-                <tr>
-                  <th className="py-3 px-4">Cover</th>
-                  <th className="py-3 px-4">Title</th>
-                  <th className="py-3 px-4">Author</th>
-                  <th className="py-3 px-4">Quantity</th>
-                  <th className="py-3 px-4">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {availableBooks.map((book) => (
-                  <tr key={book._id}>
-                    <td className="py-3 px-4">
-                      <div
-                        className="book-cover"
-                        style={{
-                          width: '50px',
-                          height: '75px',
-                          backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center',
-                          transition: 'transform 0.3s ease-in-out',
-                          cursor: 'pointer'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.4)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                      />
-                    </td>
-                    <td className="py-3 px-4">{book.title}</td>
-                    <td className="py-3 px-4">{book.author}</td>
-                    <td className="py-3 px-4">{book.quantity}</td>
-                    <td className="py-3 px-4">
-                      <Button
-                        variant="outline-primary"
-                        size="sm"
-                        onClick={() => handleBorrow(book._id)}
-                        className="px-3 py-2 fw-bold"
-                      >
-                        Borrow
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Card.Body>
-        </Card>
+      <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold text-gray-800 relative">
+              Available Books
+              <span className="absolute bottom-0 left-0 w-1/3 h-1 bg-blue-500 rounded-full"></span>
+            </h2>
+          </div>
+          <p className="text-gray-600 mt-2">Browse and request books to borrow</p>
+        </div>
 
-        <Card className="shadow-sm">
-          <Card.Header as="h5" className="bg-success text-white py-3">
-            <BookmarkBorder className="me-2" /> Your Borrowed Books
-          </Card.Header>
-          <Card.Body className="p-0">
-            <Table striped bordered hover responsive className="mb-0">
-              <thead className="bg-light">
-                <tr>
-                  <th className="py-3 px-4">Cover</th>
-                  <th className="py-3 px-4">Title</th>
-                  <th className="py-3 px-4">Author</th>
-                  <th className="py-3 px-4">Borrow Date</th>
-                  <th className="py-3 px-4">Return Date</th>
-                  <th className="py-3 px-4">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {borrowedBooks.map((book) => (
-                  <tr key={book._id}>
-                    <td className="py-3 px-4">
-                      <div
-                        className="book-cover"
-                        style={{
-                          width: '50px',
-                          height: '75px',
-                          backgroundImage: `url(${book.avatar || '/placeholder-cover.jpg'})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center',
-                          transition: 'transform 0.3s ease-in-out',
-                          cursor: 'pointer'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.4)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                      />
-                    </td>
-                    <td className="py-3 px-4">{book.title}</td>
-                    <td className="py-3 px-4">{book.author}</td>
-                    <td className="py-3 px-4">{new Date(book.borrowedDate).toLocaleDateString()}</td>
-                    <td className="py-3 px-4">{new Date(book.returnDate).toLocaleDateString()}</td>
-                    <td className="py-3 px-4">
-                      <Button
-                        variant="outline-success"
-                        size="sm"
-                        onClick={() => handleReturn(book._id)}
-                        className="px-3 py-2 fw-bold"
-                      >
-                        Return
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Card.Body>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {books.map(book => (
+            <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
+              <img
+                src={book.avatar || '/placeholder-cover.jpg'}
+                alt={book.title}
+                className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
+              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
+                <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
+                <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
+                <p className="text-sm mb-1 font-semibold">ISBN: {book.isbn}</p>
+                <p className="text-sm mb-1 font-semibold">Price: ₹{book.price.toFixed(2)}</p>
+                <p className="text-sm mb-1 font-semibold">Quantity: {book.quantity}</p>
+                <button
+                  onClick={() => handleBorrow(book._id)}
+                  className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                >
+                  Request to Borrow
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </Container>
     </div>
   );
