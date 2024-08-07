@@ -1,7 +1,7 @@
 // routes/bookRequests.js
 import { Router } from 'express';
 const router = Router();
-import BookRequest, { find, findByIdAndUpdate } from '../models/BookRequest';
+import BookRequest from '../models/BookRequest';
 
 // Create a new book request
 router.post('/request', async (req, res) => {
