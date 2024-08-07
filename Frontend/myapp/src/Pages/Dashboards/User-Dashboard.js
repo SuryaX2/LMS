@@ -40,7 +40,7 @@ const UserDashboard = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:3001/api/book-requests/request',
+      await axios.post('http://localhost:3001/api/admin/request',
         { bookId, userId: user.userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
