@@ -19,7 +19,7 @@ const UserDashboard = () => {
   }, [isAuthenticated, navigate]);
 
   const fetchBooks = () => {
-    axios.get('http://localhost:3001/api/user/get-books')
+    axios.get('http://localhost:3001/api/books')
       .then(res => setBooks(res.data))
       .catch(err => console.log(err));
   };
