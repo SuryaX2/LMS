@@ -1,54 +1,33 @@
-import React, { useState, useEffect, useNavigate } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
-import { Container, Navbar, Nav, Card, Button, Spinner, Dropdown } from 'react-bootstrap';
-import { Book, Person, Logout, MenuBook } from '@material-ui/icons';
+import { Container, Navbar, Nav, Dropdown, Button } from 'react-bootstrap';
+import { Book, Person, Logout, MenuBook } from '@mui/icons-material';
 
 const UserDashboard = () => {
-  const [user, setUser] = useState(null);
-  const [availableBooks, setAvailableBooks] = useState([]);
-  const [borrowedBooks, setBorrowedBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [books, setBooks] = useState([]);
+  const { isAuthenticated, user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem('user'));
-    const token = localStorage.getItem('token');
-    console.log('Token:', token);
-    if (userInfo) {
-      setUser(userInfo);
-      fetchBooks(userInfo.userId);
+    if (!isAuthenticated) {
+      navigate('/login');
     } else {
-      setLoading(false);
+      fetchBooks();
     }
-  }, []);
+  }, [isAuthenticated, navigate]);
 
-  axios.interceptors.request.use(
-    (config) => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+  const fetchBooks = () => {
+    axios.get('http://localhost:3001/api/user/get-books')
+      .then(res => setBooks(res.data))
+      .catch(err => console.log(err));
+  };
 
-  async function fetchBooks(userId) {
-    try {
-      setLoading(true);
-      const availableResponse = await axios.get('http://localhost:3001/api/books');
-      setAvailableBooks(availableResponse.data.filter(book => book.quantity > 0));
-
-      const borrowedResponse = await axios.get(`http://localhost:3001/api/books/borrowed/${userId}`);
-      setBorrowedBooks(borrowedResponse.data);
-    } catch (error) {
-      console.error('Error fetching books:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -61,57 +40,15 @@ const UserDashboard = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:3001/api/books/borrow',
+      await axios.post('http://localhost:3001/api/book-requests/request',
         { bookId, userId: user.userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      fetchBooks(user.userId);
+      alert('Request sent to admin for approval.');
     } catch (error) {
-      console.error('Error borrowing book:', error);
+      console.error('Error requesting book:', error);
     }
   };
-
-  const handleReturn = async (bookId) => {
-    if (!user) {
-      console.error('User not logged in');
-      return;
-    }
-    try {
-      await axios.post('http://localhost:3001/api/books/return', { bookId });
-      fetchBooks(user.userId);
-    } catch (error) {
-      console.error('Error returning book:', error);
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-  };
-
-  if (loading) {
-    return (
-      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <Spinner animation="border" role="status" variant="primary">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <Container className="mt-5">
-        <Card className="text-center shadow" style={{ maxWidth: '400px', margin: 'auto' }}>
-          <Card.Body className="p-5">
-            <Card.Title as="h2" className="mb-4 fw-bold">Welcome to the Library</Card.Title>
-            <Card.Text className="mb-4">Please log in to view the dashboard.</Card.Text>
-            <Button variant="primary" href="/login" size="lg" className="px-4 py-2">Log In</Button>
-          </Card.Body>
-        </Card>
-      </Container>
-    );
-  }
 
   return (
     <div className="bg-gray-100 min-h-screen font-sans">
