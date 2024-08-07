@@ -19,4 +19,5 @@ const BookRequestSchema = new Schema({
     },
 }, { timestamps: true });
 
-export default model('BookRequest', BookRequestSchema);
+const BookRequest = mongoose.model('BookRequest', BookRequestSchema);
+export default BookRequest;
