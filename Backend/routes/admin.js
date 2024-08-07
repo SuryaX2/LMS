@@ -13,6 +13,11 @@ router.post('/save-book', upload.fields([
   }
 ]), async (req, res) => {
   try {
+    let book = await Book.find({ isbn: req.body.isbn });
+    if (book) {
+      return res.status(404).json({ error: "Book already exists" });
+    }
+    
     if (!req.files || !req.files.avatar) {
       return res.status(400).json({ message: 'Avatar is Required' });
     }
