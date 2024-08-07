@@ -9,6 +9,7 @@ const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState(null);
+  const [requests, setRequests] = useState([]);
   const { isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -17,11 +18,18 @@ const AdminDashboard = () => {
       navigate('/login');
     }
     fetchBooks();
+    fetchRequests();
   }, [isAuthenticated, navigate]);
 
   const fetchBooks = () => {
     axios.get('http://localhost:3001/api/admin/get-books')
       .then(res => setBooks(res.data))
+      .catch(err => console.log(err));
+  };
+
+  const fetchRequests = () => {
+    axios.get('http://localhost:3001/api/admin/get-requests')
+      .then(res => setRequests(res.data))
       .catch(err => console.log(err));
   };
 
@@ -61,6 +69,25 @@ const AdminDashboard = () => {
 
   const handleInputChange = (e) => {
     setEditingBook({ ...editingBook, [e.target.name]: e.target.value });
+  };
+
+  const handleApproveRequest = (requestId, bookId, userId) => {
+    axios.post('http://localhost:3001/api/admin/approve-request', { requestId, bookId, userId })
+      .then(res => {
+        console.log(res.message);
+        fetchBooks();
+        fetchRequests();
+      })
+      .catch(err => console.log(err));
+  };
+
+  const handleRejectRequest = (requestId) => {
+    axios.post('http://localhost:3001/api/admin/reject-request', { requestId })
+      .then(res => {
+        console.log(res.message);
+        fetchRequests();
+      })
+      .catch(err => console.log(err));
   };
 
   const calculateTotalInventory = () => {
@@ -156,86 +183,103 @@ const AdminDashboard = () => {
                 <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
                 <p className="text-sm mb-1  font-semibold opacity-80">ISBN: {book.isbn}</p>
                 <p className="text-sm mb-1 font-semibold">Price: <span className="text-yellow-300">₹{book.price.toFixed(2)}</span></p>
-                <p className="text-sm mb-1 font-semibold">Quantity: {book.quantity}</p>
-                <p className="mb-1 font-semibold">
-                  Status: {book.borrowedBy ? (
-                    <span className="text-yellow-300 font-semibold">Borrowed</span>
-                  ) : (
-                    <span className="text-green-300 font-semibold">Available</span>
-                  )}
-                </p>
-                <p className="mb-2 font-semibold">
-                  Borrowed By: {book.borrowedBy ? (
-                    <span className="text-yellow-300 font-semibold">{book.borrowedBy.username}</span>
-                  ) : (
-                    <span className="text-green-300 font-semibold">None</span>
-                  )}
-                </p>
-                <div className="flex justify-between mt-2">
-                  <Button
-                    variant="outline-light"
-                    size="sm"
+                <p className="text-sm mb-1 font-semibold">Quantity: <span className="text-yellow-300">{book.quantity}</span></p>
+                <div className="mt-2 flex space-x-2">
+                  <button
                     onClick={() => handleEditBook(book)}
-                    className="flex items-center bg-white/20 hover:bg-white/30 transition duration-300"
+                    className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
                   >
-                    <Edit fontSize="small" className="mr-1" /> Edit
-                  </Button>
-                  <Button
-                    variant="outline-danger"
-                    size="sm"
+                    <Edit fontSize="small" />
+                  </button>
+                  <button
                     onClick={() => handleDeleteBook(book._id)}
-                    className="flex items-center bg-red-500/20 hover:bg-red-500/30 transition duration-300"
+                    className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
                   >
-                    <Delete fontSize="small" className="mr-1" /> Delete
-                  </Button>
+                    <Delete fontSize="small" />
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
+        <div className="mt-8">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Book Requests</h2>
+          {requests.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white shadow-md rounded-lg">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-2 border-b border-gray-200">Book Title</th>
+                    <th className="px-4 py-2 border-b border-gray-200">Requested By</th>
+                    <th className="px-4 py-2 border-b border-gray-200">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {requests.map(request => (
+                    <tr key={request._id}>
+                      <td className="px-4 py-2 border-b border-gray-200">{request.bookId.title}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">{request.userId.username}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">
+                        {request.status === 'pending' && (
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => handleApproveRequest(request._id, request.bookId._id, request.userId._id)}
+                              className="px-4 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => handleRejectRequest(request._id)}
+                              className="px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        )}
+                        {request.status === 'approved' && <span className="text-green-500">Approved</span>}
+                        {request.status === 'rejected' && <span className="text-red-500">Rejected</span>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p>No book requests at the moment.</p>
+          )}
+        </div>
       </Container>
 
-      <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)} size="lg">
-        <Modal.Header closeButton className="bg-gray-100">
-          <Modal.Title className="flex items-center text-xl font-semibold">
-            <Book className="mr-2 text-green-500" />
-            Edit Book
-          </Modal.Title>
+      <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Book</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleEditSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Form.Group>
-                <Form.Label>Title</Form.Label>
-                <Form.Control type="text" name="title" value={editingBook?.title || ''} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Author</Form.Label>
-                <Form.Control type="text" name="author" value={editingBook?.author || ''} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>ISBN</Form.Label>
-                <Form.Control type="text" name="isbn" value={editingBook?.isbn || ''} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Price</Form.Label>
-                <Form.Control type="number" name="price" value={editingBook?.price || ''} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Quantity</Form.Label>
-                <Form.Control type="number" name="quantity" value={editingBook?.quantity || ''} onChange={handleInputChange} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </Form.Group>
-            </div>
+            <Form.Group controlId="formTitle" className="mb-3">
+              <Form.Label>Title</Form.Label>
+              <Form.Control type="text" name="title" value={editingBook?.title || ''} onChange={handleInputChange} required />
+            </Form.Group>
+            <Form.Group controlId="formAuthor" className="mb-3">
+              <Form.Label>Author</Form.Label>
+              <Form.Control type="text" name="author" value={editingBook?.author || ''} onChange={handleInputChange} required />
+            </Form.Group>
+            <Form.Group controlId="formISBN" className="mb-3">
+              <Form.Label>ISBN</Form.Label>
+              <Form.Control type="text" name="isbn" value={editingBook?.isbn || ''} onChange={handleInputChange} required />
+            </Form.Group>
+            <Form.Group controlId="formPrice" className="mb-3">
+              <Form.Label>Price</Form.Label>
+              <Form.Control type="number" step="0.01" name="price" value={editingBook?.price || ''} onChange={handleInputChange} required />
+            </Form.Group>
+            <Form.Group controlId="formQuantity" className="mb-3">
+              <Form.Label>Quantity</Form.Label>
+              <Form.Control type="number" name="quantity" value={editingBook?.quantity || ''} onChange={handleInputChange} required />
+            </Form.Group>
+            <Button variant="primary" type="submit">Save Changes</Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setEditModalOpen(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleEditSubmit}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
   );
