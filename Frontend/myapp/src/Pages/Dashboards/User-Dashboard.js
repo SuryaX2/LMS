@@ -67,18 +67,29 @@ const UserDashboard = () => {
     setShowModal(true);
   };
 
-  const confirmBorrow = async () => {
-    if (!user || !selectedBook) return;
+  const confirmBorrow = async (selectedBook) => {
+    if (!selectedBook) {
+      console.log(selectedBook);
+      
+      return;
+    }
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:3001/api/admin/request',
-        { bookId: selectedBook._id, userId: user.userId },
+      const user = localStorage.getItem('user');
+      const res = await axios.post('http://localhost:3001/api/admin/book/request',
+        { bookId: selectedBook._id, userId: user },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setShowModal(false);
-      alert('Request sent to admin for approval.');
-      fetchBooks(); // Refresh the book list
+      console.log(res);
+      
+      if (res.data.success) {
+        console.log(res);
+        setShowModal(false);
+        alert('Request sent to admin for approval.');
+        fetchBooks(); // Refresh the book list
+      }
+
     } catch (error) {
       console.error('Error requesting book:', error);
       alert('Failed to send request. Please try again.');
@@ -178,14 +189,13 @@ const UserDashboard = () => {
                 <p className="text-sm mb-1 font-semibold">Price: ₹{book.price.toFixed(2)}</p>
                 <td className="text-sm mb-1 font-semibold">Borrow Date: <span className="text-yellow-300 font-semibold">{new Date(book.borrowedDate).toLocaleDateString()}</span></td>
                 <td className="text-sm mb-1 font-semibold">Return Date: <span className="text-green-300 font-semibold">{new Date(book.returnDate).toLocaleDateString()}</span></td>
-                <td className="py-3 px-4">
+                <td className="">
                   <Button
                     variant="outline-success"
-                    size="sm"
                     onClick={() => handleReturn(book._id)}
-                    className="px-3 py-2 fw-bold"
+                    className="mt-2 px-4 py-2 w-full text-white"
                   >
-                    Return
+                    Return the book
                   </Button>
                 </td>
               </div>
@@ -205,7 +215,7 @@ const UserDashboard = () => {
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={confirmBorrow}>
+          <Button variant="primary" onClick={()=>confirmBorrow(selectedBook)}>
             Confirm Request
           </Button>
         </Modal.Footer>

@@ -10,8 +10,8 @@ const router = Router();
 // Create a new borrow request
 router.post('/request', authenticate, async (req, res) => {
   try {
-    const { bookId } = req.body;
-    const userId = req.user.id;
+    const { bookId, userId } = req.body;
+    // const userId = req.user.id;
 
     const existingRequest = await BookRequest.findOne({ userId, bookId, status: 'pending' });
     if (existingRequest) {
@@ -29,7 +29,10 @@ router.post('/request', authenticate, async (req, res) => {
 
     const newRequest = new BookRequest({ userId, bookId, status: 'pending' });
     await newRequest.save();
-    res.status(201).json(newRequest);
+    res.status(201).json({
+      success: true,
+      newRequest
+    });
   } catch (error) {
     console.error('Error creating borrow request:', error);
     res.status(500).json({ error: 'Internal Server Error' });
