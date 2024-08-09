@@ -11,6 +11,9 @@ const AdminDashboard = () => {
   const [editingBook, setEditingBook] = useState(null);
   const [requests, setRequests] = useState([]);
   const { isAuthenticated, logout } = useContext(AuthContext);
+  const [borrowRequests, setBorrowRequests] = useState([]);
+  const [showBorrowRequestModal, setShowBorrowRequestModal] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +21,7 @@ const AdminDashboard = () => {
       navigate('/login');
     }
     fetchBooks();
-    fetchRequests();
+    fetchBorrowRequests();
   }, [isAuthenticated, navigate]);
 
   const fetchBooks = () => {
@@ -89,6 +92,35 @@ const AdminDashboard = () => {
       })
       .catch(err => console.log(err));
   };
+
+  const fetchBorrowRequests = () => {
+    axios.get('http://localhost:3001/api/admin/borrow-requests')
+      .then(res => setBorrowRequests(res.data))
+      .catch(err => console.log(err));
+  };
+
+  const handleApproveBorrowRequest = async (requestId) => {
+    try {
+      await axios.post(`http://localhost:3001/api/admin/approve-borrow-request/${requestId}`);
+      fetchBorrowRequests();
+      fetchBooks();
+      setShowBorrowRequestModal(false);
+    } catch (error) {
+      console.error('Error approving borrow request:', error);
+    }
+  };
+
+  const handleRejectBorrowRequest = async (requestId) => {
+    try {
+      await axios.post(`http://localhost:3001/api/admin/reject-borrow-request/${requestId}`);
+      fetchBorrowRequests();
+      setShowBorrowRequestModal(false);
+    } catch (error) {
+      console.error('Error rejecting borrow request:', error);
+    }
+  };
+
+
 
   const calculateTotalInventory = () => {
     const totalBooks = books.length;
@@ -222,41 +254,36 @@ const AdminDashboard = () => {
         </div>
 
         <div className="mt-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Book Requests</h2>
-          {requests.length > 0 ? (
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Borrow Requests</h2>
+          {borrowRequests.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white shadow-md rounded-lg">
                 <thead>
                   <tr>
                     <th className="px-4 py-2 border-b border-gray-200">Book Title</th>
                     <th className="px-4 py-2 border-b border-gray-200">Requested By</th>
+                    <th className="px-4 py-2 border-b border-gray-200">Request Date</th>
                     <th className="px-4 py-2 border-b border-gray-200">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {requests.map(request => (
+                  {borrowRequests.map(request => (
                     <tr key={request._id}>
                       <td className="px-4 py-2 border-b border-gray-200">{request.bookId.title}</td>
                       <td className="px-4 py-2 border-b border-gray-200">{request.userId.username}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">{new Date(request.createdAt).toLocaleDateString()}</td>
                       <td className="px-4 py-2 border-b border-gray-200">
-                        {request.status === 'pending' && (
-                          <div className="flex space-x-2">
-                            <button
-                              onClick={() => handleApproveRequest(request._id, request.bookId._id, request.userId._id)}
-                              className="px-4 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-                            >
-                              Approve
-                            </button>
-                            <button
-                              onClick={() => handleRejectRequest(request._id)}
-                              className="px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
-                            >
-                              Reject
-                            </button>
-                          </div>
-                        )}
-                        {request.status === 'approved' && <span className="text-green-500">Approved</span>}
-                        {request.status === 'rejected' && <span className="text-red-500">Rejected</span>}
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedRequest(request);
+                            setShowBorrowRequestModal(true);
+                          }}
+                          className="mr-2"
+                        >
+                          Review
+                        </Button>
                       </td>
                     </tr>
                   ))}
@@ -264,7 +291,7 @@ const AdminDashboard = () => {
               </table>
             </div>
           ) : (
-            <p>No book requests at the moment.</p>
+            <p>No borrow requests at the moment.</p>
           )}
         </div>
       </Container>
@@ -298,6 +325,28 @@ const AdminDashboard = () => {
             <Button variant="primary" type="submit">Save Changes</Button>
           </Form>
         </Modal.Body>
+      </Modal>
+
+      <Modal show={showBorrowRequestModal} onHide={() => setShowBorrowRequestModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Review Borrow Request</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p><strong>Book:</strong> {selectedRequest?.bookId.title}</p>
+          <p><strong>Requested By:</strong> {selectedRequest?.userId.username}</p>
+          <p><strong>Request Date:</strong> {selectedRequest ? new Date(selectedRequest.createdAt).toLocaleDateString() : ''}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowBorrowRequestModal(false)}>
+            Close
+          </Button>
+          <Button variant="danger" onClick={() => handleRejectBorrowRequest(selectedRequest?._id)}>
+            Reject
+          </Button>
+          <Button variant="success" onClick={() => handleApproveBorrowRequest(selectedRequest?._id)}>
+            Approve
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );
