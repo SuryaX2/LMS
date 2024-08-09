@@ -168,6 +168,7 @@ const AdminDashboard = () => {
       </Navbar>
 
       <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* stats div */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
             <Book style={{ fontSize: 48, color: '#3B82F6' }} />
@@ -190,7 +191,7 @@ const AdminDashboard = () => {
             <p className="text-3xl font-bold text-red-500">{borrowedBooks}</p>
           </div>
         </div>
-
+        {/* book inventory div */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-bold text-gray-800 relative">
@@ -200,7 +201,7 @@ const AdminDashboard = () => {
           </div>
           <p className="text-gray-600 mt-2">Manage your library's collection with ease</p>
         </div>
-
+        {/* book card div */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {books.map(book => (
             <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
@@ -252,7 +253,7 @@ const AdminDashboard = () => {
             </div>
           ))}
         </div>
-
+        {/* borrow request div */}
         <div className="mt-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">Borrow Requests</h2>
           {borrowRequests.length > 0 ? (
