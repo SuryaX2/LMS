@@ -31,7 +31,7 @@ const AdminDashboard = () => {
   };
 
   const fetchRequests = () => {
-    axios.get('http://localhost:3001/api/admin/get-requests')
+    axios.get('http://localhost:3001/api/admin/book/borrow-requests')
       .then(res => setRequests(res.data))
       .catch(err => console.log(err));
   };
@@ -94,14 +94,14 @@ const AdminDashboard = () => {
   };
 
   const fetchBorrowRequests = () => {
-    axios.get('http://localhost:3001/api/admin/borrow-requests')
+    axios.get('http://localhost:3001/api/admin/book/borrow-requests')
       .then(res => setBorrowRequests(res.data))
       .catch(err => console.log(err));
   };
 
   const handleApproveBorrowRequest = async (requestId) => {
     try {
-      await axios.post(`http://localhost:3001/api/admin/approve-borrow-request/${requestId}`);
+      await axios.post(`http://localhost:3001/api/admin/book/approve-borrow-request/${requestId}`);
       fetchBorrowRequests();
       fetchBooks();
       setShowBorrowRequestModal(false);
@@ -112,7 +112,7 @@ const AdminDashboard = () => {
 
   const handleRejectBorrowRequest = async (requestId) => {
     try {
-      await axios.post(`http://localhost:3001/api/admin/reject-borrow-request/${requestId}`);
+      await axios.post(`http://localhost:3001/api/admin/book/reject-borrow-request/${requestId}`);
       fetchBorrowRequests();
       setShowBorrowRequestModal(false);
     } catch (error) {

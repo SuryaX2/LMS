@@ -40,15 +40,16 @@ router.post('/request', authenticate, async (req, res) => {
 });
 
 // Get all borrow requests for admin
-router.get('/borrow-requests', authenticate, async (req, res) => {
-  try {
-    if (!req.user.isAdmin) {
-      return res.status(403).json({ error: 'Access denied' });
-    }
+router.get('/borrow-requests', async (req, res) => {
+  try {    
+    // if (!req.user.isAdmin) {
+    //   return res.status(403).json({ error: 'Access denied' });
+    // }
 
     const requests = await BookRequest.find({ status: 'pending' })
-      .populate('userId', 'username')
-      .populate('bookId', 'title author');
+      .populate('userId','username')
+      .populate('bookId','title author');
+    
     res.status(200).json(requests);
   } catch (error) {
     console.error('Error fetching borrow requests:', error);
@@ -57,11 +58,11 @@ router.get('/borrow-requests', authenticate, async (req, res) => {
 });
 
 // Approve a borrow request
-router.post('/approve-borrow-request/:id', authenticate, async (req, res) => {
+router.post('/approve-borrow-request/:id', async (req, res) => {
   try {
-    if (!req.user.isAdmin) {
-      return res.status(403).json({ error: 'Access denied' });
-    }
+    // if (!req.user.isAdmin) {
+    //   return res.status(403).json({ error: 'Access denied' });
+    // }
 
     const request = await BookRequest.findById(req.params.id);
     if (!request) {
