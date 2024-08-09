@@ -176,8 +176,18 @@ const UserDashboard = () => {
                 <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
                 <p className="text-sm mb-1 font-semibold">ISBN: {book.isbn}</p>
                 <p className="text-sm mb-1 font-semibold">Price: ₹{book.price.toFixed(2)}</p>
-                <td className="text-sm mb-1 font-semibold">Borrow Date: {new Date(book.borrowedDate).toLocaleDateString()}</td>
-                <td className="text-sm mb-1 font-semibold">Return Date: {new Date(book.returnDate).toLocaleDateString()}</td>
+                <td className="text-sm mb-1 font-semibold">Borrow Date: <span className="text-yellow-300 font-semibold">{new Date(book.borrowedDate).toLocaleDateString()}</span></td>
+                <td className="text-sm mb-1 font-semibold">Return Date: <span className="text-green-300 font-semibold">{new Date(book.returnDate).toLocaleDateString()}</span></td>
+                <td className="py-3 px-4">
+                  <Button
+                    variant="outline-success"
+                    size="sm"
+                    onClick={() => handleReturn(book._id)}
+                    className="px-3 py-2 fw-bold"
+                  >
+                    Return
+                  </Button>
+                </td>
               </div>
             </div>
           ))}
