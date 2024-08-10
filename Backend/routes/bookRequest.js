@@ -59,7 +59,7 @@ router.get('/borrow-requests', async (req, res) => {
 
 // Approve a borrow request
 router.post('/approve-borrow-request/:id', async (req, res) => {
-  try {
+  try {    
     // if (!req.user.isAdmin) {
     //   return res.status(403).json({ error: 'Access denied' });
     // }
@@ -78,21 +78,12 @@ router.post('/approve-borrow-request/:id', async (req, res) => {
       return res.status(400).json({ error: 'Book is not available for borrowing' });
     }
 
-    // Update book quantity and add to user's borrowed books
+    // Update book quantity and borrowing status
     book.quantity -= 1;
+    book.borrowedBy = request.userId;
+    book.borrowedDate = new Date();
+    book.returnDate = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000); // 14 days from now
     await book.save();
-
-    const user = await User.findById(request.userId);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    user.borrowedBooks.push({
-      bookId: book._id,
-      borrowDate: new Date(),
-      dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) // 14 days from now
-    });
-    await user.save();
 
     // Update request status
     request.status = 'approved';
@@ -104,6 +95,7 @@ router.post('/approve-borrow-request/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 // Reject a borrow request
 router.post('/reject-borrow-request/:id', authenticate, async (req, res) => {

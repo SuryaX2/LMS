@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Container, Navbar, Nav, Button, Modal, Form, Dropdown } from 'react-bootstrap';
 import { MenuBook, Person, Logout, Edit, Delete, Add, Book, AttachMoney, Inventory, LocalLibrary } from '@mui/icons-material';
@@ -96,17 +97,24 @@ const AdminDashboard = () => {
   const fetchBorrowRequests = () => {
     axios.get('http://localhost:3001/api/admin/book/borrow-requests')
       .then(res => setBorrowRequests(res.data))
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.error('Error fetching borrow requests:', err);
+        toast.error('Failed to fetch borrow requests');
+      });
   };
 
   const handleApproveBorrowRequest = async (requestId) => {
     try {
-      await axios.post(`http://localhost:3001/api/admin/book/approve-borrow-request/${requestId}`);
+      const res  = await axios.post(`http://localhost:3001/api/admin/book/approve-borrow-request/${requestId}`);
+      console.log(res);
+      
       fetchBorrowRequests();
       fetchBooks();
       setShowBorrowRequestModal(false);
+      toast.success('Borrow request approved successfully');
     } catch (error) {
       console.error('Error approving borrow request:', error);
+      toast.error('Failed to approve borrow request');
     }
   };
 
@@ -115,8 +123,10 @@ const AdminDashboard = () => {
       await axios.post(`http://localhost:3001/api/admin/book/reject-borrow-request/${requestId}`);
       fetchBorrowRequests();
       setShowBorrowRequestModal(false);
+      toast.success('Borrow request rejected successfully');
     } catch (error) {
       console.error('Error rejecting borrow request:', error);
+      toast.error('Failed to reject borrow request');
     }
   };
 
@@ -262,6 +272,7 @@ const AdminDashboard = () => {
                 <thead>
                   <tr>
                     <th className="px-4 py-2 border-b border-gray-200">Book Title</th>
+                    <th className="px-4 py-2 border-b border-gray-200">Author</th>
                     <th className="px-4 py-2 border-b border-gray-200">Requested By</th>
                     <th className="px-4 py-2 border-b border-gray-200">Request Date</th>
                     <th className="px-4 py-2 border-b border-gray-200">Action</th>
@@ -271,6 +282,7 @@ const AdminDashboard = () => {
                   {borrowRequests.map(request => (
                     <tr key={request._id}>
                       <td className="px-4 py-2 border-b border-gray-200">{request.bookId.title}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">{request.bookId.author}</td>
                       <td className="px-4 py-2 border-b border-gray-200">{request.userId.username}</td>
                       <td className="px-4 py-2 border-b border-gray-200">{new Date(request.createdAt).toLocaleDateString()}</td>
                       <td className="px-4 py-2 border-b border-gray-200">

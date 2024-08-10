@@ -52,7 +52,7 @@ router.post('/borrow', authenticateToken, async (req, res) => {
 });
 
 // Return a book
-router.post('/return', authenticateToken, async (req, res) => {
+router.post('/return', async (req, res) => {
   try {
     const { bookId } = req.body;
     const book = await Book.findById(bookId);

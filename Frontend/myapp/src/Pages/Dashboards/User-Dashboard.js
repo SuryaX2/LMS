@@ -41,10 +41,11 @@ const UserDashboard = () => {
 
 
   const handleReturn = async (bookId) => {
-    if (!user) {
-      console.error('User not logged in');
-      return;
-    }
+    const user = localStorage.getItem('user')
+    // if (!user) {
+    //   console.error('User not logged in');
+    //   return;
+    // }
     try {
       await axios.post('http://localhost:3001/api/books/return', { bookId });
       fetchBooks(user.userId);
