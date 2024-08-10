@@ -48,7 +48,8 @@ const UserDashboard = () => {
     // }
     try {
       await axios.post('http://localhost:3001/api/books/return', { bookId });
-      fetchBooks(user.userId);
+      fetchBooks(user);
+      fetchBorrowedBooks();
     } catch (error) {
       console.error('Error returning book:', error);
     }
@@ -175,7 +176,7 @@ const UserDashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {borrowedBooks.map(book => (
+          {borrowedBooks.filter(book => book != null).map(book => (
             <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl mb-4">
               <img
                 src={book.avatar || '/placeholder-cover.jpg'}
