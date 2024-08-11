@@ -141,7 +141,7 @@ const UserDashboard = () => {
           <p className="text-gray-600 mt-2">Browse and request books to borrow</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {books.filter(book => book.quantity > 0).map(book => (
             <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
               <img
@@ -177,7 +177,7 @@ const UserDashboard = () => {
           <p className="text-gray-600 mt-2">Books you have currently borrowed</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {borrowedBooks.filter(book => book != null).map(book => (
             <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl mb-4">
               <img
