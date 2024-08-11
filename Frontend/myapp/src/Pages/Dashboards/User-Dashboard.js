@@ -51,7 +51,7 @@ const UserDashboard = () => {
       await axios.post('http://localhost:3001/api/books/return', { bookId });
       fetchBooks(user);
       fetchBorrowedBooks();
-      toast.success('Request sent to admin for approval.');
+      toast.success('You Returned The Book Successfully');
     } catch (error) {
       console.error('Error returning book:', error);
     }
@@ -96,7 +96,7 @@ const UserDashboard = () => {
 
     } catch (error) {
       console.error('Error requesting book:', error);
-      alert('Failed to send request. Please try again.');
+      toast.error('Failed to send request.');
     }
   };
 
