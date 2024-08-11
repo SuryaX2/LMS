@@ -14,7 +14,7 @@ router.post('/save-book', upload.fields([
   }
 ]), async (req, res) => {
   try {
-    let book = await Book.find({ isbn: req.body.isbn });
+    const book = await Book.findOne({ isbn: req.body.isbn });
     if (book) {
       const avatarLocalPath = req.files.avatar[0].path;
       fs.unlinkSync(avatarLocalPath)

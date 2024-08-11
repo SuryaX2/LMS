@@ -135,7 +135,7 @@ const UserDashboard = () => {
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-bold text-gray-800 relative">
               Available Books
-              <span className="absolute bottom-0 left-0 w-1/3 h-1 bg-blue-500 rounded-full"></span>
+              <span className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 rounded-full"></span>
             </h2>
           </div>
           <p className="text-gray-600 mt-2">Browse and request books to borrow</p>
@@ -171,7 +171,7 @@ const UserDashboard = () => {
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-bold text-gray-800 relative">
               Borrowed Books
-              <span className="absolute bottom-0 left-0 w-1/3 h-1 bg-green-500 rounded-full"></span>
+              <span className="absolute bottom-0 left-0 w-full h-1 bg-green-500 rounded-full"></span>
             </h2>
           </div>
           <p className="text-gray-600 mt-2">Books you have currently borrowed</p>

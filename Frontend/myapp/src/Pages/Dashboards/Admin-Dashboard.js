@@ -13,7 +13,8 @@ const AdminDashboard = () => {
   const [requests, setRequests] = useState([]);
   const { isAuthenticated, logout } = useContext(AuthContext);
   const [borrowRequests, setBorrowRequests] = useState([]);
-  const [showBorrowRequestModal, setShowBorrowRequestModal] = useState(false);
+  const [reviewModal, setReviewModal] = useState(false);
+  const [showBorrowRequestsModal, setShowBorrowRequestsModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const navigate = useNavigate();
 
@@ -105,12 +106,12 @@ const AdminDashboard = () => {
 
   const handleApproveBorrowRequest = async (requestId) => {
     try {
-      const res  = await axios.post(`http://localhost:3001/api/admin/book/approve-borrow-request/${requestId}`);
+      const res = await axios.post(`http://localhost:3001/api/admin/book/approve-borrow-request/${requestId}`);
       console.log(res);
-      
+
       fetchBorrowRequests();
       fetchBooks();
-      setShowBorrowRequestModal(false);
+      setReviewModal(false);
       toast.success('Borrow request approved successfully');
     } catch (error) {
       console.error('Error approving borrow request:', error);
@@ -122,7 +123,7 @@ const AdminDashboard = () => {
     try {
       await axios.post(`http://localhost:3001/api/admin/book/reject-borrow-request/${requestId}`);
       fetchBorrowRequests();
-      setShowBorrowRequestModal(false);
+      setReviewModal(false);
       toast.success('Borrow request rejected successfully');
     } catch (error) {
       console.error('Error rejecting borrow request:', error);
@@ -158,6 +159,10 @@ const AdminDashboard = () => {
                 <Add className="mr-1" />
                 Add Book
               </Button>
+              <Button variant="outline-light" className="mr-2 flex items-center" onClick={() => setShowBorrowRequestsModal(true)}>
+                <Book className="mr-1" />
+                Borrow Requests
+              </Button>
               <Dropdown align="end">
                 <Dropdown.Toggle variant="outline-light" id="dropdown-basic" className="flex items-center">
                   <Person className="mr-2" />
@@ -177,7 +182,7 @@ const AdminDashboard = () => {
         </Container>
       </Navbar>
 
-      <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Container className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         {/* stats div */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
@@ -212,7 +217,7 @@ const AdminDashboard = () => {
           <p className="text-gray-600 mt-2">Manage your library's collection with ease</p>
         </div>
         {/* book card div */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {books.map(book => (
             <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
               <img
@@ -264,49 +269,6 @@ const AdminDashboard = () => {
           ))}
         </div>
         {/* borrow request div */}
-        <div className="mt-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Borrow Requests</h2>
-          {borrowRequests.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full bg-white shadow-md rounded-lg">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-2 border-b border-gray-200">Book Title</th>
-                    <th className="px-4 py-2 border-b border-gray-200">Author</th>
-                    <th className="px-4 py-2 border-b border-gray-200">Requested By</th>
-                    <th className="px-4 py-2 border-b border-gray-200">Request Date</th>
-                    <th className="px-4 py-2 border-b border-gray-200">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {borrowRequests.map(request => (
-                    <tr key={request._id}>
-                      <td className="px-4 py-2 border-b border-gray-200">{request.bookId.title}</td>
-                      <td className="px-4 py-2 border-b border-gray-200">{request.bookId.author}</td>
-                      <td className="px-4 py-2 border-b border-gray-200">{request.userId.username}</td>
-                      <td className="px-4 py-2 border-b border-gray-200">{new Date(request.createdAt).toLocaleDateString()}</td>
-                      <td className="px-4 py-2 border-b border-gray-200">
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          onClick={() => {
-                            setSelectedRequest(request);
-                            setShowBorrowRequestModal(true);
-                          }}
-                          className="mr-2"
-                        >
-                          Review
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <p>No borrow requests at the moment.</p>
-          )}
-        </div>
       </Container>
 
       <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)} centered>
@@ -340,7 +302,65 @@ const AdminDashboard = () => {
         </Modal.Body>
       </Modal>
 
-      <Modal show={showBorrowRequestModal} onHide={() => setShowBorrowRequestModal(false)} centered>
+      {/* borrow request Modal */}
+      <Modal
+        show={showBorrowRequestsModal}
+        onHide={() => setShowBorrowRequestsModal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Borrow Requests</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {borrowRequests.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book Title</th>
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Requested By</th>
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request Date</th>
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {borrowRequests.map(request => (
+                    <tr key={request._id} className="hover:bg-gray-50">
+                      <td className="px-4 py-2 whitespace-nowrap">{request.bookId.title}</td>
+                      <td className="px-4 py-2 whitespace-nowrap">{request.bookId.author}</td>
+                      <td className="px-4 py-2 whitespace-nowrap">{request.userId.username}</td>
+                      <td className="px-4 py-2 whitespace-nowrap">{new Date(request.createdAt).toLocaleDateString()}</td>
+                      <td className="px-4 py-2 whitespace-nowrap">
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          className="mr-2"
+                          onClick={() => handleApproveBorrowRequest(request._id)}
+                        >
+                          Approve
+                        </Button>
+                        <Button
+                          variant="outline-danger"
+                          size="sm"
+                          onClick={() => handleRejectBorrowRequest(request._id)}
+                        >
+                          Reject
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-center text-gray-500">No borrow requests at the moment.</p>
+          )}
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={reviewModal} onHide={() => setReviewModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Review Borrow Request</Modal.Title>
         </Modal.Header>
@@ -350,7 +370,7 @@ const AdminDashboard = () => {
           <p><strong>Request Date:</strong> {selectedRequest ? new Date(selectedRequest.createdAt).toLocaleDateString() : ''}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowBorrowRequestModal(false)}>
+          <Button variant="secondary" onClick={() => setReviewModal(false)}>
             Close
           </Button>
           <Button variant="danger" onClick={() => handleRejectBorrowRequest(selectedRequest?._id)}>

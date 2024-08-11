@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "../Components/Navbar";
 import Carousel from "../Components/Carousel";
-import Cards from "../Components/Cards";
 import Footer from "../Components/Footer";
 
 function Home() {
@@ -9,7 +8,6 @@ function Home() {
         <>
             <Navbar />
             <Carousel />
-            <Cards />
             <Footer />
           </>
     );

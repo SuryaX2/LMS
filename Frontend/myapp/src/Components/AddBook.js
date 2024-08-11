@@ -25,32 +25,31 @@ const AddBook = () => {
     };
 
     const handleAddBook = (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        const formData = new FormData();
-        for (const key in book) {
+    const formData = new FormData();
+    for (const key in book) {
+        if (book[key] !== null && book[key] !== undefined) { // Check for null or undefined
             formData.append(key, book[key]);
         }
+    }
 
-        axios.post('http://localhost:3001/api/admin/save-book', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+    axios.post('http://localhost:3001/api/admin/save-book', formData)
+        .then(res => {
+            console.log(res.data);
+            setBook({
+                title: '',
+                author: '',
+                isbn: '',
+                price: '',
+                quantity: '',
+                avatar: null
+            });
+            navigate('/admin-dashboard');
         })
-            .then(res => {
-                console.log(res.data);
-                setBook({
-                    title: '',
-                    author: '',
-                    isbn: '',
-                    price: '',
-                    quantity: '',
-                    avatar: null
-                });
-                navigate('/admin-dashboard')
-            })
-            .catch(err => console.log(err));
-    };
+        .catch(err => console.log(err));
+};
+
 
     return (
         <Container fluid className="bg-light min-vh-100 d-flex align-items-center justify-content-center py-5">
