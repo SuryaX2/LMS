@@ -8,10 +8,13 @@ import ProtectedRoute from './Pages/Dashboards/ProtectedRoute';
 import UserDashboard from './Pages/Dashboards/User-Dashboard.js';
 import AdminDashboard from './Pages/Dashboards/Admin-Dashboard.js';
 import AddBook from './Components/AddBook.js';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	return (
 		<BrowserRouter>
+			<ToastContainer />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/signup" element={<Signup />} />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Container, Navbar, Nav, Dropdown, Modal, Button } from 'react-bootstrap';
 import { Book, Person, Logout, MenuBook } from '@mui/icons-material';
@@ -50,6 +51,7 @@ const UserDashboard = () => {
       await axios.post('http://localhost:3001/api/books/return', { bookId });
       fetchBooks(user);
       fetchBorrowedBooks();
+      toast.success('Request sent to admin for approval.');
     } catch (error) {
       console.error('Error returning book:', error);
     }
@@ -88,7 +90,7 @@ const UserDashboard = () => {
       if (res.data.success) {
         console.log(res);
         setShowModal(false);
-        alert('Request sent to admin for approval.');
+        toast.success('Request sent to admin for approval.');
         fetchBooks(); // Refresh the book list
       }
 
