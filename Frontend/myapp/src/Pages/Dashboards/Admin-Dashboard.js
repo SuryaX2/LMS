@@ -2,11 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import axios from 'axios';
-import { Container, Navbar, Nav, Button, Modal, Form, Dropdown } from 'react-bootstrap';
-import { Dialog, Transition } from '@headlessui/react';
-import { XIcon, CheckIcon, XCircleIcon } from '@heroicons/react/solid';
+import axios from 'axios'; import { Container, Navbar, Nav, Button, Modal, Form, Dropdown, Table } from 'react-bootstrap';
 import { MenuBook, Person, Logout, Edit, Delete, Add, Book, AttachMoney, Inventory, LocalLibrary } from '@mui/icons-material';
+import { Check2, X } from 'react-bootstrap-icons';
 
 const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
@@ -221,7 +219,7 @@ const AdminDashboard = () => {
         {/* book card div */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {books.map(book => (
-            <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
+            <div key={book._id} className="relative h-96 mb-3 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
               <img
                 src={book.avatar || '/placeholder-cover.jpg'}
                 alt={book.title}
@@ -306,111 +304,64 @@ const AdminDashboard = () => {
       </Modal>
 
       {/* borrow request Modal */}
-      <Transition.Root show={showBorrowRequestsModal} as={React.Fragment}>
-      <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setShowBorrowRequestsModal}>
-        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-          <Transition.Child
-            as={React.Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
-
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-            &#8203;
-          </span>
-          <Transition.Child
-            as={React.Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            enterTo="opacity-100 translate-y-0 sm:scale-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          >
-            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full sm:p-6">
-              <div className="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
-                <button
-                  type="button"
-                  className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  onClick={() => setShowBorrowRequestsModal(false)}
-                >
-                  <span className="sr-only">Close</span>
-                  <XIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-              </div>
-              <div className="sm:flex sm:items-start">
-                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                    Borrow Requests
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    {borrowRequests.length > 0 ? (
-                      <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200">
-                          <thead className="bg-gray-50">
-                            <tr>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Book Title
-                              </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Author
-                              </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Requested By
-                              </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Request Date
-                              </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Action
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-white divide-y divide-gray-200">
-                            {borrowRequests.map((request) => (
-                              <tr key={request._id}>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{request.bookId.title}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{request.bookId.author}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{request.userId.username}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                  {new Date(request.createdAt).toLocaleDateString()}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                  <button
-                                    onClick={() => handleApproveBorrowRequest(request._id)}
-                                    className="text-indigo-600 hover:text-indigo-900 mr-4"
-                                  >
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                  </button>
-                                  <button
-                                    onClick={() => handleRejectBorrowRequest(request._id)}
-                                    className="text-red-600 hover:text-red-900"
-                                  >
-                                    <XCircleIcon className="h-5 w-5" aria-hidden="true" />
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    ) : (
-                      <p className="text-center text-gray-500">No borrow requests at the moment.</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Transition.Child>
-        </div>
-      </Dialog>
-    </Transition.Root>
+      <Modal
+        show={showBorrowRequestsModal}
+        onHide={() => setShowBorrowRequestsModal(false)}
+        size="xl"
+        centered
+      >
+        <Modal.Header closeButton className="bg-primary text-white">
+          <Modal.Title className="w-100 text-center">Borrow Requests</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-0">
+          {borrowRequests.length > 0 ? (
+            <Table responsive hover className="m-0">
+              <thead className="bg-light">
+                <tr>
+                  <th className="text-center">Book Title</th>
+                  <th className="text-center">Author</th>
+                  <th className="text-center">Requested By</th>
+                  <th className="text-center">Request Date</th>
+                  <th className="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {borrowRequests.map((request) => (
+                  <tr key={request._id}>
+                    <td className="text-center align-middle">{request.bookId.title}</td>
+                    <td className="text-center align-middle">{request.bookId.author}</td>
+                    <td className="text-center align-middle">{request.userId.username}</td>
+                    <td className="text-center align-middle">
+                      {new Date(request.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="text-center align-middle">
+                      <Button
+                        variant="outline-success"
+                        size="sm"
+                        className="me-2"
+                        onClick={() => handleApproveBorrowRequest(request._id)}
+                      >
+                        <Check2 size={18} />
+                      </Button>
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={() => handleRejectBorrowRequest(request._id)}
+                      >
+                        <X size={18} />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <p className="text-center text-muted py-4">No borrow requests at the moment.</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+        </Modal.Footer>
+      </Modal>
 
       {/* confirm borrow request Modal */}
       {/* <Modal show={reviewModal} onHide={() => setReviewModal(false)} centered>

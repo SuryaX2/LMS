@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
 	return (
 		<BrowserRouter>
-			<ToastContainer />
+			<ToastContainer position="top-center" />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/signup" element={<Signup />} />
