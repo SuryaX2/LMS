@@ -226,7 +226,7 @@ const AdminDashboard = () => {
                 className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
+              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white ">
                 <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
                 <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
                 <p className="text-sm mb-1  font-semibold opacity-80">ISBN: {book.isbn}</p>
@@ -310,7 +310,7 @@ const AdminDashboard = () => {
         size="xl"
         centered
       >
-        <Modal.Header closeButton className="bg-primary text-white">
+        <Modal.Header closeButton className="bg-success text-white">
           <Modal.Title className="w-100 text-center">Borrow Requests</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-0">
@@ -359,8 +359,6 @@ const AdminDashboard = () => {
             <p className="text-center text-muted py-4">No borrow requests at the moment.</p>
           )}
         </Modal.Body>
-        <Modal.Footer className="justify-content-center">
-        </Modal.Footer>
       </Modal>
 
       {/* confirm borrow request Modal */}
