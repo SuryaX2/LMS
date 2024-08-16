@@ -287,7 +287,7 @@ const AdminDashboard = () => {
 
       {/* View Modal */}
       <Modal show={viewModalOpen} onHide={() => setViewModalOpen(false)} centered>
-        <Modal.Header closeButton className="bg-primary text-white">
+        <Modal.Header closeButton className="bg-dark text-white">
           <Modal.Title>Book Details</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-0">
