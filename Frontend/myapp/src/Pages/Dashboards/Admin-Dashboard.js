@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import axios from 'axios'; import { Container, Navbar, Nav, Button, Modal, Form, Dropdown, Table } from 'react-bootstrap';
-import { MenuBook, Person, Logout, Edit, Delete, Add, Book, AttachMoney, Inventory, LocalLibrary } from '@mui/icons-material';
+import { MenuBook, Person, Logout, Edit, Delete, Add, Book, AttachMoney, Inventory, LocalLibrary, Visibility } from '@mui/icons-material';
 import { Check2, X } from 'react-bootstrap-icons';
 
 const AdminDashboard = () => {
@@ -133,6 +133,10 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleViewBook = (book) => {
+    setViewingBook(book);
+    setViewModalOpen(true);
+  };
 
 
   const calculateTotalInventory = () => {
@@ -252,6 +256,14 @@ const AdminDashboard = () => {
                   <Button
                     variant="outline-light"
                     size="sm"
+                    onClick={() => handleViewBook(book)}
+                    className="flex items-center bg-white/20 hover:bg-white/30 transition duration-300"
+                  >
+                    <Visibility fontSize="small" className="mr-1" /> View
+                  </Button>
+                  <Button
+                    variant="outline-light"
+                    size="sm"
                     onClick={() => handleEditBook(book)}
                     className="flex items-center bg-white/20 hover:bg-white/30 transition duration-300"
                   >
@@ -272,6 +284,45 @@ const AdminDashboard = () => {
         </div>
         {/* borrow request div */}
       </Container>
+
+      {/* View Modal */}
+      <Modal show={viewModalOpen} onHide={() => setViewModalOpen(false)} size="lg" centered>
+        <Modal.Header closeButton className="bg-primary text-white">
+          <Modal.Title>Book Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-0">
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-1/2">
+              <img
+                src={viewingBook?.avatar || '/placeholder-cover.jpg'}
+                alt={viewingBook?.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="md:w-1/2 p-4">
+              <h2 className="text-2xl font-bold mb-2">{viewingBook?.title}</h2>
+              <p className="text-gray-600 mb-2">By {viewingBook?.author}</p>
+              <p className="mb-2"><strong>ISBN:</strong> {viewingBook?.isbn}</p>
+              <p className="mb-2"><strong>Price:</strong> ₹{viewingBook?.price?.toFixed(2)}</p>
+              <p className="mb-2"><strong>Quantity:</strong> {viewingBook?.quantity}</p>
+              <p className="mb-2">
+                <strong>Status:</strong> {viewingBook?.borrowedBy ? (
+                  <span className="text-yellow-500 font-semibold">Borrowed</span>
+                ) : (
+                  <span className="text-green-500 font-semibold">Available</span>
+                )}
+              </p>
+              <p className="mb-2">
+                <strong>Borrowed By:</strong> {viewingBook?.borrowedBy ? (
+                  <span className="text-yellow-500 font-semibold">{viewingBook.borrowedBy.username}</span>
+                ) : (
+                  <span className="text-green-500 font-semibold">None</span>
+                )}
+              </p>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
 
       {/* Edit Modal */}
       <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)} centered>
