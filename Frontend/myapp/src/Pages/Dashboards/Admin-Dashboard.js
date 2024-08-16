@@ -16,6 +16,8 @@ const AdminDashboard = () => {
   const [reviewModal, setReviewModal] = useState(false);
   const [showBorrowRequestsModal, setShowBorrowRequestsModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [viewingBook, setViewingBook] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
