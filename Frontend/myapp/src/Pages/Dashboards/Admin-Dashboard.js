@@ -286,7 +286,7 @@ const AdminDashboard = () => {
       </Container>
 
       {/* View Modal */}
-      <Modal show={viewModalOpen} onHide={() => setViewModalOpen(false)} size="lg" centered>
+      <Modal show={viewModalOpen} onHide={() => setViewModalOpen(false)} centered>
         <Modal.Header closeButton className="bg-primary text-white">
           <Modal.Title>Book Details</Modal.Title>
         </Modal.Header>
@@ -296,7 +296,7 @@ const AdminDashboard = () => {
               <img
                 src={viewingBook?.avatar || '/placeholder-cover.jpg'}
                 alt={viewingBook?.title}
-                className="w-full h-full object-cover"
+                className="inset-0 w-full h-full object-cover object-top opacity-100"
               />
             </div>
             <div className="md:w-1/2 p-4">
