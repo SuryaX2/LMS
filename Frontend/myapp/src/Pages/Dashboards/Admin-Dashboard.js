@@ -286,43 +286,65 @@ const AdminDashboard = () => {
       </Container>
 
       {/* View Modal */}
-      <Modal show={viewModalOpen} onHide={() => setViewModalOpen(false)} centered>
-        <Modal.Header closeButton className="bg-dark text-white">
-          <Modal.Title>Book Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="p-0">
-          <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/2">
-              <img
-                src={viewingBook?.avatar || '/placeholder-cover.jpg'}
-                alt={viewingBook?.title}
-                className="inset-0 w-full h-full object-cover object-top opacity-100"
-              />
-            </div>
-            <div className="md:w-1/2 p-4">
-              <h2 className="text-2xl font-bold mb-2">{viewingBook?.title}</h2>
-              <p className="text-gray-600 mb-2">By {viewingBook?.author}</p>
-              <p className="mb-2"><strong>ISBN:</strong> {viewingBook?.isbn}</p>
-              <p className="mb-2"><strong>Price:</strong> ₹{viewingBook?.price?.toFixed(2)}</p>
-              <p className="mb-2"><strong>Quantity:</strong> {viewingBook?.quantity}</p>
-              <p className="mb-2">
-                <strong>Status:</strong> {viewingBook?.borrowedBy ? (
-                  <span className="text-yellow-500 font-semibold">Borrowed</span>
-                ) : (
-                  <span className="text-green-500 font-semibold">Available</span>
-                )}
-              </p>
-              <p className="mb-2">
-                <strong>Borrowed By:</strong> {viewingBook?.borrowedBy ? (
-                  <span className="text-yellow-500 font-semibold">{viewingBook.borrowedBy.username}</span>
-                ) : (
-                  <span className="text-green-500 font-semibold">None</span>
-                )}
-              </p>
-            </div>
+      <Modal 
+  show={viewModalOpen} 
+  onHide={() => setViewModalOpen(false)} 
+  centered
+  size="md"
+  className="book-details-modal"
+>
+  <div className="modal-content bg-white bg-opacity-80 backdrop-filter backdrop-blur-md rounded-lg overflow-hidden">
+    <Modal.Header closeButton className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-b-0">
+      <Modal.Title className="text-xl font-bold">Book Details</Modal.Title>
+    </Modal.Header>
+    <Modal.Body className="p-0 ">
+      <div className="flex flex-col md:flex-row">
+        <div className="md:w-2/5 relative h-64 md:h-auto">
+          <img
+            src={viewingBook?.avatar || '/placeholder-cover.jpg'}
+            alt={viewingBook?.title}
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-100"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50"></div>
+        </div>
+        <div className="md:w-3/5 p-6 bg-white">
+          <h2 className="text-3xl font-bold mb-3 text-gray-800">{viewingBook?.title}</h2>
+          <p className="text-xl text-gray-600 mb-4">By {viewingBook?.author}</p>
+          <div className="space-y-2">
+            <p className="flex items-center">
+              <span className="w-24 font-semibold text-gray-700">ISBN:</span>
+              <span className="text-gray-800">{viewingBook?.isbn}</span>
+            </p>
+            <p className="flex items-center">
+              <span className="w-24 font-semibold text-gray-700">Price:</span>
+              <span className="text-green-600 font-bold">₹{viewingBook?.price?.toFixed(2)}</span>
+            </p>
+            <p className="flex items-center">
+              <span className="w-24 font-semibold text-gray-700">Quantity:</span>
+              <span className="text-gray-800">{viewingBook?.quantity}</span>
+            </p>
+            <p className="flex items-center">
+              <span className="w-24 font-semibold text-gray-700">Status:</span>
+              {viewingBook?.borrowedBy ? (
+                <span className="text-yellow-500 font-semibold">Borrowed</span>
+              ) : (
+                <span className="text-green-500 font-semibold">Available</span>
+              )}
+            </p>
+            <p className="flex items-center">
+              <span className="w-24 font-semibold text-gray-700">Borrowed By:</span>
+              {viewingBook?.borrowedBy ? (
+                <span className="text-yellow-500 font-semibold">{viewingBook.borrowedBy.username}</span>
+              ) : (
+                <span className="text-green-500 font-semibold">None</span>
+              )}
+            </p>
           </div>
-        </Modal.Body>
-      </Modal>
+        </div>
+      </div>
+    </Modal.Body>
+  </div>
+</Modal>
 
       {/* Edit Modal */}
       <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)} centered>
