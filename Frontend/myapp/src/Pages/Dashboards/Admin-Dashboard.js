@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { Container, Navbar, Nav, Button, Modal, Form, Dropdown, Table } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Modal, Form, Dropdown, Table, Spinner } from 'react-bootstrap';
 import { MenuBook, Person, Logout, Edit, Delete, Add, Book, AttachMoney, Inventory, LocalLibrary, Visibility } from '@mui/icons-material';
 import { Check2, X } from 'react-bootstrap-icons';
 
@@ -19,7 +19,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    
+
     if (!token || role !== 'admin') {
       navigate('/login');
     } else {
