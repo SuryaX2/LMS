@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, Form, Button, Card, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
 import BookIcon from '@mui/icons-material/Book';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,8 @@ const AddBook = () => {
         quantity: '',
         avatar: null
     });
-  const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         if (e.target.name === 'avatar') {
@@ -25,30 +26,35 @@ const AddBook = () => {
     };
 
     const handleAddBook = (e) => {
-    e.preventDefault();
+        e.preventDefault();
+        setIsLoading(true);
 
-    const formData = new FormData();
-    for (const key in book) {
-        if (book[key] !== null && book[key] !== undefined) { // Check for null or undefined
-            formData.append(key, book[key]);
+        const formData = new FormData();
+        for (const key in book) {
+            if (book[key] !== null && book[key] !== undefined) {
+                formData.append(key, book[key]);
+            }
         }
-    }
 
-    axios.post('http://localhost:3001/api/admin/save-book', formData)
-        .then(res => {
-            console.log(res.data);
-            setBook({
-                title: '',
-                author: '',
-                isbn: '',
-                price: '',
-                quantity: '',
-                avatar: null
+        axios.post('http://localhost:3001/api/admin/save-book', formData)
+            .then(res => {
+                console.log(res.data);
+                setBook({
+                    title: '',
+                    author: '',
+                    isbn: '',
+                    price: '',
+                    quantity: '',
+                    avatar: null
+                });
+                setIsLoading(false);
+                navigate('/admin-dashboard');
+            })
+            .catch(err => {
+                console.log(err);
+                setIsLoading(false);
             });
-            navigate('/admin-dashboard');
-        })
-        .catch(err => console.log(err));
-};
+    };
 
 
     return (
@@ -137,8 +143,24 @@ const AddBook = () => {
                                     />
                                 </Form.Group>
                                 <div className="d-grid mt-4">
-                                    <Button variant="primary" type="submit" size="lg">
-                                        <AddIcon className="me-2 mb-1" /> Add Book
+                                    <Button variant="primary" type="submit" size="lg" disabled={isLoading}>
+                                        {isLoading ? (
+                                            <>
+                                                <Spinner
+                                                    as="span"
+                                                    animation="border"
+                                                    size="sm"
+                                                    role="status"
+                                                    aria-hidden="true"
+                                                    className="me-2"
+                                                />
+                                                Adding Book...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <AddIcon className="me-2 mb-1" /> Add Book
+                                            </>
+                                        )}
                                     </Button>
                                 </div>
                             </Form>
