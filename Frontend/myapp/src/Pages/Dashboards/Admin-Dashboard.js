@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import axios from 'axios'; import { Container, Navbar, Nav, Button, Modal, Form, Dropdown, Table } from 'react-bootstrap';
+import axios from 'axios';
+import { Container, Navbar, Nav, Button, Modal, Form, Dropdown, Table } from 'react-bootstrap';
 import { MenuBook, Person, Logout, Edit, Delete, Add, Book, AttachMoney, Inventory, LocalLibrary, Visibility } from '@mui/icons-material';
 import { Check2, X } from 'react-bootstrap-icons';
 
@@ -10,23 +10,23 @@ const AdminDashboard = () => {
   const [books, setBooks] = useState([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState(null);
-  const [requests, setRequests] = useState([]);
-  const { isAuthenticated, logout } = useContext(AuthContext);
   const [borrowRequests, setBorrowRequests] = useState([]);
-  const [reviewModal, setReviewModal] = useState(false);
   const [showBorrowRequestsModal, setShowBorrowRequestsModal] = useState(false);
-  const [selectedRequest, setSelectedRequest] = useState(null);
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [viewingBook, setViewingBook] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    
+    if (!token || role !== 'admin') {
       navigate('/login');
+    } else {
+      fetchBooks();
+      fetchBorrowRequests();
     }
-    fetchBooks();
-    fetchBorrowRequests();
-  }, [isAuthenticated, navigate]);
+  }, [navigate]);
 
   const fetchBooks = () => {
     axios.get('http://localhost:3001/api/admin/get-books')
@@ -34,14 +34,9 @@ const AdminDashboard = () => {
       .catch(err => console.log(err));
   };
 
-  const fetchRequests = () => {
-    axios.get('http://localhost:3001/api/admin/book/borrow-requests')
-      .then(res => setRequests(res.data))
-      .catch(err => console.log(err));
-  };
-
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
     navigate('/login');
   };
 
@@ -78,25 +73,6 @@ const AdminDashboard = () => {
     setEditingBook({ ...editingBook, [e.target.name]: e.target.value });
   };
 
-  const handleApproveRequest = (requestId, bookId, userId) => {
-    axios.post('http://localhost:3001/api/admin/approve-request', { requestId, bookId, userId })
-      .then(res => {
-        console.log(res.message);
-        fetchBooks();
-        fetchRequests();
-      })
-      .catch(err => console.log(err));
-  };
-
-  const handleRejectRequest = (requestId) => {
-    axios.post('http://localhost:3001/api/admin/reject-request', { requestId })
-      .then(res => {
-        console.log(res.message);
-        fetchRequests();
-      })
-      .catch(err => console.log(err));
-  };
-
   const fetchBorrowRequests = () => {
     axios.get('http://localhost:3001/api/admin/book/borrow-requests')
       .then(res => setBorrowRequests(res.data))
@@ -110,10 +86,8 @@ const AdminDashboard = () => {
     try {
       const res = await axios.post(`http://localhost:3001/api/admin/book/approve-borrow-request/${requestId}`);
       console.log(res);
-
       fetchBorrowRequests();
       fetchBooks();
-      setReviewModal(false);
       toast.success('Borrow request approved successfully');
     } catch (error) {
       console.error('Error approving borrow request:', error);
@@ -125,7 +99,6 @@ const AdminDashboard = () => {
     try {
       await axios.post(`http://localhost:3001/api/admin/book/reject-borrow-request/${requestId}`);
       fetchBorrowRequests();
-      setReviewModal(false);
       toast.success('Borrow request rejected successfully');
     } catch (error) {
       console.error('Error rejecting borrow request:', error);
@@ -138,7 +111,6 @@ const AdminDashboard = () => {
     setViewModalOpen(true);
   };
 
-
   const calculateTotalInventory = () => {
     const totalBooks = books.length;
     const totalQuantity = books.reduce((sum, book) => sum + book.quantity, 0);
@@ -149,6 +121,7 @@ const AdminDashboard = () => {
   };
 
   const { totalBooks, totalQuantity, totalValue, borrowedBooks } = calculateTotalInventory();
+
 
   return (
     <div className="bg-gray-100 min-h-screen font-sans">
@@ -435,29 +408,6 @@ const AdminDashboard = () => {
           )}
         </Modal.Body>
       </Modal>
-
-      {/* confirm borrow request Modal */}
-      {/* <Modal show={reviewModal} onHide={() => setReviewModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Review Borrow Request</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p><strong>Book:</strong> {selectedRequest?.bookId.title}</p>
-          <p><strong>Requested By:</strong> {selectedRequest?.userId.username}</p>
-          <p><strong>Request Date:</strong> {selectedRequest ? new Date(selectedRequest.createdAt).toLocaleDateString() : ''}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setReviewModal(false)}>
-            Close
-          </Button>
-          <Button variant="danger" onClick={() => handleRejectBorrowRequest(selectedRequest?._id)}>
-            Reject
-          </Button>
-          <Button variant="success" onClick={() => handleApproveBorrowRequest(selectedRequest?._id)}>
-            Approve
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
     </div>
   );
 };
