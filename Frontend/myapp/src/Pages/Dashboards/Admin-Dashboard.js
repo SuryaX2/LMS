@@ -219,34 +219,17 @@ const AdminDashboard = () => {
             {/* book card div */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {books.map(book => (
-                <div key={book._id} className="relative h-96 mb-3 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl ">
+                <div key={book._id} className="relative h-96 mb-3 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl group">
                   <img
                     src={book.avatar || '/placeholder-cover.jpg'}
                     alt={book.title}
                     className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-                  <div className="absolute inset-0 p-6 flex flex-col justify-end text-white ">
-                    <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
-                    <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
-                    <p className="text-sm mb-1  font-semibold opacity-80">ISBN: {book.isbn}</p>
-                    <p className="text-sm mb-1 font-semibold">Price: <span className="text-yellow-300">₹{book.price.toFixed(2)}</span></p>
-                    <p className="text-sm mb-1 font-semibold">Quantity: {book.quantity}</p>
-                    <p className="mb-1 font-semibold">
-                      Status: {book.borrowedBy ? (
-                        <span className="text-yellow-300 font-semibold">Borrowed</span>
-                      ) : (
-                        <span className="text-green-300 font-semibold">Available</span>
-                      )}
-                    </p>
-                    <p className="mb-2 font-semibold">
-                      Borrowed By: {book.borrowedBy ? (
-                        <span className="text-yellow-300 font-semibold">{book.borrowedBy.username}</span>
-                      ) : (
-                        <span className="text-green-300 font-semibold">None</span>
-                      )}
-                    </p>
-                    <div className="flex justify-between mt-2">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black-100 to-transparent opacity-100 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-x-0 bottom-0 p-6 text-white transform translate-y-16 group-hover:translate-y-0 transition-transform duration-300">
+                    <h1 className="text-3xl font-bold mb-2 text-shadow">{book.title}</h1>
+                    <h4 className="text-sm font-semibold mb-4 opacity-90">~ {book.author}</h4>
+                    <div className="flex justify-between mt-4">
                       <Button
                         variant="outline-light"
                         size="sm"
@@ -284,13 +267,13 @@ const AdminDashboard = () => {
             onHide={() => setViewModalOpen(false)}
             centered
             size="md"
-            className="book-details-modal"
+            className="book-details-modal bg-black bg-opacity-50"
           >
             <div className="modal-content bg-white bg-opacity-80 backdrop-filter backdrop-blur-md rounded-lg overflow-hidden">
               <Modal.Header closeButton className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-b-0">
                 <Modal.Title className="text-xl font-bold">Book Details</Modal.Title>
               </Modal.Header>
-              <Modal.Body className="p-0 ">
+              <Modal.Body className="p-0">
                 <div className="flex flex-col md:flex-row">
                   <div className="md:w-2/5 relative h-64 md:h-auto">
                     <img
