@@ -323,7 +323,10 @@ const AdminDashboard = () => {
           </Modal>
 
           {/* Edit Modal */}
-          <Modal show={editModalOpen} onHide={() => setEditModalOpen(false)} centered>
+            <Modal show={editModalOpen}
+              onHide={() => { setEditModalOpen(false); fetchData(); }}
+              centered
+            >
             <Modal.Header closeButton>
               <Modal.Title>Edit Book</Modal.Title>
             </Modal.Header>
