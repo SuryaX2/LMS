@@ -264,7 +264,7 @@ const AdminDashboard = () => {
           {/* View Modal */}
           <Modal
             show={viewModalOpen}
-              onHide={() => { setViewModalOpen(false); fetchData();}}
+            onHide={() => { setViewModalOpen(false); fetchData(); }}
             centered
             size="md"
             className="book-details-modal bg-black bg-opacity-50"
@@ -323,10 +323,10 @@ const AdminDashboard = () => {
           </Modal>
 
           {/* Edit Modal */}
-            <Modal show={editModalOpen}
-              onHide={() => { setEditModalOpen(false); fetchData(); }}
-              centered
-            >
+          <Modal show={editModalOpen}
+            onHide={() => { setEditModalOpen(false); fetchData(); }}
+            centered
+          >
             <Modal.Header closeButton>
               <Modal.Title>Edit Book</Modal.Title>
             </Modal.Header>
