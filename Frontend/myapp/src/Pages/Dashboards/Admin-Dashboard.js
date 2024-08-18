@@ -264,7 +264,7 @@ const AdminDashboard = () => {
           {/* View Modal */}
           <Modal
             show={viewModalOpen}
-            onHide={() => setViewModalOpen(false)}
+              onHide={() => { setViewModalOpen(false); fetchData();}}
             centered
             size="md"
             className="book-details-modal bg-black bg-opacity-50"
