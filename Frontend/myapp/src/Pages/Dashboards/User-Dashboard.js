@@ -74,7 +74,7 @@ const UserDashboard = () => {
   const confirmBorrow = async (selectedBook) => {
     if (!selectedBook) {
       console.log(selectedBook);
-      
+
       return;
     }
 
@@ -86,7 +86,7 @@ const UserDashboard = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(res);
-      
+
       if (res.data.success) {
         console.log(res);
         setShowModal(false);
@@ -219,7 +219,7 @@ const UserDashboard = () => {
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={()=>confirmBorrow(selectedBook)}>
+          <Button variant="primary" onClick={() => confirmBorrow(selectedBook)}>
             Confirm Request
           </Button>
         </Modal.Footer>
