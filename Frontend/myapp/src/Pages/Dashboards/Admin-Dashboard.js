@@ -276,7 +276,6 @@ const AdminDashboard = () => {
                 </div>
               ))}
             </div>
-            {/* borrow request div */}
           </Container>
 
           {/* View Modal */}
