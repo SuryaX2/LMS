@@ -28,7 +28,7 @@ const AdminDashboard = () => {
       setIsLoading(false);
     }
   }, []);
-  
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
