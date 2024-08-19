@@ -219,7 +219,7 @@ const AdminDashboard = () => {
             {/* book card div */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {books.map(book => (
-                <div key={book._id} className="relative h-96 mb-3 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl group">
+                <div key={book._id} className="relative h-96 mb-3 rounded-lg shadow-black shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl group">
                   <img
                     src={book.avatar || '/placeholder-cover.jpg'}
                     alt={book.title}
