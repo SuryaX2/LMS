@@ -267,39 +267,40 @@ const AdminDashboard = () => {
             onHide={() => { setViewModalOpen(false); fetchData(); }}
             centered
             size="md"
-            className="book-details-modal bg-black bg-opacity-50"
+            className="book-details-modal"
           >
-            <div className="modal-content bg-white bg-opacity-80 backdrop-filter backdrop-blur-md rounded-lg overflow-hidden">
+            <div className="modal-content bg-white rounded-lg overflow-hidden shadow-lg">
               <Modal.Header closeButton className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-b-0">
-                <Modal.Title className="text-xl font-bold">Book Details</Modal.Title>
+                <Modal.Title>Book Details</Modal.Title>
               </Modal.Header>
               <Modal.Body className="p-0">
-                <div className="flex flex-col md:flex-row">
-                  <div className="md:w-2/5 relative h-64 md:h-auto">
+                <div className="flex">
+                  <div className="w-1/2 relative">
                     <img
                       src={viewingBook?.avatar || '/placeholder-cover.jpg'}
                       alt={viewingBook?.title}
-                      className="absolute inset-0 w-full h-full object-cover object-center opacity-100"
+                      className="w-full h-full object-cover opacity-100"
+                      style={{ minHeight: '400px' }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50"></div>
                   </div>
-                  <div className="md:w-3/5 p-6 bg-white">
+                  <div className="w-1/2 p-6 bg-white">
                     <h2 className="text-3xl font-bold mb-3 text-gray-800">{viewingBook?.title}</h2>
                     <p className="text-xl text-gray-600 mb-4">By {viewingBook?.author}</p>
-                    <div className="space-y-2">
-                      <p className="flex items-center">
+                    <div className="space-y-3">
+                      <p className="flex items-center text-lg">
                         <span className="w-24 font-semibold text-gray-700">ISBN:</span>
                         <span className="text-gray-800">{viewingBook?.isbn}</span>
                       </p>
-                      <p className="flex items-center">
+                      <p className="flex items-center text-lg">
                         <span className="w-24 font-semibold text-gray-700">Price:</span>
                         <span className="text-green-600 font-bold">₹{viewingBook?.price?.toFixed(2)}</span>
                       </p>
-                      <p className="flex items-center">
+                      <p className="flex items-center text-lg">
                         <span className="w-24 font-semibold text-gray-700">Quantity:</span>
                         <span className="text-gray-800">{viewingBook?.quantity}</span>
                       </p>
-                      <p className="flex items-center">
+                      <p className="flex items-center text-lg">
                         <span className="w-24 font-semibold text-gray-700">Status:</span>
                         {viewingBook?.borrowedBy ? (
                           <span className="text-yellow-500 font-semibold">Borrowed</span>
@@ -307,7 +308,7 @@ const AdminDashboard = () => {
                           <span className="text-green-500 font-semibold">Available</span>
                         )}
                       </p>
-                      <p className="flex items-center">
+                      <p className="flex items-center text-lg">
                         <span className="w-24 font-semibold text-gray-700">Borrowed By:</span>
                         {viewingBook?.borrowedBy ? (
                           <span className="text-yellow-500 font-semibold">{viewingBook.borrowedBy.username}</span>
