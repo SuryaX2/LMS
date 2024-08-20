@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { Container, Navbar, Nav, Button, Modal, Form, Dropdown, Table, Spinner } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Modal, Form, Dropdown, Table, Spinner, FormControl } from 'react-bootstrap';
 import { MenuBook, Person, Logout, Edit, Delete, Add, Book, AttachMoney, Inventory, LocalLibrary, Visibility } from '@mui/icons-material';
 import { Check2, X } from 'react-bootstrap-icons';
 
@@ -15,6 +15,7 @@ const AdminDashboard = () => {
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [viewingBook, setViewingBook] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   const fetchData = useCallback(async () => {
@@ -39,7 +40,6 @@ const AdminDashboard = () => {
       fetchData();
     }
   }, [navigate, fetchData]);
-
 
   const fetchBooks = () => {
     axios.get('http://localhost:3001/api/admin/get-books')
@@ -123,6 +123,13 @@ const AdminDashboard = () => {
     setViewingBook(book);
     setViewModalOpen(true);
   };
+
+  const filteredBooks = searchQuery
+    ? books.filter(book =>
+      book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      book.author.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    : books;
 
   const calculateTotalInventory = () => {
     const totalBooks = books.length;
@@ -213,12 +220,21 @@ const AdminDashboard = () => {
                   Book Inventory
                   <span className="absolute bottom-0 left-0 w-1/3 h-1 bg-blue-500 rounded-full"></span>
                 </h2>
+                <div className="relative w-64"> {/* Wrapper for search input with fixed width */}
+                  <FormControl
+                    type="search"
+                    className="form-control w-full" // Ensures the input takes full width of the container
+                    placeholder="Search by title or author"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
               </div>
               <p className="text-gray-600 mt-2">Manage your library's collection with ease</p>
             </div>
             {/* book card div */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {books.map(book => (
+              {filteredBooks.map(book => (
                 <div key={book._id} className="relative h-96 mb-3 rounded-lg shadow-black shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl group">
                   <img
                     src={book.avatar || '/placeholder-cover.jpg'}
