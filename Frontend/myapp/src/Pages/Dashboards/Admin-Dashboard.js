@@ -317,7 +317,7 @@ const AdminDashboard = () => {
                       {viewingBook?.borrowedBy && (
                         <div className="flex justify-between items-center mt-1">
                           <span className="font-semibold text-gray-700 text-sm">Borrowed By</span>
-                          <span className="text-blue-600 font-semibold text-sm">{viewingBook.borrowedBy.username}</span>
+                          <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">{viewingBook.borrowedBy.username}</span>
                         </div>
                       )}
                     </div>
