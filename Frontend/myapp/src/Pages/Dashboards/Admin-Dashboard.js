@@ -279,68 +279,68 @@ const AdminDashboard = () => {
 
           {/* View Modal */}
           <Modal
-  show={viewModalOpen}
-  onHide={() => { setViewModalOpen(false); fetchData(); }}
-  centered
-  size="lg"
-  className="book-details-modal"
->
-  <div className="modal-content bg-white rounded-lg overflow-hidden shadow-lg">
-    <Modal.Header closeButton className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-b-0">
-      <Modal.Title className="text-xl font-bold">Book Details</Modal.Title>
-    </Modal.Header>
-    <Modal.Body className="p-0">
-      <div className="flex h-[500px]">
-        <div className="w-2/5 relative">
-          <img
-            src={viewingBook?.avatar || '/placeholder-cover.jpg'}
-            alt={viewingBook?.title}
-            className="w-full h-full object-cover opacity-100"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50"></div>
-        </div>
-        <div className="w-3/5 p-6 bg-white flex flex-col justify-between">
-          <div>
-            <h2 className="text-2xl font-bold mb-2 text-gray-800">{viewingBook?.title}</h2>
-            <p className="text-lg text-gray-600 mb-4 italic">By {viewingBook?.author}</p>
-            <div className="w-12 h-1 bg-blue-500 mb-4"></div>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                <span className="font-semibold text-gray-700 text-sm">ISBN</span>
-                <span className="text-gray-800 text-sm">{viewingBook?.isbn}</span>
-              </div>
-              <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                <span className="font-semibold text-gray-700 text-sm">Price</span>
-                <span className="text-green-600 font-bold text-sm">₹{viewingBook?.price?.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                <span className="font-semibold text-gray-700 text-sm">Quantity</span>
-                <span className="text-gray-800 text-sm">{viewingBook?.quantity}</span>
-              </div>
+            show={viewModalOpen}
+            onHide={() => { setViewModalOpen(false); fetchData(); }}
+            centered
+            size="lg"
+            className="book-details-modal"
+          >
+            <div className="modal-content bg-white rounded-lg overflow-hidden shadow-lg">
+              <Modal.Header closeButton className="bg-gradient-to-r from-blue-500 to-purple-600 text-white border-b-0">
+                <Modal.Title className="text-xl font-bold">Book Details</Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="p-0">
+                <div className="flex h-[500px]">
+                  <div className="w-2/5 relative">
+                    <img
+                      src={viewingBook?.avatar || '/placeholder-cover.jpg'}
+                      alt={viewingBook?.title}
+                      className="w-full h-full object-cover opacity-100"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50"></div>
+                  </div>
+                  <div className="w-3/5 p-6 bg-white flex flex-col justify-between">
+                    <div>
+                      <h2 className="text-2xl font-bold mb-2 text-gray-800">{viewingBook?.title}</h2>
+                      <p className="text-lg text-gray-600 mb-4 italic">By {viewingBook?.author}</p>
+                      <div className="w-12 h-1 bg-blue-500 mb-4"></div>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+                          <span className="font-semibold text-gray-700 text-sm">ISBN</span>
+                          <span className="text-gray-800 text-sm">{viewingBook?.isbn}</span>
+                        </div>
+                        <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+                          <span className="font-semibold text-gray-700 text-sm">Price</span>
+                          <span className="text-green-600 font-bold text-sm">₹{viewingBook?.price?.toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+                          <span className="font-semibold text-gray-700 text-sm">Quantity</span>
+                          <span className="text-gray-800 text-sm">{viewingBook?.quantity}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">Current Status</p>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-gray-700 text-sm">Availability</span>
+                        {viewingBook?.borrowedBy ? (
+                          <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">Borrowed</span>
+                        ) : (
+                          <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">Available</span>
+                        )}
+                      </div>
+                      {viewingBook?.borrowedBy && (
+                        <div className="flex justify-between items-center mt-2">
+                          <span className="font-semibold text-gray-700 text-sm">Borrowed By</span>
+                          <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">{viewingBook.borrowedBy.username}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </Modal.Body>
             </div>
-          </div>
-          <div className="mt-4">
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">Current Status</p>
-            <div className="flex justify-between items-center">
-              <span className="font-semibold text-gray-700 text-sm">Availability</span>
-              {viewingBook?.borrowedBy ? (
-                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">Borrowed</span>
-              ) : (
-                <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">Available</span>
-              )}
-            </div>
-            {viewingBook?.borrowedBy && (
-              <div className="flex justify-between items-center mt-2">
-                <span className="font-semibold text-gray-700 text-sm">Borrowed By</span>
-                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">{viewingBook.borrowedBy.username}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </Modal.Body>
-  </div>
-</Modal>
+          </Modal>
 
           {/* Edit Modal */}
           <Modal show={editModalOpen}
