@@ -17,9 +17,9 @@ function Footer() {
               Our goal is to inspire, educate, and entertain through the power of literature.
             </p>
           </div>
-          <div className="space-y-6">
+          <div className="space-y-6 text-right">
             <h3 className="text-2xl font-bold text-white mb-4 border-b-2 border-blue-500 inline-block pb-2">Connect With Us</h3>
-            <div className="flex space-x-6">
+            <div className="flex space-x-6 justify-end">
               <a href="https://www.facebook.com/SuryaSekhar.sharma.1GOD/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">
                 <FacebookIcon fontSize="large" />
               </a>
