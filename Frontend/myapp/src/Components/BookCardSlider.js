@@ -28,15 +28,15 @@ const BookCardSlider = () => {
     <div className="book-card-slider container mx-auto my-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {currentBooks.filter((book)=> book.quantity > 0).map((book) => (
-          <div key={book._id} className="bg-white shadow-lg shadow-white cursor-pointer rounded-lg overflow-hidden">
+          <div key={book._id} className="bg-black-500 shadow-lg shadow-white cursor-pointer rounded-lg overflow-hidden">
             <img 
               className="w-full h-96 object-cover object-top opacity-100"
               src={book.avatar} 
               alt={book.title} 
             />
             <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
-              <p className="text-gray-600">Author: {book.author}</p>
+              <h3 className="text-xl font-semibold mb-2 text-white">{book.title}</h3>
+              <p className="text-gray-400">Author: {book.author}</p>
             </div>
           </div>
         ))}
