@@ -7,7 +7,7 @@ import BookCardSlider from "../Components/BookCardSlider";
 function Home() {
     return (
         <>
-            <div className="bg-gray-900 min-h-screen">
+            <div className="bg-gray-800 min-h-screen">
                 <Navbar />
                 <Carousel />
                 <BookCardSlider />
