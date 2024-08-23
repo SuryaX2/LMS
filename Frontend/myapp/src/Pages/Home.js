@@ -8,6 +8,7 @@ function Home() {
         <>
             <Navbar />
             <Carousel />
+            BookCardSlider
             <Footer />
           </>
     );
