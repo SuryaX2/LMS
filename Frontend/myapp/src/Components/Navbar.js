@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 function MyNavbar() {
     return (
-        <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar bg="dark" variant="dark" expand="lg" className='p-3'>
             <Container>
                 <Navbar.Brand href="#">
                     <img
@@ -21,14 +21,6 @@ function MyNavbar() {
                         <Nav.Link href="#home">Home</Nav.Link>
                         <Nav.Link href="#about">About</Nav.Link>
                     </Nav>
-                    <Form className="d-flex mt-2 search-form">
-                        <FormControl
-                            type="search"
-                            placeholder="Search"
-                            className="mr-2"
-                            aria-label="Search"
-                        />
-                    </Form>
                     <div className="d-flex">
                         <LinkContainer to="/login">
                             <Button variant="outline-light" className="ml-2">Login</Button>

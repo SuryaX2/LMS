@@ -22,6 +22,7 @@ const BookCardSlider = () => {
 
   return (
     <div className="book-card-slider container mx-auto my-8">
+      <h1>OUR book</h1>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
