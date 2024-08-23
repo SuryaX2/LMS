@@ -84,7 +84,7 @@ const AdminDashboard = () => {
 
   const handleInputChange = (e) => {
     setEditingBook({ ...editingBook, [e.target.name]: e.target.value });
-  };
+  }; 
 
   const fetchBorrowRequests = () => {
     axios.get('http://localhost:3001/api/admin/book/borrow-requests')
