@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Pagination } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const BookCardSlider = () => {
   const [books, setBooks] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const booksPerPage = 4;
 
   useEffect(() => {
     fetchBooks();
@@ -18,42 +19,42 @@ const BookCardSlider = () => {
       .catch(err => console.log(err));
   };
 
-  const indexOfLastBook = currentPage * booksPerPage;
-  const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   return (
     <div className="book-card-slider container mx-auto my-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {currentBooks.filter((book)=> book.quantity > 0).map((book) => (
-          <div key={book._id} className="bg-black-500 shadow-lg shadow-white cursor-pointer rounded-lg overflow-hidden">
-            <img 
-              className="w-full h-96 object-cover object-top opacity-100"
-              src={book.avatar} 
-              alt={book.title} 
-            />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2 text-white">{book.title}</h3>
-              <p className="text-gray-400">Author: {book.author}</p>
+      <Swiper
+        modules={[Navigation, Pagination]}
+        spaceBetween={20}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        breakpoints={{
+          640: {
+            slidesPerView: 2,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          1024: {
+            slidesPerView: 4,
+          },
+        }}
+      >
+        {books.filter((book) => book.quantity > 0).map((book) => (
+          <SwiperSlide key={book._id}>
+            <div className="bg-black-500 shadow-lg shadow-white cursor-pointer rounded-lg overflow-hidden h-full">
+              <img 
+                className="w-full h-64 object-cover object-top opacity-100"
+                src={book.avatar} 
+                alt={book.title} 
+              />
+              <div className="p-4">
+                <h3 className="text-xl font-semibold mb-2 text-white">{book.title}</h3>
+                <p className="text-gray-400">Author: {book.author}</p>
+              </div>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
-      </div>
-      <div className="mt-4 flex justify-center">
-        <Pagination>
-          {[...Array(Math.ceil(books.length / booksPerPage))].map((_, index) => (
-            <Pagination.Item
-              key={index + 1}
-              active={index + 1 === currentPage}
-              onClick={() => paginate(index + 1)}
-            >
-              {index + 1}
-            </Pagination.Item>
-          ))}
-        </Pagination>
-      </div>
+      </Swiper>
     </div>
   );
 };
