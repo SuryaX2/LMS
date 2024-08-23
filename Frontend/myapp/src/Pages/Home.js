@@ -7,11 +7,13 @@ import BookCardSlider from "../Components/BookCardSlider";
 function Home() {
     return (
         <>
-            <Navbar />
-            <Carousel />
-            <BookCardSlider/>
-            <Footer />
-          </>
+            <<div className="bg-gray-900 min-h-screen">
+                <Navbar />
+                <Carousel />
+                <BookCardSlider />
+                <Footer />
+            </div>
+        </>
     );
 }
 
