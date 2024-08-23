@@ -49,7 +49,7 @@ const BookCardSlider = () => {
           <SwiperSlide key={book._id}>
             <div className="bg-black-500 shadow-lg shadow-white cursor-pointer rounded-lg overflow-hidden h-full mb-5">
               <img 
-                className="w-full h-96 object-cover object-top opacity-100"
+                className="w-full h-96 object-cover object-top opacity-80"
                 src={book.avatar} 
                 alt={book.title} 
               />
