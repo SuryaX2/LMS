@@ -128,7 +128,7 @@ const UserDashboard = () => {
   }
 
   return (
-    <><div className="bg-gray-100 min-h-screen font-sans">
+    <div className="bg-gray-100 min-h-screen font-sans">
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
         <Container>
           <Navbar.Brand href="#home" className="flex items-center">
@@ -158,7 +158,7 @@ const UserDashboard = () => {
 
       <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Available Books section */}
-        <Tabs defaultActiveKey="available" id="dashboard-tabs" className="mb-4">
+        <Tabs defaultActiveKey="available" id="dashboard-tabs" className="mb-4 text-xl font-bold" fill>
           <Tab eventKey="available" title="Available Books">
             <div className="mb-8">
               <div className="flex items-center justify-between">
@@ -172,7 +172,7 @@ const UserDashboard = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {books.filter(book => book.quantity > 0).map(book => (
-                <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
+                <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl mb-2">
                   <img
                     src={book.avatar || '/placeholder-cover.jpg'}
                     alt={book.title}
@@ -184,12 +184,13 @@ const UserDashboard = () => {
                     <p className="text-sm mb-1 font-semibold">ISBN: {book.isbn}</p>
                     <p className="text-sm mb-1 font-semibold">Price: ₹{book.price.toFixed(2)}</p>
                     <p className="text-sm mb-1 font-semibold">Quantity: {book.quantity}</p>
-                    <button
+                    <Button
+                      variant="outline-primary"
                       onClick={() => handleBorrow(book)}
                       className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
                     >
                       Request to Borrow
-                    </button>
+                    </Button>
                   </div>
                 </div>
               ))}
@@ -254,7 +255,7 @@ const UserDashboard = () => {
         </Modal.Footer>
       </Modal>
     </div>
-      );
+  );
 };
 
-      export default UserDashboard;
+export default UserDashboard;
