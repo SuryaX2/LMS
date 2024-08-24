@@ -26,27 +26,35 @@ const UserDashboard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) {
+    const role = localStorage.getItem('role');
+
+    if (!token || role !== 'user') {
       navigate('/login');
     } else {
       fetchData();
     }
-  }, [navigate]);
+  }, [navigate, fetchData]);
 
-  const fetchBooks = () => {
-    return axios.get('http://localhost:3001/api/books')
-      .then(res => setBooks(res.data))
-      .catch(err => console.log(err));
+  const fetchBooks = async () => {
+    try {
+      const res = await axios.get('http://localhost:3001/api/books');
+      return setBooks(res.data);
+    } catch (err) {
+      return console.log(err);
+    }
   };
-  
-  const fetchBorrowedBooks = () => {
+
+  const fetchBorrowedBooks = async () => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user');
-    return axios.get(`http://localhost:3001/api/books/borrowed/${userId}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(res => setBorrowedBooks(res.data))
-      .catch(err => console.log(err));
+    try {
+      const res = await axios.get(`http://localhost:3001/api/books/borrowed/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      return setBorrowedBooks(res.data);
+    } catch (err) {
+      return console.log(err);
+    }
   };
 
   const handleReturn = async (bookId) => {
