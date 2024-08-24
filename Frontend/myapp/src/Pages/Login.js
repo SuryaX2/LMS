@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { Container, Navbar, Nav, Dropdown, Modal, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, Dropdown, Modal, Button, Spinner } from 'react-bootstrap';
 import { Book, Person, Logout, MenuBook } from '@mui/icons-material';
 
 const UserDashboard = () => {
@@ -10,28 +10,39 @@ const UserDashboard = () => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      await Promise.all([fetchBooks(), fetchBorrowedBooks()]);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
       navigate('/login');
     } else {
-      fetchBooks();
-      fetchBorrowedBooks();
+      fetchData();
     }
   }, [navigate]);
 
   const fetchBooks = () => {
-    axios.get('http://localhost:3001/api/books')
+    return axios.get('http://localhost:3001/api/books')
       .then(res => setBooks(res.data))
       .catch(err => console.log(err));
   };
-
+  
   const fetchBorrowedBooks = () => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user');
-    axios.get(`http://localhost:3001/api/books/borrowed/${userId}`, {
+    return axios.get(`http://localhost:3001/api/books/borrowed/${userId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => setBorrowedBooks(res.data))
@@ -82,6 +93,31 @@ const UserDashboard = () => {
       toast.error('Failed to send request.');
     }
   };
+
+  if (loading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
+      }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '2rem',
+          borderRadius: '1rem',
+          background: 'rgba(255, 255, 255, 0.8)',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)'
+        }}>
+          <Spinner animation="border" variant="primary" style={{ width: '4rem', height: '4rem' }} />
+          <p style={{ marginTop: '1rem', fontSize: '1.2rem', fontWeight: 'bold', color: '#3a5ccc' }}>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen font-sans">
