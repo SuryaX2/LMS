@@ -128,7 +128,7 @@ const UserDashboard = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen font-sans">
+    <><div className="bg-gray-100 min-h-screen font-sans">
       <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
         <Container>
           <Navbar.Brand href="#home" className="flex items-center">
@@ -176,8 +176,7 @@ const UserDashboard = () => {
                   <img
                     src={book.avatar || '/placeholder-cover.jpg'}
                     alt={book.title}
-                    className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
-                  />
+                    className="absolute inset-0 w-full h-full object-cover object-top opacity-100" />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
                   <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
                     <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
@@ -195,9 +194,11 @@ const UserDashboard = () => {
                 </div>
               ))}
             </div>
+          </Tab>
 
-            {/* Borrowed Books section */}
-            <div className="mt-12 mb-8">
+          {/* Borrowed Books section */}
+          <Tab eventKey="borrowed" title="Borrowed Books">
+            <div className="mb-8">
               <div className="flex items-center justify-between">
                 <h2 className="text-3xl font-bold text-gray-800 relative">
                   Borrowed Books
@@ -213,8 +214,7 @@ const UserDashboard = () => {
                   <img
                     src={book.avatar || '/placeholder-cover.jpg'}
                     alt={book.title}
-                    className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
-                  />
+                    className="absolute inset-0 w-full h-full object-cover object-top opacity-100" />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
                   <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
                     <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
@@ -237,7 +237,6 @@ const UserDashboard = () => {
           </Tab>
         </Tabs>
       </Container>
-
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Borrow Request</Modal.Title>
@@ -255,7 +254,7 @@ const UserDashboard = () => {
         </Modal.Footer>
       </Modal>
     </div>
-  );
+      );
 };
 
-export default UserDashboard;
+      export default UserDashboard;
