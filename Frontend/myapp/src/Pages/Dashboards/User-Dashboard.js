@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { Container, Navbar, Nav, Dropdown, Modal, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, Dropdown, Modal, Button, Spinner } from 'react-bootstrap';
 import { Book, Person, Logout, MenuBook } from '@mui/icons-material';
 
 const UserDashboard = () => {
@@ -11,45 +10,49 @@ const UserDashboard = () => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
-  const { isAuthenticated, user, logout } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      await Promise.all([fetchBooks(), fetchBorrowedBooks()]);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    if (!isAuthenticated) {
+    const token = localStorage.getItem('token');
+    if (!token) {
       navigate('/login');
     } else {
-      fetchBooks();
-      fetchBorrowedBooks();
+      fetchData();
     }
-  }, [isAuthenticated, navigate]);
+  }, [navigate]);
 
   const fetchBooks = () => {
-    axios.get('http://localhost:3001/api/books')
+    return axios.get('http://localhost:3001/api/books')
       .then(res => setBooks(res.data))
       .catch(err => console.log(err));
   };
-
+  
   const fetchBorrowedBooks = () => {
     const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
-    console.log(user)
-    axios.get(`http://localhost:3001/api/books/borrowed/${user}`, {
+    const userId = localStorage.getItem('user');
+    return axios.get(`http://localhost:3001/api/books/borrowed/${userId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => setBorrowedBooks(res.data))
       .catch(err => console.log(err));
   };
 
-
   const handleReturn = async (bookId) => {
-    const user = localStorage.getItem('user')
-    // if (!user) {
-    //   console.error('User not logged in');
-    //   return;
-    // }
     try {
       await axios.post('http://localhost:3001/api/books/return', { bookId });
-      fetchBooks(user);
+      fetchBooks();
       fetchBorrowedBooks();
       toast.success('You Returned The Book Successfully');
     } catch (error) {
@@ -58,12 +61,10 @@ const UserDashboard = () => {
   };
 
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
     navigate('/login');
-  };
-
-  const handleNavigation = (path) => {
-    navigate(path);
   };
 
   const handleBorrow = (book) => {
@@ -71,34 +72,52 @@ const UserDashboard = () => {
     setShowModal(true);
   };
 
-  const confirmBorrow = async (selectedBook) => {
-    if (!selectedBook) {
-      console.log(selectedBook);
-
-      return;
-    }
+  const confirmBorrow = async () => {
+    if (!selectedBook) return;
 
     try {
       const token = localStorage.getItem('token');
-      const user = localStorage.getItem('user');
+      const userId = localStorage.getItem('user');
       const res = await axios.post('http://localhost:3001/api/admin/book/request',
-        { bookId: selectedBook._id, userId: user },
+        { bookId: selectedBook._id, userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log(res);
 
       if (res.data.success) {
-        console.log(res);
         setShowModal(false);
         toast.success('Request sent to admin for approval.');
-        fetchBooks(); // Refresh the book list
+        fetchBooks();
       }
-
     } catch (error) {
       console.error('Error requesting book:', error);
       toast.error('Failed to send request.');
     }
   };
+
+  if (loading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
+      }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '2rem',
+          borderRadius: '1rem',
+          background: 'rgba(255, 255, 255, 0.8)',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)'
+        }}>
+          <Spinner animation="border" variant="primary" style={{ width: '4rem', height: '4rem' }} />
+          <p style={{ marginTop: '1rem', fontSize: '1.2rem', fontWeight: 'bold', color: '#3a5ccc' }}>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen font-sans">
@@ -113,11 +132,10 @@ const UserDashboard = () => {
             <Nav>
               <Dropdown align="end">
                 <Dropdown.Toggle variant="outline-light" id="dropdown-basic" className="flex items-center">
-                  <Person className="mr-2" />
-                  {user?.username || 'User'}
+                  <Person className="mr-2" /> User
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleNavigation('/user-dashboard')} className="flex items-center">
+                  <Dropdown.Item onClick={() => navigate('/user-dashboard')} className="flex items-center">
                     <Book className="mr-2" />Dashboard
                   </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout} className="flex items-center">
@@ -131,6 +149,7 @@ const UserDashboard = () => {
       </Navbar>
 
       <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Available Books section */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-bold text-gray-800 relative">
@@ -167,6 +186,7 @@ const UserDashboard = () => {
           ))}
         </div>
 
+        {/* Borrowed Books section */}
         <div className="mt-12 mb-8">
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-bold text-gray-800 relative">
@@ -191,17 +211,15 @@ const UserDashboard = () => {
                 <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
                 <p className="text-sm mb-1 font-semibold">ISBN: {book.isbn}</p>
                 <p className="text-sm mb-1 font-semibold">Price: ₹{book.price.toFixed(2)}</p>
-                <td className="text-sm mb-1 font-semibold">Borrow Date: <span className="text-yellow-300 font-semibold">{new Date(book.borrowedDate).toLocaleDateString()}</span></td>
-                <td className="text-sm mb-1 font-semibold">Return Date: <span className="text-green-300 font-semibold">{new Date(book.returnDate).toLocaleDateString()}</span></td>
-                <td className="">
-                  <Button
-                    variant="outline-success"
-                    onClick={() => handleReturn(book._id)}
-                    className="mt-2 px-4 py-2 w-full text-white"
-                  >
-                    Return the book
-                  </Button>
-                </td>
+                <p className="text-sm mb-1 font-semibold">Borrow Date: <span className="text-yellow-300 font-semibold">{new Date(book.borrowedDate).toLocaleDateString()}</span></p>
+                <p className="text-sm mb-1 font-semibold">Return Date: <span className="text-green-300 font-semibold">{new Date(book.returnDate).toLocaleDateString()}</span></p>
+                <Button
+                  variant="outline-success"
+                  onClick={() => handleReturn(book._id)}
+                  className="mt-2 px-4 py-2 w-full text-white"
+                >
+                  Return the book
+                </Button>
               </div>
             </div>
           ))}
@@ -219,7 +237,7 @@ const UserDashboard = () => {
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={() => confirmBorrow(selectedBook)}>
+          <Button variant="primary" onClick={confirmBorrow}>
             Confirm Request
           </Button>
         </Modal.Footer>
