@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Form, Button, Card, Row, Col, Spinner } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
@@ -16,6 +16,15 @@ const AddBook = () => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+
+        if (!token || role !== 'admin') {
+            navigate('/login');
+        }
+    })
 
     const handleInputChange = (e) => {
         if (e.target.name === 'avatar') {
