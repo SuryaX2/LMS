@@ -157,6 +157,7 @@ const UserDashboard = () => {
       </Navbar>
 
       <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Available Books section */}
         <Tabs defaultActiveKey="available" id="dashboard-tabs" className="mb-4">
           <Tab eventKey="available" title="Available Books">
             <div className="mb-8">
@@ -169,70 +170,72 @@ const UserDashboard = () => {
               <p className="text-gray-600 mt-2">Browse and request books to borrow</p>
             </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {books.filter(book => book.quantity > 0).map(book => (
-            <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
-              <img
-                src={book.avatar || '/placeholder-cover.jpg'}
-                alt={book.title}
-                className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
-                <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
-                <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
-                <p className="text-sm mb-1 font-semibold">ISBN: {book.isbn}</p>
-                <p className="text-sm mb-1 font-semibold">Price: ₹{book.price.toFixed(2)}</p>
-                <p className="text-sm mb-1 font-semibold">Quantity: {book.quantity}</p>
-                <button
-                  onClick={() => handleBorrow(book)}
-                  className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-                >
-                  Request to Borrow
-                </button>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {books.filter(book => book.quantity > 0).map(book => (
+                <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl">
+                  <img
+                    src={book.avatar || '/placeholder-cover.jpg'}
+                    alt={book.title}
+                    className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
+                  <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
+                    <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
+                    <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
+                    <p className="text-sm mb-1 font-semibold">ISBN: {book.isbn}</p>
+                    <p className="text-sm mb-1 font-semibold">Price: ₹{book.price.toFixed(2)}</p>
+                    <p className="text-sm mb-1 font-semibold">Quantity: {book.quantity}</p>
+                    <button
+                      onClick={() => handleBorrow(book)}
+                      className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                    >
+                      Request to Borrow
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* Borrowed Books section */}
-        <div className="mt-12 mb-8">
-          <div className="flex items-center justify-between">
-            <h2 className="text-3xl font-bold text-gray-800 relative">
-              Borrowed Books
-              <span className="absolute bottom-0 left-0 w-full h-1 bg-green-500 rounded-full"></span>
-            </h2>
-          </div>
-          <p className="text-gray-600 mt-2">Books you have currently borrowed</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {borrowedBooks.filter(book => book != null).map(book => (
-            <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl mb-4">
-              <img
-                src={book.avatar || '/placeholder-cover.jpg'}
-                alt={book.title}
-                className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
-                <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
-                <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
-                <p className="text-sm mb-1 font-semibold">ISBN: {book.isbn}</p>
-                <p className="text-sm mb-1 font-semibold">Price: ₹{book.price.toFixed(2)}</p>
-                <p className="text-sm mb-1 font-semibold">Borrow Date: <span className="text-yellow-300 font-semibold">{new Date(book.borrowedDate).toLocaleDateString()}</span></p>
-                <p className="text-sm mb-1 font-semibold">Return Date: <span className="text-green-300 font-semibold">{new Date(book.returnDate).toLocaleDateString()}</span></p>
-                <Button
-                  variant="outline-success"
-                  onClick={() => handleReturn(book._id)}
-                  className="mt-2 px-4 py-2 w-full text-white"
-                >
-                  Return the book
-                </Button>
+            {/* Borrowed Books section */}
+            <div className="mt-12 mb-8">
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-bold text-gray-800 relative">
+                  Borrowed Books
+                  <span className="absolute bottom-0 left-0 w-full h-1 bg-green-500 rounded-full"></span>
+                </h2>
               </div>
+              <p className="text-gray-600 mt-2">Books you have currently borrowed</p>
             </div>
-          ))}
-        </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {borrowedBooks.filter(book => book != null).map(book => (
+                <div key={book._id} className="relative h-96 rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl mb-4">
+                  <img
+                    src={book.avatar || '/placeholder-cover.jpg'}
+                    alt={book.title}
+                    className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
+                  <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
+                    <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
+                    <h4 className="text-sm font-semibold mb-1 opacity-90">By {book.author}</h4>
+                    <p className="text-sm mb-1 font-semibold">ISBN: {book.isbn}</p>
+                    <p className="text-sm mb-1 font-semibold">Price: ₹{book.price.toFixed(2)}</p>
+                    <p className="text-sm mb-1 font-semibold">Borrow Date: <span className="text-yellow-300 font-semibold">{new Date(book.borrowedDate).toLocaleDateString()}</span></p>
+                    <p className="text-sm mb-1 font-semibold">Return Date: <span className="text-green-300 font-semibold">{new Date(book.returnDate).toLocaleDateString()}</span></p>
+                    <Button
+                      variant="outline-success"
+                      onClick={() => handleReturn(book._id)}
+                      className="mt-2 px-4 py-2 w-full text-white"
+                    >
+                      Return the book
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Tab>
+        </Tabs>
       </Container>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
