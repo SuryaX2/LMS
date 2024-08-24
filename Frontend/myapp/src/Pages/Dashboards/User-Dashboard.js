@@ -157,16 +157,17 @@ const UserDashboard = () => {
       </Navbar>
 
       <Container className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Available Books section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <h2 className="text-3xl font-bold text-gray-800 relative">
-              Available Books
-              <span className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 rounded-full"></span>
-            </h2>
-          </div>
-          <p className="text-gray-600 mt-2">Browse and request books to borrow</p>
-        </div>
+        <Tabs defaultActiveKey="available" id="dashboard-tabs" className="mb-4">
+          <Tab eventKey="available" title="Available Books">
+            <div className="mb-8">
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-bold text-gray-800 relative">
+                  Available Books
+                  <span className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 rounded-full"></span>
+                </h2>
+              </div>
+              <p className="text-gray-600 mt-2">Browse and request books to borrow</p>
+            </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {books.filter(book => book.quantity > 0).map(book => (
