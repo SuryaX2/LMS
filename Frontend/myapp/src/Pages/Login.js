@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 import { Container, Card, Form, Button, Alert } from 'react-bootstrap';
 import { Email, Lock, Login as LoginIcon } from '@mui/icons-material';
 
@@ -10,19 +9,11 @@ const Login = () => {
   const [user, setUser] = useState(null);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { isAuthenticated, login } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-    login();
     try {
       const response = await axios.post('http://localhost:3001/api/auth/login', { email, password });
       if (response.data.success) {
