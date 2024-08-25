@@ -85,7 +85,7 @@ const AdminDashboard = () => {
 
   const handleInputChange = (e) => {
     setEditingBook({ ...editingBook, [e.target.name]: e.target.value });
-  }; 
+  };
 
   const fetchBorrowRequests = () => {
     axios.get('http://localhost:3001/api/admin/book/borrow-requests')
@@ -145,7 +145,7 @@ const AdminDashboard = () => {
 
 
   return (
-    <div className="bg-gray-100 min-h-screen font-sans">
+    <div className="bg-gray-800 min-h-screen font-sans text-white">
       {isLoading ? (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
           <Spinner animation="border" role="status" variant="primary" style={{ width: '4rem', height: '4rem' }}>
@@ -153,8 +153,8 @@ const AdminDashboard = () => {
           </Spinner>
         </div>
       ) : (
-        <div className="bg-gray-100 min-h-screen font-sans">
-          <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
+        <div className="bg-gray-800 min-h-screen font-sans text-white">
+          <Navbar bg="gray-900" variant="dark" expand="lg" className="mb-4 shadow-lg">
             <Container>
               <Navbar.Brand href="#home" className="flex items-center">
                 <MenuBook className="mr-2" />
@@ -193,25 +193,25 @@ const AdminDashboard = () => {
           <Container className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
             {/* stats div */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
-                <Book style={{ fontSize: 48, color: '#3B82F6' }} />
-                <h3 className="text-xl font-semibold mt-2">Total Books</h3>
-                <p className="text-3xl font-bold text-blue-500">{totalBooks}</p>
+              <div className="bg-gray-700 rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
+                <Book style={{ fontSize: 48, color: '#60A5FA' }} />
+                <h3 className="text-xl font-semibold mt-2 text-gray-200">Total Books</h3>
+                <p className="text-3xl font-bold text-blue-400">{totalBooks}</p>
               </div>
-              <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
-                <Inventory style={{ fontSize: 48, color: '#10B981' }} />
-                <h3 className="text-xl font-semibold mt-2">Total Quantity</h3>
-                <p className="text-3xl font-bold text-green-500">{totalQuantity}</p>
+              <div className="bg-gray-700 rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
+                <Inventory style={{ fontSize: 48, color: '#34D399' }} />
+                <h3 className="text-xl font-semibold mt-2 text-gray-200">Total Quantity</h3>
+                <p className="text-3xl font-bold text-green-400">{totalQuantity}</p>
               </div>
-              <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
-                <AttachMoney style={{ fontSize: 48, color: '#F59E0B' }} />
-                <h3 className="text-xl font-semibold mt-2">Total Value</h3>
-                <p className="text-3xl font-bold text-yellow-500">₹{totalValue.toFixed(2)}</p>
+              <div className="bg-gray-700 rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
+                <AttachMoney style={{ fontSize: 48, color: '#FBBF24' }} />
+                <h3 className="text-xl font-semibold mt-2 text-gray-200">Total Value</h3>
+                <p className="text-3xl font-bold text-yellow-400">₹{totalValue.toFixed(2)}</p>
               </div>
-              <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
-                <LocalLibrary style={{ fontSize: 48, color: '#EF4444' }} />
-                <h3 className="text-xl font-semibold mt-2">Borrowed Books</h3>
-                <p className="text-3xl font-bold text-red-500">{borrowedBooks}</p>
+              <div className="bg-gray-700 rounded-lg shadow-md p-6 flex flex-col items-center justify-center transition duration-300 ease-in-out transform hover:scale-105">
+                <LocalLibrary style={{ fontSize: 48, color: '#F87171' }} />
+                <h3 className="text-xl font-semibold mt-2 text-gray-200">Borrowed Books</h3>
+                <p className="text-3xl font-bold text-red-400">{borrowedBooks}</p>
               </div>
             </div>
             {/* book inventory div */}
