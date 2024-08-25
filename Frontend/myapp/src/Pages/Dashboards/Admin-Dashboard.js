@@ -217,11 +217,9 @@ const AdminDashboard = () => {
             {/* book inventory div */}
             <div className="mb-8">
               <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-bold text-white relative">
+                <h2 className="text-4xl font-bold text-white mb-4 border-b-2 border-blue-500 inline-block pb-2">
                   Book Inventory
-                  <span className="absolute bottom-0 left-0 w-1/3 h-1 bg-blue-500 rounded-full"></span>
                 </h2>
-                
                 <div className="relative w-64"> {/* Wrapper for search input with fixed width */}
                   <FormControl
                     type="search"
@@ -237,13 +235,13 @@ const AdminDashboard = () => {
             {/* book card div */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {filteredBooks.map(book => (
-                <div key={book._id} className="relative h-96 mb-3 rounded-lg shadow-black shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl group">
+                <div key={book._id} className="relative h-96 mb-3 rounded-lg shadow-lg overflow-hidden transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl group">
                   <img
                     src={book.avatar || '/placeholder-cover.jpg'}
                     alt={book.title}
                     className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black-100 to-transparent opacity-100 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent opacity-100 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute inset-x-0 bottom-0 p-6 text-white transform translate-y-16 group-hover:translate-y-0 transition-transform duration-300">
                     <h1 className="text-3xl font-bold mb-2 text-shadow">{book.title}</h1>
                     <h4 className="text-sm font-semibold mb-4 opacity-90">~ {book.author}</h4>
