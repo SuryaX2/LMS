@@ -21,7 +21,7 @@ const BookCardSlider = () => {
   };
 
   return (
-    <div className="book-card-slider container mx-auto my-8">
+    <div id='ourBooks' className="book-card-slider container mx-auto my-8">
       <div className="relative text-center">
       <h3 className="text-4xl font-bold text-white mb-4 border-b-2 border-blue-500 inline-block pb-2">Our Books</h3>
       </div>

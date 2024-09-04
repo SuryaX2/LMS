@@ -42,7 +42,7 @@ function CarouselComponent() {
                 <Carousel.Caption className="text-end">
                     <h1>Elevate Your Learning Experience</h1>
                     <p>Experience top-notch education with our cutting-edge LMS. Enhance your skills and knowledge in a seamless, engaging environment.</p>
-                    <Button variant="outline-light" size="lg" href="#home">Browse gallery</Button>
+                    <Button variant="outline-light" size="lg" href="#ourBooks">Browse gallery</Button>
                 </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
