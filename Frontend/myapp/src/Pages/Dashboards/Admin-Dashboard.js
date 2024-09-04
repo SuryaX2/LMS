@@ -220,12 +220,12 @@ const AdminDashboard = () => {
                 <h2 className="text-4xl font-bold text-white mb-4 border-b-2 border-blue-500 inline-block pb-2">
                   Book Inventory
                 </h2>
-                <div className="relative w-64"> {/* Wrapper for search input with fixed width */}
+                <div className="relative w-64">
                   <FormControl
                     type="search"
-                    className="form-control w-full text-white placeholder-gray-400" // Ensures the input takes full width of the container
+                    style={{ backgroundColor: 'rgb(255 255 255 / 15%)'}}
+                    className="form-control w-full text-white"
                     placeholder="Search by title or author"
-                    style={{ backgroundColor: 'rgb(31 41 55)' }}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
