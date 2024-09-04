@@ -5,7 +5,9 @@ import adminRouter from "./routes/admin.js";
 import bookRouter from "./routes/bookRoutes.js";
 import bookRequest from "./routes/bookRequest.js";
 import connectToMongo from "./db.js";
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app = express();
 const PORT = 3001;
 
