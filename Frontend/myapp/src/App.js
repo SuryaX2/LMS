@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home.js';
-import Signup from './Pages/Signup.js';
-import Login from './Pages/Login.js';
-import Forgot from './Pages/Forgot.js';
+import Signup from './Components/Signup.js';
+import Login from './Components/Login.js';
+import Forgot from './Components/Forgot.js';
 import UserDashboard from './Pages/Dashboards/User-Dashboard.js';
 import AdminDashboard from './Pages/Dashboards/Admin-Dashboard.js';
 import AddBook from './Components/AddBook.js';
