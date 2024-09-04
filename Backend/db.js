@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-const uri = "mongodb://localhost:27017/signup";
+dotenv.config();
+
+const uri = process.env.MONGODB_URI;
 
 const connectToMongo = async () => {
     try {
