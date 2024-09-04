@@ -16,6 +16,29 @@ const UserDashboard = () => {
 
   const fetchData = useCallback(async () => {
     setLoading(true);
+
+    const fetchBooks = async () => {
+      try {
+        const res = await axios.get(`${baseURL}/books`);
+        setBooks(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const fetchBorrowedBooks = async () => {
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('user');
+      try {
+        const res = await axios.get(`${baseURL}/books/borrowed/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setBorrowedBooks(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     try {
       await Promise.all([fetchBooks(), fetchBorrowedBooks()]);
     } catch (error) {
@@ -23,7 +46,7 @@ const UserDashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [baseURL]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -36,33 +59,10 @@ const UserDashboard = () => {
     }
   }, [navigate, fetchData]);
 
-  const fetchBooks = async () => {
-    try {
-      const res = await axios.get(`${baseURL}/books`);
-      return setBooks(res.data);
-    } catch (err) {
-      return console.log(err);
-    }
-  };
-
-  const fetchBorrowedBooks = async () => {
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('user');
-    try {
-      const res = await axios.get(`${baseURL}/books/borrowed/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      return setBorrowedBooks(res.data);
-    } catch (err) {
-      return console.log(err);
-    }
-  };
-
   const handleReturn = async (bookId) => {
     try {
       await axios.post(`${baseURL}/books/return`, { bookId });
-      fetchBooks();
-      fetchBorrowedBooks();
+      fetchData(); // Refresh data after returning a book
       toast.success('You Returned The Book Successfully');
     } catch (error) {
       console.error('Error returning book:', error);
@@ -95,7 +95,7 @@ const UserDashboard = () => {
       if (res.data.success) {
         setShowModal(false);
         toast.success('Request sent to admin for approval.');
-        fetchBooks();
+        fetchData();
       }
     } catch (error) {
       console.error('Error requesting book:', error);

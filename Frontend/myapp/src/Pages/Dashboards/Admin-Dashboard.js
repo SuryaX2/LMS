@@ -21,6 +21,23 @@ const AdminDashboard = () => {
 
   const fetchData = useCallback(async () => {
     setIsLoading(true);
+
+    const fetchBooks = () => {
+      return axios.get(`${baseURL}/admin/get-books`)
+        .then(res => setBooks(res.data))
+        .catch(err => console.log(err));
+    };
+
+    const fetchBorrowRequests = async () => {
+      try {
+        const res = await axios.get(`${baseURL}/admin/book/borrow-requests`);
+        return setBorrowRequests(res.data);
+      } catch (err) {
+        console.error('Error fetching borrow requests:', err);
+        toast.error('Failed to fetch borrow requests');
+      }
+    };
+
     try {
       await Promise.all([fetchBooks(), fetchBorrowRequests()]);
     } catch (error) {
@@ -29,7 +46,7 @@ const AdminDashboard = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [baseURL]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -41,12 +58,6 @@ const AdminDashboard = () => {
       fetchData();
     }
   }, [navigate, fetchData]);
-
-  const fetchBooks = () => {
-    axios.get(`${baseURL}/admin/get-books`)
-      .then(res => setBooks(res.data))
-      .catch(err => console.log(err));
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -68,7 +79,7 @@ const AdminDashboard = () => {
     axios.delete(`${baseURL}/admin/${bookId}`)
       .then(res => {
         console.log(res.message);
-        fetchBooks();
+        fetchData();
       })
       .catch(err => console.log(err));
   };
@@ -79,7 +90,7 @@ const AdminDashboard = () => {
       .then(res => {
         console.log(res.message);
         setEditModalOpen(false);
-        fetchBooks();
+        fetchData();
       })
       .catch(err => console.log(err));
   };
@@ -88,21 +99,11 @@ const AdminDashboard = () => {
     setEditingBook({ ...editingBook, [e.target.name]: e.target.value });
   };
 
-  const fetchBorrowRequests = () => {
-    axios.get(`${baseURL}/admin/book/borrow-requests`)
-      .then(res => setBorrowRequests(res.data))
-      .catch(err => {
-        console.error('Error fetching borrow requests:', err);
-        toast.error('Failed to fetch borrow requests');
-      });
-  };
-
   const handleApproveBorrowRequest = async (requestId) => {
     try {
       const res = await axios.post(`${baseURL}/admin/book/approve-borrow-request/${requestId}`);
       console.log(res);
-      fetchBorrowRequests();
-      fetchBooks();
+      fetchData();
       toast.success('Borrow request approved successfully');
     } catch (error) {
       console.error('Error approving borrow request:', error);
@@ -113,7 +114,7 @@ const AdminDashboard = () => {
   const handleRejectBorrowRequest = async (requestId) => {
     try {
       await axios.post(`${baseURL}/admin/book/reject-borrow-request/${requestId}`);
-      fetchBorrowRequests();
+      fetchData();
       toast.success('Borrow request rejected successfully');
     } catch (error) {
       console.error('Error rejecting borrow request:', error);

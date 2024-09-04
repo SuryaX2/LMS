@@ -11,9 +11,6 @@ const BookCardSlider = () => {
   const [books, setBooks] = useState([]);
   const baseURL = `http://localhost:3001/api`;
 
-  useEffect(() => {
-    fetchBooks();
-  }, []);
 
   const fetchBooks = () => {
     axios.get(`${baseURL}/admin/get-books`)
@@ -21,10 +18,14 @@ const BookCardSlider = () => {
       .catch(err => console.log(err));
   };
 
+  useEffect(() => {
+    fetchBooks();
+  });
+
   return (
     <div id='ourBooks' className="book-card-slider container mx-auto my-8">
       <div className="relative text-center">
-      <h3 className="text-4xl font-bold text-white mb-4 border-b-2 border-blue-500 inline-block pb-2">Our Books</h3>
+        <h3 className="text-4xl font-bold text-white mb-4 border-b-2 border-blue-500 inline-block pb-2">Our Books</h3>
       </div>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
