@@ -223,8 +223,9 @@ const AdminDashboard = () => {
                 <div className="relative w-64"> {/* Wrapper for search input with fixed width */}
                   <FormControl
                     type="search"
-                    className="form-control w-full" // Ensures the input takes full width of the container
+                    className="form-control w-full text-white placeholder-white-600" // Ensures the input takes full width of the container
                     placeholder="Search by title or author"
+                    style={{backgroundColor: 'rgb(31 41 55)'}}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
