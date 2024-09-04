@@ -15,6 +15,7 @@ const AddBook = () => {
         avatar: null
     });
     const [isLoading, setIsLoading] = useState(false);
+    const baseURL = `http://localhost:3001/api`;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -45,7 +46,7 @@ const AddBook = () => {
             }
         }
 
-        axios.post('http://localhost:3001/api/admin/save-book', formData)
+        axios.post(`${baseURL}/admin/save-book`, formData)
             .then(res => {
                 console.log(res.data);
                 setBook({

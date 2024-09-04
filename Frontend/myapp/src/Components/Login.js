@@ -9,13 +9,14 @@ const Login = () => {
   const [user, setUser] = useState(null);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const baseURL = `http://localhost:3001/api`;
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/login', { email, password });
+      const response = await axios.post(`${baseURL}/auth/login`, { email, password });
       if (response.data.success) {
         const role = response.data.role;
         localStorage.setItem('role', role);

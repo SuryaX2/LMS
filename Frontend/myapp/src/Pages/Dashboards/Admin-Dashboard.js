@@ -16,6 +16,7 @@ const AdminDashboard = () => {
   const [viewingBook, setViewingBook] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const baseURL = `http://localhost:3001/api`;
   const navigate = useNavigate();
 
   const fetchData = useCallback(async () => {
@@ -42,7 +43,7 @@ const AdminDashboard = () => {
   }, [navigate, fetchData]);
 
   const fetchBooks = () => {
-    axios.get('http://localhost:3001/api/admin/get-books')
+    axios.get(`${baseURL}/admin/get-books`)
       .then(res => setBooks(res.data))
       .catch(err => console.log(err));
   };
@@ -64,7 +65,7 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteBook = (bookId) => {
-    axios.delete(`http://localhost:3001/api/admin/${bookId}`)
+    axios.delete(`${baseURL}/admin/${bookId}`)
       .then(res => {
         console.log(res.message);
         fetchBooks();
@@ -74,7 +75,7 @@ const AdminDashboard = () => {
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:3001/api/admin/${editingBook._id}`, editingBook)
+    axios.put(`${baseURL}/admin/${editingBook._id}`, editingBook)
       .then(res => {
         console.log(res.message);
         setEditModalOpen(false);
@@ -88,7 +89,7 @@ const AdminDashboard = () => {
   };
 
   const fetchBorrowRequests = () => {
-    axios.get('http://localhost:3001/api/admin/book/borrow-requests')
+    axios.get(`${baseURL}/admin/book/borrow-requests`)
       .then(res => setBorrowRequests(res.data))
       .catch(err => {
         console.error('Error fetching borrow requests:', err);
@@ -98,7 +99,7 @@ const AdminDashboard = () => {
 
   const handleApproveBorrowRequest = async (requestId) => {
     try {
-      const res = await axios.post(`http://localhost:3001/api/admin/book/approve-borrow-request/${requestId}`);
+      const res = await axios.post(`${baseURL}/admin/book/approve-borrow-request/${requestId}`);
       console.log(res);
       fetchBorrowRequests();
       fetchBooks();
@@ -111,7 +112,7 @@ const AdminDashboard = () => {
 
   const handleRejectBorrowRequest = async (requestId) => {
     try {
-      await axios.post(`http://localhost:3001/api/admin/book/reject-borrow-request/${requestId}`);
+      await axios.post(`${baseURL}/admin/book/reject-borrow-request/${requestId}`);
       fetchBorrowRequests();
       toast.success('Borrow request rejected successfully');
     } catch (error) {
@@ -223,7 +224,7 @@ const AdminDashboard = () => {
                 <div className="relative w-64">
                   <FormControl
                     type="search"
-                    style={{ backgroundColor: 'rgb(255 255 255 / 15%)'}}
+                    style={{ backgroundColor: 'rgb(255 255 255 / 15%)' }}
                     className="form-control w-full text-white"
                     placeholder="Search by title or author"
                     value={searchQuery}

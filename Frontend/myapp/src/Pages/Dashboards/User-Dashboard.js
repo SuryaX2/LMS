@@ -11,6 +11,7 @@ const UserDashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [loading, setLoading] = useState(true);
+  const baseURL = `http://localhost:3001/api`;
   const navigate = useNavigate();
 
   const fetchData = useCallback(async () => {
@@ -37,7 +38,7 @@ const UserDashboard = () => {
 
   const fetchBooks = async () => {
     try {
-      const res = await axios.get('http://localhost:3001/api/books');
+      const res = await axios.get(`${baseURL}/books`);
       return setBooks(res.data);
     } catch (err) {
       return console.log(err);
@@ -48,7 +49,7 @@ const UserDashboard = () => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user');
     try {
-      const res = await axios.get(`http://localhost:3001/api/books/borrowed/${userId}`, {
+      const res = await axios.get(`${baseURL}/books/borrowed/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       return setBorrowedBooks(res.data);
@@ -59,7 +60,7 @@ const UserDashboard = () => {
 
   const handleReturn = async (bookId) => {
     try {
-      await axios.post('http://localhost:3001/api/books/return', { bookId });
+      await axios.post(`${baseURL}/books/return`, { bookId });
       fetchBooks();
       fetchBorrowedBooks();
       toast.success('You Returned The Book Successfully');
@@ -86,7 +87,7 @@ const UserDashboard = () => {
     try {
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('user');
-      const res = await axios.post('http://localhost:3001/api/admin/book/request',
+      const res = await axios.post(`${baseURL}/admin/book/request`,
         { bookId: selectedBook._id, userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );

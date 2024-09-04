@@ -9,13 +9,14 @@ import 'swiper/css/autoplay';
 
 const BookCardSlider = () => {
   const [books, setBooks] = useState([]);
+  const baseURL = `http://localhost:3001/api`;
 
   useEffect(() => {
     fetchBooks();
   }, []);
 
   const fetchBooks = () => {
-    axios.get('http://localhost:3001/api/admin/get-books')
+    axios.get(`${baseURL}/admin/get-books`)
       .then(res => setBooks(res.data))
       .catch(err => console.log(err));
   };

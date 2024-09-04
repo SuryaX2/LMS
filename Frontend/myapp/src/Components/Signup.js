@@ -37,6 +37,7 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [role, setRole] = useState('user');
     const [error, setError] = useState('');
+    const baseURL = `http://localhost:3001/api`;
     const navigate = useNavigate();
 
     const clearFormFields = () => {
@@ -56,7 +57,7 @@ const Signup = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3001/api/auth/signup', {
+            const response = await axios.post(`${baseURL}/auth/signup`, {
                 username,
                 email,
                 password,

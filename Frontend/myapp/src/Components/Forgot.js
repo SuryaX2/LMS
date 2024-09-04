@@ -38,13 +38,14 @@ const Forgot = () => {
     const [message, setMessage] = useState('');
     const [emailVerified, setEmailVerified] = useState(false);
     const [loading, setLoading] = useState(false);
+    const baseURL = `http://localhost:3001/api`;
     const navigate = useNavigate();
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:3001/api/auth/verify-email', { email });
+            const response = await axios.post(`${baseURL}/auth/verify-email`, { email });
             if (response.data.success) {
                 setEmailVerified(true);
                 setMessage('');
@@ -65,7 +66,7 @@ const Forgot = () => {
         }
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:3001/api/auth/reset-password', { email, newPassword });
+            const response = await axios.post(`${baseURL}/auth/reset-password`, { email, newPassword });
             setMessage(response.data.message);
             if (response.data.success)
                 navigate("/login");
