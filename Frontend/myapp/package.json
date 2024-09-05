@@ -7,7 +7,6 @@
     "@emotion/styled": "^11.13.0",
     "@headlessui/react": "^1.7.7",
     "@heroicons/react": "^1.0.6",
-    "@material-ui/utils": "^4.11.3",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
