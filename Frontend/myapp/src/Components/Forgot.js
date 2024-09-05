@@ -38,7 +38,7 @@ const Forgot = () => {
     const [message, setMessage] = useState('');
     const [emailVerified, setEmailVerified] = useState(false);
     const [loading, setLoading] = useState(false);
-    const baseURL = `http://localhost:3001/api`;
+    const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
     const navigate = useNavigate();
 
     const handleEmailSubmit = async (e) => {

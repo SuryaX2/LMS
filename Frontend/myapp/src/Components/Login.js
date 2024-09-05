@@ -9,7 +9,7 @@ const Login = () => {
   const [user, setUser] = useState(null);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const baseURL = `http://localhost:3001/api`;
+  const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {

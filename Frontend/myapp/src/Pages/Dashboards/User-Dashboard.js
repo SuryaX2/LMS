@@ -11,7 +11,7 @@ const UserDashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [loading, setLoading] = useState(true);
-  const baseURL = `http://localhost:3001/api`;
+  const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
   const navigate = useNavigate();
 
   const fetchData = useCallback(async () => {

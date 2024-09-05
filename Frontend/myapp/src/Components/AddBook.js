@@ -15,7 +15,7 @@ const AddBook = () => {
         avatar: null
     });
     const [isLoading, setIsLoading] = useState(false);
-    const baseURL = `http://localhost:3001/api`;
+    const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
     const navigate = useNavigate();
 
     useEffect(() => {

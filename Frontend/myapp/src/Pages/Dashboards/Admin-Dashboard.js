@@ -16,7 +16,7 @@ const AdminDashboard = () => {
   const [viewingBook, setViewingBook] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const baseURL = `http://localhost:3001/api`;
+  const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
   const navigate = useNavigate();
 
   const fetchData = useCallback(async () => {

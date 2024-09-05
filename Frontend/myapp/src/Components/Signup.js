@@ -37,7 +37,7 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [role, setRole] = useState('user');
     const [error, setError] = useState('');
-    const baseURL = `http://localhost:3001/api`;
+    const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
     const navigate = useNavigate();
 
     const clearFormFields = () => {
