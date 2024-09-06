@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 function MyNavbar() {
     return (
-        <Navbar bg="dark" variant="dark" expand="lg" className='py-2'>
+        <Navbar bg="dark" variant="dark" expand="lg" className='py-3'>
             <Container fluid>
                 <Navbar.Brand href="#" className="me-auto">
                     <img
@@ -22,10 +22,10 @@ function MyNavbar() {
                     </Nav>
                     <div className="d-flex flex-column flex-lg-row gap-2">
                         <LinkContainer to="/login">
-                            <Button variant="outline-light" className="w-100">Login</Button>
+                            <Button variant="outline-light" className="lg:w-100">Login</Button>
                         </LinkContainer>
                         <LinkContainer to="/signup">
-                            <Button variant="warning" className="w-100">Sign-up</Button>
+                            <Button variant="warning" className="lg:w-100">Sign-up</Button>
                         </LinkContainer>
                     </div>
                 </Navbar.Collapse>
