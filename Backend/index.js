@@ -16,11 +16,6 @@ connectToMongo();
 
 app.use(express.json());
 app.use(cors());
-app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true
-}));
 app.use("/api/auth", userRoutes);
 app.use('/api/admin', adminRouter);
 app.use('/api/admin/book', bookRequest);
