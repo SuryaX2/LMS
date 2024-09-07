@@ -15,7 +15,11 @@ const PORT = process.env.PORT || 3001;
 connectToMongo();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'https://lms-7phy.vercel.app', // Allow your frontend domain
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true // If you're using cookies or credentials
+}));
 app.use("/api/auth", userRoutes);
 app.use('/api/admin', adminRouter);
 app.use('/api/admin/book', bookRequest);
