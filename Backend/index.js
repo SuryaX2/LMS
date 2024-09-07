@@ -1,5 +1,6 @@
 import express from "express";
 import cors from 'cors';
+import path from 'path';
 import userRoutes from "./routes/user.js";
 import adminRouter from "./routes/admin.js";
 import bookRouter from "./routes/bookRoutes.js";
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 3001;
 connectToMongo();
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, './tmp')))
 app.use(cors({
     origin: 'https://lms-7phy.vercel.app', // Allow your frontend domain
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
