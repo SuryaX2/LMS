@@ -22,10 +22,13 @@ const AdminDashboard = () => {
   const fetchData = useCallback(async () => {
     setIsLoading(true);
 
-    const fetchBooks = () => {
-      return axios.get(`${baseURL}/admin/get-books`)
-        .then(res => setBooks(res.data))
-        .catch(err => console.log(err));
+    const fetchBooks = async () => {
+      try {
+        const res = await axios.get(`${baseURL}/admin/get-books`);
+        return setBooks(res.data);
+      } catch (err) {
+        return console.log(err);
+      }
     };
 
     const fetchBorrowRequests = async () => {
