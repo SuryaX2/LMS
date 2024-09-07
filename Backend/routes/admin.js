@@ -1,6 +1,7 @@
 import express from 'express';
 import Book from '../models/Books.js';
-import fs from "fs"
+import fs from "fs";
+import path from 'path';
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { upload } from '../middleware/multer.middleware.js';
 
@@ -16,7 +17,8 @@ router.post('/save-book', upload.fields([
   try {
     const book = await Book.findOne({ isbn: req.body.isbn });
     if (book) {
-      const avatarLocalPath = req.files.avatar[0].path;
+      // const avatarLocalPath = req.files.avatar[0].path;
+      const avatarLocalPath = path.join('/tmp', req.files.avatar[0].filename);
       fs.unlinkSync(avatarLocalPath)
       return res.status(404).json({ error: "Book already exists" });
     }
@@ -25,7 +27,8 @@ router.post('/save-book', upload.fields([
       return res.status(400).json({ message: 'Avatar is Required' });
     }
 
-    const avatarLocalPath = req.files.avatar[0].path;
+    // const avatarLocalPath = req.files.avatar[0].path;
+    const avatarLocalPath = path.join('/tmp', req.files.avatar[0].filename);
     const avatar = await uploadOnCloudinary(avatarLocalPath);
     if (!avatar) {
       return res.status(500).json({ message: 'Error uploading avatar' });
