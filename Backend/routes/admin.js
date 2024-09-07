@@ -38,7 +38,7 @@ router.post('/save-book', upload.fields([
     await newBook.save();
     res.status(201).json(newBook);
   } catch (err) {
-    res.status(500).json({ message: 'Error creating book' });
+    res.status(500).json({ message: 'Error creating book', error: err.message });
   }
 });
 
