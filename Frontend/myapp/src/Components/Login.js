@@ -37,10 +37,10 @@ const Login = () => {
 
   return (
     <Container fluid className="d-flex align-items-center justify-content-center min-vh-100" style={{ background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}>
-      <Card className="shadow-lg border-0 rounded-lg w-full max-w-md">
-        <Card.Body className="p-5">
+      <Card className="shadow-lg border-0 rounded-lg w-100" style={{ maxWidth: '400px' }}>
+        <Card.Body className="p-4 p-sm-5">
           <div className="text-center mb-4">
-            <LoginIcon className='mr-4' style={{ fontSize: 50, color: '#3a5ccc' }} />
+            <LoginIcon style={{ fontSize: 50, color: '#3a5ccc' }} />
             <h2 className="mt-3 font-weight-bold" style={{ color: '#3a5ccc' }}>Login</h2>
           </div>
           {error && <Alert variant="danger" className="text-center mb-4">{error}</Alert>}
@@ -82,8 +82,8 @@ const Login = () => {
             >
               Login
             </Button>
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-muted">
+            <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center">
+              <span className="text-muted mb-2 mb-sm-0">
                 Not a Member? <a href='/signup' style={{ color: '#3a5ccc' }} className='font-weight-bold text-decoration-none'>Sign Up</a>
               </span>
               <a href="/forgot" style={{ color: '#3a5ccc' }} className="font-weight-bold text-decoration-none">Forgot password?</a>

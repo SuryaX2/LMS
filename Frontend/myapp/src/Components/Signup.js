@@ -1,34 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import {
-    Container,
-    Paper,
-    Typography,
-    TextField,
-    Button,
-    Box,
-    Alert,
-    Grid,
-    FormControlLabel,
-    Radio,
-    RadioGroup,
-    FormControl,
-    FormLabel
-} from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { PersonAdd, Email, Lock, CheckCircle, LockOpen } from '@mui/icons-material';
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#1976d2',
-        },
-        secondary: {
-            main: '#f50057',
-        },
-    },
-});
 
 const Signup = () => {
     const [username, setUsername] = useState('');
@@ -76,127 +50,114 @@ const Signup = () => {
     };
 
     return (
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xl" sx={{ height: '100vh', width: '100vw', overflow: "hidden" }}>
-                <Grid container sx={{ height: '100%', width: '99vw' }}>
-                    <Grid item xs={false} sm={4} md={7} sx={{
-                        backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        height: '100vh',
-                        width: '100vw'
-                    }} />
-                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                        <Box
-                            sx={{
-                                my: 8,
-                                mx: 4,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <LockOpen sx={{ fontSize: 48, color: 'primary.main' }} />
-                            <Typography component="h1" variant="h5" gutterBottom>
-                                Sign Up
-                            </Typography>
-                            {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
-                            <Box component="form" onSubmit={handleSignup} sx={{ mt: 1, width: '100%' }}>
-                                <FormControl component="fieldset" sx={{ mb: 2 }}>
-                                    <FormLabel component="legend">User Role</FormLabel>
-                                    <RadioGroup
-                                        row
-                                        aria-label="role"
+        <Container fluid className="vh-100 p-0">
+            <Row className="h-100 m-0">
+                <Col xs={12} md={7} className="d-none d-md-block p-0">
+                    <div
+                        className="h-100 w-100"
+                        style={{
+                            backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                        }}
+                    />
+                </Col>
+                <Col xs={12} md={5} className="d-flex align-items-center justify-content-center">
+                    <div className="w-100 p-4">
+                        <div className="text-center mb-4">
+                            <LockOpen style={{ fontSize: 48, color: '#1976d2' }} />
+                            <h2>Sign Up</h2>
+                        </div>
+                        {error && <Alert variant="danger">{error}</Alert>}
+                        <Form onSubmit={handleSignup}>
+                            <Form.Group className="mb-3">
+                                <Form.Label>User Role</Form.Label>
+                                <div>
+                                    <Form.Check
+                                        inline
+                                        type="radio"
+                                        label="User"
                                         name="role"
-                                        value={role}
+                                        value="user"
+                                        checked={role === 'user'}
                                         onChange={(e) => setRole(e.target.value)}
-                                    >
-                                        <FormControlLabel value="user" control={<Radio />} label="User" />
-                                        <FormControlLabel value="admin" control={<Radio />} label="Admin" />
-                                    </RadioGroup>
-                                </FormControl>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="username"
-                                    label="Username"
-                                    name="username"
-                                    autoComplete="username"
-                                    autoFocus
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <PersonAdd sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    }}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <Email sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    }}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="new-password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <Lock sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    }}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="confirmPassword"
-                                    label="Confirm Password"
-                                    type="password"
-                                    id="confirmPassword"
-                                    autoComplete="new-password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <CheckCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                                    }}
-                                />
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 1 }}
-                                >
-                                    Sign Up
-                                </Button>
-                                <Grid container justifyContent="flex-end">
-                                    <Grid item>
-                                        <span>Already have an account? </span>
-                                        <Link to="/login" className='no-underline'>
-                                            Log in
-                                        </Link>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Container>
-        </ThemeProvider>
+                                    />
+                                    <Form.Check
+                                        inline
+                                        type="radio"
+                                        label="Admin"
+                                        name="role"
+                                        value="admin"
+                                        checked={role === 'admin'}
+                                        onChange={(e) => setRole(e.target.value)}
+                                    />
+                                </div>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Username</Form.Label>
+                                <div className="input-group">
+                                    <span className="input-group-text"><PersonAdd /></span>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter username"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Email address</Form.Label>
+                                <div className="input-group">
+                                    <span className="input-group-text"><Email /></span>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="Enter email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Password</Form.Label>
+                                <div className="input-group">
+                                    <span className="input-group-text"><Lock /></span>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Confirm Password</Form.Label>
+                                <div className="input-group">
+                                    <span className="input-group-text"><CheckCircle /></span>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Confirm password"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            </Form.Group>
+                            <Button variant="primary" type="submit" className="w-100 mt-3">
+                                Sign Up
+                            </Button>
+                            <div className="text-end mt-3">
+                                <span>Already have an account? </span>
+                                <Link to="/login" className="text-decoration-none">Log in</Link>
+                            </div>
+                        </Form>
+                    </div>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
