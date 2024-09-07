@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function CarouselComponent() {
     return (
-        <Carousel className="mb-6">
+        <Carousel className="mb-1">
             <Carousel.Item>
                 <img
                     className="d-block w-100 h-[32rem] object-cover opacity-80"
