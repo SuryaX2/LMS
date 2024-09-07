@@ -46,7 +46,10 @@ const AddBook = () => {
                 formData.append(key, book[key]);
             }
         }
-
+        console.log('FormData contents:');
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
         axios.post(`${baseURL}/admin/save-book`, formData)
             .then(res => {
                 console.log(res.data);
