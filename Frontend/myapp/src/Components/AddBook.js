@@ -49,7 +49,6 @@ const AddBook = () => {
 
         axios.post(`${baseURL}/admin/save-book`, formData)
             .then(res => {
-                console.log(res.data);
                 setBook({
                     title: '',
                     author: '',
