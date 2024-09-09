@@ -19,30 +19,49 @@ const AdminDashboard = () => {
   const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
   const navigate = useNavigate();
 
+  // const fetchData = useCallback(async () => {
+  //   setIsLoading(true);
+
+  //   const fetchBooks = async () => {
+  //     try {
+  //       const res = await axios.get(`${baseURL}/admin/get-books`);
+  //       return setBooks(res.data);
+  //     } catch (err) {
+  //       return console.log(err);
+  //     }
+  //   };
+
+  //   const fetchBorrowRequests = async () => {
+  //     try {
+  //       const res = await axios.get(`${baseURL}/admin/book/borrow-requests`);
+  //       return setBorrowRequests(res.data);
+  //     } catch (err) {
+  //       console.error('Error fetching borrow requests:', err);
+  //       toast.error('Failed to fetch borrow requests');
+  //     }
+  //   };
+
+  //   try {
+  //     await Promise.all([fetchBooks(), fetchBorrowRequests()]);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //     toast.error('Failed to load data');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }, [baseURL]);
+
   const fetchData = useCallback(async () => {
     setIsLoading(true);
 
-    const fetchBooks = async () => {
-      try {
-        const res = await axios.get(`${baseURL}/admin/get-books`);
-        return setBooks(res.data);
-      } catch (err) {
-        return console.log(err);
-      }
-    };
-
-    const fetchBorrowRequests = async () => {
-      try {
-        const res = await axios.get(`${baseURL}/admin/book/borrow-requests`);
-        return setBorrowRequests(res.data);
-      } catch (err) {
-        console.error('Error fetching borrow requests:', err);
-        toast.error('Failed to fetch borrow requests');
-      }
-    };
-
     try {
-      await Promise.all([fetchBooks(), fetchBorrowRequests()]);
+      const [booksRes, requestsRes] = await Promise.all([
+        axios.get(`${baseURL}/admin/get-books`),
+        axios.get(`${baseURL}/admin/book/borrow-requests`)
+      ]);
+
+      setBooks(booksRes.data);
+      setBorrowRequests(requestsRes.data);
     } catch (error) {
       console.error('Error fetching data:', error);
       toast.error('Failed to load data');
@@ -78,24 +97,28 @@ const AdminDashboard = () => {
     setEditModalOpen(true);
   };
 
-  const handleDeleteBook = (bookId) => {
-    axios.delete(`${baseURL}/admin/${bookId}`)
-      .then(res => {
-        console.log(res.message);
-        fetchData();
-      })
-      .catch(err => console.log(err));
+  const handleDeleteBook = async (bookId) => {
+    try {
+      await axios.delete(`${baseURL}/admin/${bookId}`);
+      setBooks(prevBooks => prevBooks.filter(book => book._id !== bookId));
+      toast.success('Book deleted successfully');
+    } catch (err) {
+      console.error('Error deleting book:', err);
+      toast.error('Failed to delete book');
+    }
   };
 
-  const handleEditSubmit = (e) => {
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
-    axios.put(`${baseURL}/admin/${editingBook._id}`, editingBook)
-      .then(res => {
-        console.log(res.message);
-        setEditModalOpen(false);
-        fetchData();
-      })
-      .catch(err => console.log(err));
+    try {
+      const res = await axios.put(`${baseURL}/admin/${editingBook._id}`, editingBook);
+      setBooks(prevBooks => prevBooks.map(book => book._id === editingBook._id ? res.data : book));
+      setEditModalOpen(false);
+      toast.success('Book updated successfully');
+    } catch (err) {
+      console.error('Error updating book:', err);
+      toast.error('Failed to update book');
+    }
   };
 
   const handleInputChange = (e) => {
@@ -104,9 +127,8 @@ const AdminDashboard = () => {
 
   const handleApproveBorrowRequest = async (requestId) => {
     try {
-      const res = await axios.post(`${baseURL}/admin/book/approve-borrow-request/${requestId}`);
-      console.log(res);
-      fetchData();
+      await axios.post(`${baseURL}/admin/book/approve-borrow-request/${requestId}`);
+      setBorrowRequests(prevRequests => prevRequests.filter(request => request._id !== requestId));
       toast.success('Borrow request approved successfully');
     } catch (error) {
       console.error('Error approving borrow request:', error);
@@ -117,7 +139,7 @@ const AdminDashboard = () => {
   const handleRejectBorrowRequest = async (requestId) => {
     try {
       await axios.post(`${baseURL}/admin/book/reject-borrow-request/${requestId}`);
-      fetchData();
+      setBorrowRequests(prevRequests => prevRequests.filter(request => request._id !== requestId));
       toast.success('Borrow request rejected successfully');
     } catch (error) {
       console.error('Error rejecting borrow request:', error);
@@ -286,7 +308,7 @@ const AdminDashboard = () => {
           {/* View Modal */}
           <Modal
             show={viewModalOpen}
-            onHide={() => { setViewModalOpen(false); fetchData(); }}
+            onHide={() => setViewModalOpen(false)}
             centered
             size="lg"
             className="book-details-modal"
@@ -350,7 +372,7 @@ const AdminDashboard = () => {
 
           {/* Edit Modal */}
           <Modal show={editModalOpen}
-            onHide={() => { setEditModalOpen(false); fetchData(); }}
+            onHide={() => setEditModalOpen(false)}
             centered
           >
             <Modal.Header closeButton>
