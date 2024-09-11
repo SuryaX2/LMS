@@ -22,7 +22,7 @@ const HowItWorks = () => {
         {steps.map((step, index) => (
           <Col key={index} xs={12} sm={6} md={3} className="mb-8">
             <div className="flex flex-col items-center text-center">
-              <div className="bg-gray-700 rounded-full p-4 mb-4">
+              <div className="bg-gray-700 rounded-full p-4 mb-4 mt-8">
                 {step.icon}
               </div>
               <h3 className="text-xl font-semibold mb-2">{step.title}</h3>

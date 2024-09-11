@@ -16,7 +16,7 @@ connectToMongo();
 
 app.use(express.json());
 app.use(cors({
-    origin: 'https://lms-7phy.vercel.app', // Allow your frontend domain
+    origin: process.env.FRONTEND_URL, // Allow your frontend domain
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true // If you're using cookies or credentials
 }));
