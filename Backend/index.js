@@ -16,9 +16,9 @@ connectToMongo();
 
 app.use(express.json());
 app.use(cors({
-    origin: process.env.FRONTEND_URL, // Allow your frontend domain
+    origin: process.env.FRONTEND_URL,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true // If you're using cookies or credentials
+    credentials: true
 }));
 app.use("/api/auth", userRoutes);
 app.use('/api/admin', adminRouter);
