@@ -16,6 +16,7 @@ const AddBook = () => {
         avatar: null
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState(null);
     const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
     const navigate = useNavigate();
 
@@ -28,9 +29,24 @@ const AddBook = () => {
         }
     })
 
+    useEffect(() => {
+        return () => {
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
+        };
+    }, [previewUrl]);
+
     const handleInputChange = (e) => {
         if (e.target.name === 'avatar') {
-            setBook({ ...book, avatar: e.target.files[0] });
+            const file = e.target.files[0];
+            setBook({ ...book, avatar: file });
+            if (file) {
+                const url = URL.createObjectURL(file);
+                setPreviewUrl(url);
+            } else {
+                setPreviewUrl(null);
+            }
         } else {
             setBook({ ...book, [e.target.name]: e.target.value });
         }
@@ -75,7 +91,15 @@ const AddBook = () => {
                     <Row>
                         <Col md={5} className="mb-4 mb-md-0">
                             <div className="h-100 d-flex flex-column justify-content-center align-items-center bg-primary text-white rounded p-4">
-                                <BookIcon style={{ fontSize: 80 }} />
+                                {previewUrl ? (
+                                    <img
+                                        src={previewUrl}
+                                        alt="Book avatar preview"
+                                        style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px' }}
+                                    />
+                                ) : (
+                                    <BookIcon style={{ fontSize: 80 }} />
+                                )}
                                 <h2 className="mt-4 text-center">Add a New Book</h2>
                                 <p className="text-center mt-3">Expand your library with new titles</p>
                             </div>
