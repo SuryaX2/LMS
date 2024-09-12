@@ -95,13 +95,15 @@ const AddBook = () => {
                                     <img
                                         src={previewUrl}
                                         alt="Book avatar preview"
-                                        style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px' }}
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }}
                                     />
                                 ) : (
-                                    <BookIcon style={{ fontSize: 80 }} />
+                                    <>
+                                        <BookIcon style={{ fontSize: 80 }} />
+                                        <h2 className="mt-4 text-center">Add a New Book</h2>
+                                        <p className="text-center mt-3">Expand your library with new titles</p>
+                                    </>
                                 )}
-                                <h2 className="mt-4 text-center">Add a New Book</h2>
-                                <p className="text-center mt-3">Expand your library with new titles</p>
                             </div>
                         </Col>
                         <Col md={7}>
