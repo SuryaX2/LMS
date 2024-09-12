@@ -101,7 +101,7 @@ const AddBook = () => {
                                     <img
                                         src={previewUrl}
                                         alt="Book avatar preview"
-                                        style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '10px' }}
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px',objectPosition: 'center' }}
                                     />
                                 ) : (
                                     <>
