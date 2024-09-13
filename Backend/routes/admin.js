@@ -28,7 +28,7 @@ router.post('/save-book', upload.fields([
     }
 
     // const avatarLocalPath = req.files.avatar[0].path;
-    const avatarLocalPath = path.join('./tmp', req.files.avatar[0].filename);
+    const avatarLocalPath = path.join('/tmp', req.files.avatar[0].filename);
     const avatar = await uploadOnCloudinary(avatarLocalPath);
     if (!avatar) {
       return res.status(500).json({ message: 'Error uploading avatar' });
