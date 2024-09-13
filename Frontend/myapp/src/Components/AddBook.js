@@ -12,7 +12,7 @@ const AddBook = () => {
         author: '',
         isbn: '',
         price: '',
-        quantity: '',
+        quantity: '1',
         avatar: null
     });
     const [isLoading, setIsLoading] = useState(false);
@@ -171,9 +171,8 @@ const AddBook = () => {
                                             <Form.Control
                                                 type="number"
                                                 name="quantity"
-                                                // value={book.quantity}
-                                                value={1}
-                                                readOnly
+                                                value={book.quantity}
+                                                onChange={handleInputChange}
                                                 required
                                                 placeholder="Enter quantity"
                                                 style={inputStyle}
