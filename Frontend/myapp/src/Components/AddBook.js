@@ -172,9 +172,8 @@ const AddBook = () => {
                                                 type="number"
                                                 name="quantity"
                                                 // value={book.quantity}
-                                                value='1'
+                                                value={1}
                                                 readOnly
-                                                onChange={handleInputChange}
                                                 required
                                                 placeholder="Enter quantity"
                                                 style={inputStyle}
