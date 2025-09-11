@@ -217,4 +217,4 @@ For any queries or support, please open an issue on this repository.
 
 ---
 
-<p align="center">Made with ❤️ by [Your Name/Team Name]</p>
+<p align="center">Made with ❤️ by Surya Sekhar Sharma (SuryaX2)</p>
