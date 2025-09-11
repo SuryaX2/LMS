@@ -38,7 +38,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div style={{ backgroundColor: "#1a202c", padding: "5rem 0" }}>
+    <div id="how-it-works" style={{ backgroundColor: "#1a202c", padding: "5rem 0" }}>
       <Container>
         <div className="text-center mb-5">
           <h2 className="display-5 fw-bold mb-3" style={{ color: "#ffffff" }}>
