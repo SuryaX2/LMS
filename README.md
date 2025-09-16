@@ -1,6 +1,6 @@
 # 📚 Library Management System (LMS)
 
-![https://via.placeholder.com/800x200?text=Library+Management+System](https://media.licdn.com/dms/image/v2/D5612AQGkHpb-Z2B1CQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1693328158461?e=1731542400&v=beta&t=hk55vajzaxjKppxqJg-48MpSpLV0-ArdFX51Xio9J5w)
+![https://via.placeholder.com/800x200?text=Library+Management+System](https://static.vecteezy.com/system/resources/previews/042/161/177/non_2x/library-management-yellow-word-concept-books-and-materials-security-measures-information-secure-typography-banner-illustration-with-title-text-editable-icons-color-hubot-sans-font-used-vector.jpg)
 
 ## 🌐 Live Demo
 [**Experience LMS on Vercel**](https://lms-7phy.vercel.app/)
